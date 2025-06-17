@@ -3,13 +3,50 @@ title: "Saas development management system for PIK Group"
 date: 2021-03-05
 ---
 
-![Saas development management system for PIK Group](cover.png)
+AutoBOP is a system for planning and controlling construction schedules. We have created an app, that solves developers' problems.  
+[The landing page with details](https://bop.pik.digital/).  
+It is a part of the [PIK Franchise project](https://fr.pik.ru/).
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<div class="wpb-content-wrapper"><p></p>
-<h2>AutoBOP is a system for planning and controlling construction schedules. We have created an app, that solves developers&#8217; problems.<br />
-<a href="https://bop.pik.digital/" target="_blank" rel="nofollow noopener">The landing page with details</a>.<br />
-It is a part of the <a href="https://fr.pik.ru/" target="_blank" rel="nofollow noopener">PIK Franchise project</a>.</h2>
-<p></p>
-<h2>Screenshots of the running system.</h2>
-<p></p>
-</div>
+![](image1.png "MacBook Pro - 1")
+
+Any project is a set of events, rigidly connected with each other.
+------------------------------------------------------------------
+
+![](image2.png "MacBook Pro - 2")
+
+It is a tool for planning and controlling the execution of key events in the construction process.
+--------------------------------------------------------------------------------------------------
+
+![](image3.png "MacBook Pro - 3")
+
+Plan project schedules, creates new events, their relationships, and assigns performers.
+----------------------------------------------------------------------------------------
+
+![](image4.png "MacBook Pro - 4")
+
+Gets tasks ready to work. Seeing the history of who did what actions. Plans his or her tasks in terms of deadlines and priorities. Can discuss the task with all stakeholders directly in the task card.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+![](image5.png "MacBook Pro - 5")
+
+Accepts execution, controls completeness and accuracy, based on supporting documents.
+-------------------------------------------------------------------------------------
+
+![](image6.png "MacBook Pro - 6")
+
+Monitors ratings on performers and violating deadlines, by processes and projects. Obtains information about the status of projects in different views: graphical diagrams, news feeds.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+![](image7.png "MacBook Pro - 7")
+
+Screenshots of the running system.
+----------------------------------
+
+![](image8.png "Artboard")
+
+![](image9.png "image_2020-05-13_15-10-47")
+
+![](image10.png "image_2020-04-30_15-41-25")
+
+![](image11.png "ТП Панель 1")

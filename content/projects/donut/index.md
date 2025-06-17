@@ -3,7 +3,6 @@ title: "Just a donut"
 date: 2022-06-22
 ---
 
-![Just a donut](cover.jpg)
+<video src="video.mp4" autoplay muted loop playsinline controls style="max-width:100%;height:auto;"></video>
 
-<div class="wpb-content-wrapper"><p>First serious Blender project. Folowed <a href="https://youtube.com/playlist?list=PLjEaoINr3zgFX8ZsChQVQsuDSjEqdWMAD" target="_blank" rel="noopener">BlenderGuru tutorial.</a></p>
-</div>
+First serious Blender project. Folowed [BlenderGuru tutorial.](https://youtube.com/playlist?list=PLjEaoINr3zgFX8ZsChQVQsuDSjEqdWMAD)

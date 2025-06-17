@@ -1,6 +1,16 @@
 ---
 title: "Useful telegram bot commands"
-date: 2017-03-29
+date: 2017-03-28
 ---
 
-Content coming soon.
+```
+https://api.telegram.org/bot{your bot token}/setWebhook?url={message handler url}
+```
+
+```
+https://api.telegram.org/bot{your bot token}/getWebhookInfo
+```
+
+```
+https://api.telegram.org/bot{your bot token}/getMe
+```

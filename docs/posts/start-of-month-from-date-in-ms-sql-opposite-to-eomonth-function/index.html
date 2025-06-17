@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,39 @@
             
             <div class="content">
                 <h1>Start of month from date in MS SQL (opposite to EOMONTH function)</h1>
-                <div class="date">Sun Oct 09 2016 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2016-10-08</div>
+                <p>Sometimes we need to select values grouped by month from MS SQL Table. Probably the easiest way to do it is to call function DateAdd with DateDiff:</p>
+<pre><code class="language-sql">SELECT Sum(YourColumn), DATEADD(month, DATEDIFF(month, 0, [YourDateColumn]), 0) as &#39;Date&#39;
+FROM YourTable
+GROUP BY DATEADD(month, DATEDIFF(month, 0, [YourDateColumn]), 0); 
+</code></pre>
+<p>Or we can use EOMONTH function that give us date that is the last day of the month:</p>
+<pre><code class="language-sql">SELECT Sum(YourColumn),  EOMONTH([YourDateColumn]) as &#39;Date&#39;
+FROM YourTable
+GROUP BY EOMONTH([YourDateColumn]) ; 
+</code></pre>
+<p>But usually it’s just more convenient to use first day of month. So, if you want to save your time and make you script more clear, you can create you can create your own function, just like EOMONTH:</p>
+<pre><code class="language-sql">SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[SOMONTH] (@dd datetime)
+   RETURNS date
+
+AS
+BEGIN
+    declare @YYYY_MM_DD datetime;
+    
+    SET @YYYY_MM_DD = DATEADD(month, DATEDIFF(month, 0, @dd), 0);   
+    
+    return @YYYY_MM_DD
+END	
+</code></pre>
+<p>Now we can call it:</p>
+<pre><code class="language-sql">SELECT Sum(YourColumn),  SOMONTH([YourDateColumn]) as &#39;Date&#39;
+FROM YourTable
+GROUP BY SOMONTH([YourDateColumn]) ; 
+</code></pre>
 
             </div>
         </article>

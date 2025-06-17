@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,26 @@
             
             <div class="content">
                 <h1>Cron task for handling email in redmine</h1>
-                <div class="date">Mon Apr 17 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-04-16</div>
+                <p>Go to redmine folder and copy <strong>use_redmine</strong> file:</p>
+<pre><code class="language-bash">cp use_redmine proceed_mail
+</code></pre>
+<p>Edit new document:</p>
+<pre><code class="language-bash">nano ./proceed_mail
+</code></pre>
+<p>Replace text with following (put your variables):</p>
+<pre><code class="language-bash">#!/bin/bash
+
+. /opt/redmine-3.3.2-2/scripts/setenv.sh
+
+rake -f /opt/redmine-3.3.2-2/apps/redmine/htdocs/Rakefile redmine:email:receive_imap RAILS_ENV=&quot;production&quot; host=mail_server [email protected] password=your_password move_on_success=read move_on_failure=failed
+</code></pre>
+<p>To run Cron config, exec command:</p>
+<pre><code class="language-bash">crontab -e
+</code></pre>
+<p>Add following line to the end of the file (put your variables):</p>
+<pre><code class="language-bash">*/5 * * * * /opt/redmine-3.3.2-2/proceed_mail
+</code></pre>
 
             </div>
         </article>

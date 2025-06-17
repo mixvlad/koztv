@@ -201,7 +201,7 @@ a:active:after {
 pre, code { font-family: 'IBM Plex Mono', monospace; }
 code { font-style: normal; background: var(--gray-bg); padding: 2px 6px; border-radius: 4px; font-size: var(--font-smaller); }
 h1 > code, h2 > code, h3 > code, h4 > code, .loud > code, .foot > code { font: inherit; }
-.content > pre, blockquote > pre { max-width: calc(var(--width) + 60px); background: var(--gray-bg); margin: var(--gap) 0; padding: 16px 30px 14px; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word; font-style: normal; }
+.content > pre, blockquote > pre { max-width: calc(var(--width) + 60px); background: var(--gray-bg); margin: 0 0 var(--gap) 0; padding: 16px 30px 14px; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word; font-style: normal; }
 pre > code { background: none; padding: 0; font-size: var(--font-small); white-space: unset; }
 
 /* BLOCKQUOTES */
@@ -377,4 +377,8 @@ h1:empty, .date:empty{display:none;}
 
 .social-icons a:hover {
   color: var(--text);
+}
+
+body.home header {
+    display: none;
 }

@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,20 @@
             
             <div class="content">
                 <h1>Highlight overdue issues in redmine</h1>
-                <div class="date">Mon May 15 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-05-14</div>
+                <p>To higlight overdue issues in redmine, add following styles to your application.css file:</p>
+<pre><code class="language-css">tr.issue.overdue td.id a, tr.issue.overdue td.subject a, .issue.overdue td.due-date { color: #f00; }
+tr.private td.subject a:before {
+  content: &#39;&#39;;
+  display: inline-block;
+  margin: 0 3px 0 -5px;
+  height: 11px;
+  vertical-align: middle;
+  border-left: 2px solid #d22;
+  border-right: 1px solid #d22;
+}
+</code></pre>
+<p>Original article: <a href="http://www.redmine.org/issues/20812">http://www.redmine.org/issues/20812</a></p>
 
             </div>
         </article>

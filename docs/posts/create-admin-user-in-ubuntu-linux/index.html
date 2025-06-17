@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,23 @@
             
             <div class="content">
                 <h1>Create admin user in ubuntu linux</h1>
-                <div class="date">Tue Dec 05 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-12-04</div>
+                <p>1. Login as super user:</p>
+<pre><code class="language-bash">sudo su
+</code></pre>
+<p>2. Run the following command:</p>
+<pre><code class="language-bash">adduser username
+</code></pre>
+<p>Don’t forget to replace <strong>username</strong> with the name of user that you want to create.</p>
+<p>3. Add the user to the sudo group:</p>
+<pre><code class="language-bash">usermod -aG sudo username
+</code></pre>
+<p>4. Switch to the new user:</p>
+<pre><code class="language-bash">su username
+</code></pre>
+<p>5. Check that new user has admin rights:</p>
+<pre><code class="language-bash">sudo ls -la /root
+</code></pre>
 
             </div>
         </article>

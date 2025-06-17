@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,22 @@
             
             <div class="content">
                 <h1>Sendmail config when MX record points to another server</h1>
-                <div class="date">Sun May 22 2016 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2016-05-21</div>
+                <p>If your domain mail is hosted on mail server in a different domain, you should tell your sendmail about it. Otherwise if you try to send a mail to a user in your local domain, you will get an error from sendmail at <strong>/vat/log/mail.log</strong>:</p>
+<p><strong><em>User unknown.</em></strong></p>
+<p>It means that sendmail is trying to find user, that is mentioned in a message, on your local server and can’t find that user, because we use mail server that is hosted on different IP-address. To solve this problem we should tell sendmail to search for mail users with our domain name on the remote server.</p>
+<p>Open <strong>/etc/mail/sendmail.mc</strong> for edit:</p>
+<pre><code class="language-bash">sudo nano /etc/mail/sendmail.mc
+</code></pre>
+<p>Add this two lines to the end of the file:</p>
+<pre><code>define(`MAIL_HUB&#39;, `your.domain.com.&#39;)dnl
+define(`LOCAL_RELAY&#39;, `your.domain.com.&#39;)dnl
+</code></pre>
+<p>Press “<strong>Ctrl + X</strong>” when you are done and answer “<strong>Y</strong>” for question about saving a file.</p>
+<p>Now we should reload sendmail service:</p>
+<pre><code class="language-bash">service sendmail reload
+</code></pre>
+<p>And try to send mail again. If you have done everything right, emails should go through remote mail server without errors.</p>
 
             </div>
         </article>

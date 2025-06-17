@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,22 @@
             
             <div class="content">
                 <h1>Allow ssh password authentication on remote server</h1>
-                <div class="date">Tue Dec 05 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-12-04</div>
+                <p>1. Connect to the server and check ssh properties:</p>
+<pre><code class="language-bash">sudo nano /etc/ssh/sshd_config
+</code></pre>
+<pre><code class="language-ini"># Change to no to disable tunnelled clear text passwords
+PasswordAuthentication yes
+</code></pre>
+<p><strong>PasswordAuthentication</strong> should be set to <strong>yes</strong>.</p>
+<p>2. Now restart ssh service:</p>
+<pre><code class="language-bash">service ssh restart
+</code></pre>
+<p>3. Try to make ssh connection with authentication by password:</p>
+<pre><code class="language-bash">ssh username@domain
+</code></pre>
+<p>Don’t forget to replace <strong>username</strong> and <strong>domain</strong> with your values.</p>
+<p><a href="create-admin-user-in-ubuntu-linux/">There</a> you can find how to create new user, if you don’t have one, for your ssh connection.</p>
 
             </div>
         </article>

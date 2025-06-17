@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,16 @@
             
             <div class="content">
                 <h1>Adding Resharper Code Quality Analysis to TFS/VSTS</h1>
-                <div class="date">Wed Dec 06 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-12-05</div>
+                <p>To improve code qulaity of your project is’t good to check every build with some analyzing tool such as <a href="https://marketplace.visualstudio.com/items?itemName=alanwales.resharper-code-analysis">Resharper Code Quality Analysis</a>.</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=alanwales.resharper-code-analysis" title="Resharper Code Quality Analysis">Install Resharper Code Quality Analysis</a></p>
+<p>Now you have to add additional step to the build definition of your project after build step, like this:</p>
+<p><img src="image1.png" alt="" title="newStep"></p>
+<p>Then you need to set “Path to .sln or .csproj file”, you can find it in build log in build step. Usually it something like “YourProjectName” + .sln or “YourProjectName\YourProjectName” + .sln</p>
+<p><img src="image2.png" alt="" title="solutionName"></p>
+<p>System.Management.Automation.MethodInvocationException: Exception calling “GetFullPath” with “1” argument(s): “Illegal characters in path.” —&gt; System.ArgumentException: Illegal characters in path.</p>
+<p>Set “Fail build severity” to “Error” if you want your build fail only in case some critical problems have found.</p>
+<p><img src="image3.png" alt="" title="SeverityMod"></p>
 
             </div>
         </article>

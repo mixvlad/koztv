@@ -37,9 +37,14 @@ marked.setOptions({ renderer });
 // Функция для конвертации Markdown в HTML
 function convertMarkdownToHtml(markdown, metadata) {
     const content = marked.parse(markdown);
+    let dateStr = metadata.date || '';
+    if (dateStr instanceof Date) {
+        dateStr = dateStr.toISOString().slice(0, 10);
+    }
     return template
         .replace(/{{title}}/g, metadata.title || '')
-        .replace(/{{date}}/g, metadata.date || '')
+        .replace(/{{date}}/g, dateStr)
+        .replace(/{{bodyClass}}/g, metadata.bodyClass || '')
         .replace('{{content}}', content);
 }
 
@@ -58,9 +63,20 @@ async function processDir(srcDir) {
             if (path.extname(entry.name) === '.md') {
                 const content = await fs.readFile(fullPath, 'utf-8');
                 const { attributes, body } = frontMatter(content);
+                let mdBody = body;
+                if (relPath === 'index.md') {
+                    const proj = generateProjectsMarkup();
+                    mdBody = mdBody
+                        .replace(/{{postsList}}/g, generatePostsMarkdownList())
+                        .replace(/{{projectsFeatured}}/g, proj.featured)
+                        .replace(/{{projectsGrid}}/g, proj.grid);
+                }
                 const depth = path.relative(config.outputDir, path.dirname(destPath)).split(path.sep).filter(Boolean).length;
                 const rootPrefix = depth === 0 ? '' : Array(depth).fill('..').join('/') + '/';
-                const html = convertMarkdownToHtml(body, attributes)
+                const html = convertMarkdownToHtml(mdBody, {
+                    ...attributes,
+                    bodyClass: relPath === 'index.md' ? 'home' : (attributes.bodyClass || '')
+                })
                     .replace(/{{root}}/g, rootPrefix);
                 const htmlDest = destPath.replace(/\.md$/, '.html');
                 await fs.ensureDir(path.dirname(htmlDest));
@@ -177,4 +193,79 @@ if (process.argv.includes('--watch')) {
     build().then(watch).catch(console.error);
 } else {
     build().catch(console.error);
+}
+
+// Generate markdown bullet list of posts sorted by date desc
+function generatePostsMarkdownList() {
+    const postsRoot = path.join(config.sourceDir, 'posts');
+    const slugs = fs.readdirSync(postsRoot, { withFileTypes: true })
+        .filter(d => d.isDirectory())
+        .map(d => d.name);
+    const metas = slugs.map(slug => {
+        const mdPath = path.join(postsRoot, slug, 'index.md');
+        try {
+            const mdContent = fs.readFileSync(mdPath, 'utf-8');
+            const { attributes } = frontMatter(mdContent);
+            const date = attributes.date || '1970-01-01';
+            const title = attributes.title || slug;
+            return { slug, title, date };
+        } catch {
+            return null;
+        }
+    }).filter(Boolean);
+    metas.sort((a, b) => {
+        const ta = Date.parse(a.date);
+        const tb = Date.parse(b.date);
+        return tb - ta;
+    });
+    return metas.map(m => `* [${m.title}](posts/${m.slug}/index.html)`).join('\n');
+}
+
+// Generate HTML markup for projects section
+function generateProjectsMarkup() {
+    const projectsRoot = path.join(config.sourceDir, 'projects');
+    if (!fs.existsSync(projectsRoot)) return { featured: '', grid: '' };
+
+    const dirs = fs.readdirSync(projectsRoot, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name);
+
+    const metas = dirs.map(slug => {
+        const mdPath = path.join(projectsRoot, slug, 'index.md');
+        let title = slug;
+        let date = '1970-01-01';
+        let featured = false;
+        if (fs.existsSync(mdPath)) {
+            const { attributes } = frontMatter(fs.readFileSync(mdPath, 'utf-8'));
+            title = attributes.title || title;
+            date = attributes.date || date;
+            featured = !!attributes.featured;
+        }
+
+        // find cover image
+        const dirFiles = fs.readdirSync(path.join(projectsRoot, slug));
+        let cover = dirFiles.find(f => /^cover\.(png|jpe?g|gif|svg|webp)$/i.test(f));
+        if (!cover) {
+            cover = dirFiles.find(f => /image1\.(png|jpe?g|gif|svg|webp)$/i.test(f));
+        }
+        const hasVideo = fs.existsSync(path.join(projectsRoot, slug, 'video.mp4'));
+
+        return { slug, title, date, cover, hasVideo, featured };
+    });
+
+    metas.sort((a,b)=> Date.parse(b.date) - Date.parse(a.date));
+
+    let featuredProject = metas.find(m=>m.featured);
+    if(!featuredProject && metas.length) featuredProject = metas[0];
+    const others = metas.filter(m=>m!==featuredProject);
+
+    const makeAnchor = m => {
+        const videoAttr = m.hasVideo ? ' data-video' : '';
+        const imgSrc = m.cover ? `projects/${m.slug}/${m.cover}` : '';
+        const imgTag = imgSrc ? `<img src="${imgSrc}" alt="${m.title}" />` : '';
+        return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/index.html"${videoAttr}>${imgTag}<span class="caption">${m.title}</span></a>`;
+    };
+
+    return {
+        featured: featuredProject ? makeAnchor(featuredProject) : '',
+        grid: others.map(makeAnchor).join('\n\n')
+    };
 } 

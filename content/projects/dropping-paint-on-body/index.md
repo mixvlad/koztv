@@ -3,7 +3,6 @@ title: "Dropping paint on invisible body"
 date: 2022-09-13
 ---
 
-![Dropping paint on invisible body](cover.jpg)
+<video src="video.mp4" autoplay muted loop playsinline controls style="max-width:100%;height:auto;"></video>
 
-<div class="wpb-content-wrapper"><p>One of my daily projects that I share in <a href="https://www.instagram.com/mixvlad">instagram — mixvlad</a></p>
-</div>
+One of my daily projects that I share in [instagram — mixvlad](https://www.instagram.com/mixvlad)

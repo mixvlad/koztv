@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,24 @@
             
             <div class="content">
                 <h1>Migrate from tfs to git</h1>
-                <div class="date">Thu May 18 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-05-17</div>
+                <p>First of all download git-tfs from there:</p>
+<p><a href="http://git-tfs.com">http://git-tfs.com</a></p>
+<p>Right click on My Computer -&gt; Properties -&gt; Advanced system settings -&gt; Environment variables -&gt; System variables -&gt; Path</p>
+<p>Add <strong>;C:\TfsMigration\GitTfs-0.25.1</strong> to the end of Path variable.</p>
+<p>Open Command Prompt as Administrator and exec following commands, don’t forget to change commands with your variables:</p>
+<pre><code class="language-bash">git tfs clone http://myserver:8080/tfs/DefaultCollection $/PIK.BOP/Trunk . --branches=all
+</code></pre>
+<pre><code class="language-bash">git remote add origin http://[email protected]/apps/autobop-backend.git
+</code></pre>
+<p>I use <strong>-c http.sslVerify=false</strong> because I have problems with my server certificate.</p>
+<pre><code class="language-bash">git -c http.sslVerify=false push --all origin
+</code></pre>
+<p>If your server configured properly, I recommend you to use previous command without <strong>-c http.sslVerify=false</strong>:</p>
+<pre><code class="language-bash">git push --all origin
+</code></pre>
+<p>Full description about migrating from tfs to git you can found here:</p>
+<p><a href="https://github.com/git-tfs/git-tfs/blob/master/doc/usecases/migrate_tfs_to_git.md">https://github.com/git-tfs/git-tfs/blob/master/doc/usecases/migrate_tfs_to_git.md</a></p>
 
             </div>
         </article>

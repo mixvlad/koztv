@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,21 @@
             
             <div class="content">
                 <h1>How to generate and copy SSH key in Mac OS</h1>
-                <div class="date">Mon Jul 10 2017 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2017-07-09</div>
+                <h4>Generate SSH key</h4>
+<p>First of all, open terminal window. I personally use <a href="https://www.iterm2.com/">iTerm2</a>.</p>
+<p>To generate SSH keys , enter the following command in the Terminal window:</p>
+<pre><code class="language-bash">ssh-keygen -t rsa
+</code></pre>
+<p>You will need to answer some questions during ssh key generation process. Left destination as Default, other questions answer as you want.</p>
+<h4>Copy SSH key to clipboard</h4>
+<p>To copy public ssh key to clipboard, enter this command in the Terminal window:</p>
+<pre><code class="language-bash">pbcopy &lt; ~/.ssh/id_rsa.pub
+</code></pre>
+<h4>Verify SSH passphrase</h4>
+<p>To verify SSH passphrase, type:</p>
+<pre><code class="language-bash">ssh-keygen -y
+</code></pre>
 
             </div>
         </article>

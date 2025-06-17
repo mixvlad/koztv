@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -26,8 +25,21 @@
             
             <div class="content">
                 <h1>Changing the folder where screenshots placed on Mac</h1>
-                <div class="date">Fri Feb 02 2018 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <div class="date">2018-02-01</div>
+                <p>By default all your screenshots are saving on desktop, but you can change this location to any other folder on your Mac.</p>
+<p>First of all, start the terminal.</p>
+<p>I personally prefer iTerm, but you can use default one that is installed on every Mac.</p>
+<p>Choose the folder where you want to place screenshots and enter following command into terminal window:</p>
+<pre><code class="language-bash">defaults write com.apple.screencapture location
+</code></pre>
+<p>Now drug and drop your screenshots folder into terminal window. Then the command will look like this:</p>
+<pre><code class="language-bash">defaults write com.apple.screencapture location ~/Documents/Screenshots
+</code></pre>
+<p>Now you need to restart SystemUIServer, enter this command in terminal:</p>
+<pre><code class="language-bash">killall SystemUIServer
+</code></pre>
+<p>Thats all 😉</p>
+<p>Take a screenshot right now with Cmd + Shift + 3 and new screenshot will be saved to the folder you chose in previous step.</p>
 
             </div>
         </article>

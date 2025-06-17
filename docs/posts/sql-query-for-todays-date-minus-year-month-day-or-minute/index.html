@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL query for today&#8217;s date minus year, month, day or minute</title>
+    <title>SQL query for today’s date minus year, month, day or minute</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../../static/css/style.css">
     <script>
@@ -13,11 +13,10 @@
         ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
-<body>
+<body class="">
     <header>
         <nav class="narrow">
             <a href="../../index.html">Home</a>
-            <a href="../../projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
@@ -25,9 +24,36 @@
         <article>
             
             <div class="content">
-                <h1>SQL query for today&#8217;s date minus year, month, day or minute</h1>
-                <div class="date">Wed Oct 10 2018 03:00:00 GMT+0300 (Москва, стандартное время)</div>
-                <p>Content coming soon.</p>
+                <h1>SQL query for today’s date minus year, month, day or minute</h1>
+                <div class="date">2018-10-09</div>
+                <p>To add or subtract some date/time you can use MS SQL function:</p>
+<p>DATEADD(datepart, number, date)</p>
+<p>Let’s say you need to add five months to current date, use this:</p>
+<pre><code class="language-sql">SELECT * FROM YourTable
+WHERE YourDate &lt; DATEADD(month, 5, GETDATE())
+</code></pre>
+<p>I used function GETDATE() for getting current DateTime.</p>
+<p>If you need to subtract some time, just add minus to second param:</p>
+<pre><code class="language-sql">SELECT * FROM YourTable
+WHERE YourDate &lt; DATEADD(month, -5, GETDATE())
+</code></pre>
+<p>List of available arguments for datepart param:</p>
+<ul>
+<li>year</li>
+<li>quarter</li>
+<li>month</li>
+<li>dayofyear</li>
+<li>day</li>
+<li>week</li>
+<li>weekday</li>
+<li>hour</li>
+<li>minute</li>
+<li>second</li>
+<li>millisecond</li>
+<li>microsecond</li>
+<li>nanosecond</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/dateadd-transact-sql">See full info about MS SQL function DATEADD on Microsoft website</a></p>
 
             </div>
         </article>
