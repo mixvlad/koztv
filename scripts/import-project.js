@@ -32,7 +32,22 @@ async function importProject(url, params = {}) {
     if (!date) date = $('time').first().attr('datetime') || '';
     if (!date) date = $('time').first().text().trim();
   }
-  date = normalizeDate(date);
+
+  // If markdown already exists, preserve its date
+  let preservedDate = '';
+  if (await fs.pathExists(destMarkdown)) {
+    try {
+      const existingMd = await fs.readFile(destMarkdown, 'utf-8');
+      const fm = require('front-matter')(existingMd);
+      if (fm.attributes && fm.attributes.date) preservedDate = fm.attributes.date;
+    } catch {}
+  }
+
+  if (!preservedDate) {
+    date = normalizeDate(date);
+  } else {
+    date = preservedDate;
+  }
 
   // main content inside .content or article
   let contentHtml = $('.content').first().html();
@@ -80,19 +95,47 @@ async function importProject(url, params = {}) {
   });
 
   await Promise.all(imgPromises);
+
+  // detect video
+  let videoFound = false;
+  let videoSrc =
+    $('video').attr('src') ||
+    $('video source').attr('src') ||
+    $('a[href$=".mp4"]').attr('href') || '';
+  if (videoSrc) {
+    if (!videoSrc.startsWith('http')) videoSrc = new URL(videoSrc, url).href;
+    const destVideo = path.join(destDir, 'video.mp4');
+    try {
+      await download(videoSrc, destVideo);
+      videoFound = true;
+    } catch (err) {
+      console.error('Could not download video', videoSrc, err.message);
+    }
+  }
+
   // convert to markdown
   const markdownBody = turndown.turndown(root.html()).trim();
 
+  const videoTag = videoFound ? '<video src="video.mp4" autoplay muted loop playsinline controls style="max-width:100%;height:auto;"></video>\n\n' : '';
+
   // write md with optional title
   const front = `---\ntitle: "${escape(title)}"\ndate: ${date}\n---\n\n`;
-  await fs.writeFile(destMarkdown, front + markdownBody + '\n', 'utf-8');
+  await fs.writeFile(destMarkdown, front + videoTag + markdownBody + '\n', 'utf-8');
   console.log(`Saved to ${destMarkdown}`);
 
+  // Clean up stray files (e.g., hashed names) but keep sequential images/cover/video
   if (await fs.pathExists(destDir)) {
     const existing = await fs.readdir(destDir);
     for (const f of existing) {
-      if (f.toLowerCase().endsWith('.md') || f.toLowerCase() === 'video.mp4' || /^cover\./i.test(f)) continue;
-      await fs.remove(path.join(destDir, f));
+      const keep = (
+        f.toLowerCase().endsWith('.md') ||
+        f.toLowerCase() === 'video.mp4' ||
+        /^cover\./i.test(f) ||
+        /^image\d+\.(png|jpe?g|gif|svg|webp)$/i.test(f)
+      );
+      if (!keep) {
+        await fs.remove(path.join(destDir, f));
+      }
     }
   }
 }

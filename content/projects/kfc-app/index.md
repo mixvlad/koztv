@@ -1,10 +1,9 @@
 ---
 title: "KFC App"
 date: 2022-09-09
----
+--------
 
 Checkout
---------
 
 As a KFC app user, I don't want to spend a lot of time on checkout, choosing delivery/self-delivery times, etc.
 

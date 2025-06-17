@@ -31,6 +31,10 @@ renderer.link = (href, title, text) => {
     if (href.startsWith('/')) {
         href = href.substring(1);
     }
+    // Remove index.html at end of href
+    if (href.endsWith('index.html')) {
+        href = href.slice(0, -'index.html'.length);
+    }
     return originalLinkRenderer(href, title, text);
 };
 
@@ -222,7 +226,7 @@ function generatePostsMarkdownList() {
         const tb = Date.parse(b.date);
         return tb - ta;
     });
-    return metas.map(m => `* [${m.title}](posts/${m.slug}/index.html)`).join('\n');
+    return metas.map(m => `* [${m.title}](posts/${m.slug}/)`).join('\n');
 }
 
 // Generate HTML markup for projects section
@@ -265,7 +269,7 @@ function generateProjectsMarkup() {
         const videoAttr = m.hasVideo ? ' data-video' : '';
         const imgSrc = m.cover ? `projects/${m.slug}/${m.cover}` : '';
         const imgTag = imgSrc ? `<img src="${imgSrc}" alt="${m.title}" />` : '';
-        return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/index.html"${videoAttr}>${imgTag}<span class="caption">${m.title}</span></a>`;
+        return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/"${videoAttr}>${imgTag}<span class="caption">${m.title}</span></a>`;
     };
 
     return {
