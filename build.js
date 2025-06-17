@@ -12,6 +12,8 @@ const config = {
     templateFile: 'templates/post.html'
 };
 
+const isDev = process.argv.includes('--watch');
+
 // Создаем выходную директорию
 fs.ensureDirSync(config.outputDir);
 
@@ -41,10 +43,12 @@ function convertMarkdownToHtml(markdown, metadata) {
     if (dateStr instanceof Date) {
         dateStr = dateStr.toISOString().slice(0, 10);
     }
+    const devScript = isDev ? `// WebSocket hot-reload\nconst ws = new WebSocket('ws://localhost:8080');\nws.onmessage = e=>e.data==='reload' && location.reload();\nws.onclose = () => setTimeout(()=>location.reload(),1000);` : '';
     return template
         .replace(/{{title}}/g, metadata.title || '')
         .replace(/{{date}}/g, dateStr)
         .replace(/{{bodyClass}}/g, metadata.bodyClass || '')
+        .replace(/{{devReload}}/g, devScript)
         .replace('{{content}}', content);
 }
 

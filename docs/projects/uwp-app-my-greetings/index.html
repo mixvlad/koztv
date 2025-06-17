@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="../../static/css/style.css">
     <script>
         // WebSocket hot-reload
-        const ws = new WebSocket('ws://localhost:8080');
-        ws.onmessage = e=>e.data==='reload' && location.reload();
-        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+const ws = new WebSocket('ws://localhost:8080');
+ws.onmessage = e=>e.data==='reload' && location.reload();
+ws.onclose = () => setTimeout(()=>location.reload(),1000);
     </script>
 </head>
 <body class="">
