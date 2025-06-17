@@ -4,12 +4,20 @@
   "description": "Personal blog built with Markdown",
   "scripts": {
     "build": "node build.js",
-    "serve": "node serve.js"
+    "serve": "node serve.js",
+    "dev:build": "node build.js --watch",
+    "dev:serve": "browser-sync start --server docs --files 'docs/**/*' --no-notify",
+    "dev": "run-p dev:build dev:serve"
   },
   "dependencies": {
-    "marked": "^9.1.0",
-    "fs-extra": "^11.1.1",
+    "browser-sync": "^3.0.0",
     "express": "^4.18.2",
-    "front-matter": "^4.0.2"
+    "front-matter": "^4.0.2",
+    "fs-extra": "^11.1.1",
+    "marked": "^9.1.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "ws": "^8.18.2"
   }
-} 
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamagotchi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script>
+        // WebSocket hot-reload
+        const ws = new WebSocket('ws://localhost:8080');
+        ws.onmessage = e=>e.data==='reload' && location.reload();
+        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="narrow">
+            <a href="../../index.html">Home</a>
+            <a href="../../projects/d1-flat-design/index.html">Projects</a>
+        </nav>
+    </header>
+    
+    <main>
+        <article>
+            
+            <div class="content">
+                <h1>Tamagotchi</h1>
+                <div class="date">Thu Sep 22 2022 03:00:00 GMT+0300 (Москва, стандартное время)</div>
+                <p><img src="cover.jpg" alt="Tamagotchi"></p>
+<div class="wpb-content-wrapper"><p>One of my 3D projects that I share in <a href="https://www.instagram.com/mixvlad">instagram — mixvlad</a>JTNDZGl2JTIwc3R5bGUlM0QlMjJtYXgtd2lkdGglM0ElMjA2MDBweCUzQiUyMiUzRSUwQSUzQ2RpdiUyMHN0eWxlJTNEJTIycGFkZGluZyUzQSUyMDEyMCUyNSUyMDAlMjAwJTIwMCUzQiUyMHBvc2l0aW9uJTNBJTIwcmVsYXRpdmUlM0IlMjIlM0UlM0NpZnJhbWUlMjBzdHlsZSUzRCUyMnBvc2l0aW9uJTNBJTIwYWJzb2x1dGUlM0IlMjB0b3AlM0ElMjAwJTNCJTIwbGVmdCUzQSUyMDAlM0IlMjB3aWR0aCUzQSUyMDEwMCUyNSUzQiUyMGhlaWdodCUzQSUyMDEwMCUyNSUzQiUyMiUyMHRpdGxlJTNEJTIyVGFtYWdvdGNoaSUyMiUyMHNyYyUzRCUyMmh0dHBzJTNBJTJGJTJGcGxheWVyLnZpbWVvLmNvbSUyRnZpZGVvJTJGNzUyNjY2MTY5JTNGaCUzRDVhNjA4NGMyNTYlMjZhbXAlM0JhdXRvcGxheSUzRDElMjZhbXAlM0Jsb29wJTNEMSUyNmFtcCUzQnRpdGxlJTNEMCUyNmFtcCUzQmJ5bGluZSUzRDAlMjZhbXAlM0Jwb3J0cmFpdCUzRDAlMjZhbXAlM0JtdXRlZCUzRDElMjIlMjBhbGxvdyUzRCUyMmF1dG9wbGF5JTNCJTIwZnVsbHNjcmVlbiUzQiUyMHBpY3R1cmUtaW4tcGljdHVyZSUyMiUyMGZyYW1lYm9yZGVyJTNEJTIyMCUyMiUyMGFsbG93ZnVsbHNjcmVlbiUzRCUyMmFsbG93ZnVsbHNjcmVlbiUyMiUzRSUzQyUyRmlmcmFtZSUzRSUzQyUyRmRpdiUzRSUwQSUzQ3NjcmlwdCUyMHNyYyUzRCUyMmh0dHBzJTNBJTJGJTJGcGxheWVyLnZpbWVvLmNvbSUyRmFwaSUyRnBsYXllci5qcyUyMiUzRSUzQyUyRnNjcmlwdCUzRSUwQSUzQyUyRmRpdiUzRQ==</p>
+</div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+        <p>© 2014 – 2025  Mikhail Kozlov<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+    </footer>
+</body>
+</html> 

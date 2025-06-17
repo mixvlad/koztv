@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{root}}static/css/style.css">
+    <script>
+        // WebSocket hot-reload
+        const ws = new WebSocket('ws://localhost:8080');
+        ws.onmessage = e=>e.data==='reload' && location.reload();
+        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+    </script>
 </head>
 <body>
     <header>
-        <nav>
-            <a href="index.html">Главная</a>
-            <a href="about.html">Обо мне</a>
+        <nav class="narrow">
+            <a href="{{root}}index.html">Home</a>
+            <a href="{{root}}projects/d1-flat-design/index.html">Projects</a>
         </nav>
     </header>
     
     <main>
         <article>
-            <h1>{{title}}</h1>
-            <div class="date">{{date}}</div>
+            
             <div class="content">
+                <h1>{{title}}</h1>
+                <div class="date">{{date}}</div>
                 {{content}}
             </div>
         </article>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Мой блог</p>
+    <footer class="narrow">
+        <p>© 2014 – 2025  Mikhail Kozlov<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
     </footer>
 </body>
 </html> 

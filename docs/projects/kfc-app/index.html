@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFC App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script>
+        // WebSocket hot-reload
+        const ws = new WebSocket('ws://localhost:8080');
+        ws.onmessage = e=>e.data==='reload' && location.reload();
+        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="narrow">
+            <a href="../../index.html">Home</a>
+            <a href="../../projects/d1-flat-design/index.html">Projects</a>
+        </nav>
+    </header>
+    
+    <main>
+        <article>
+            
+            <div class="content">
+                <h1>KFC App</h1>
+                <div class="date">Fri Sep 09 2022 03:00:00 GMT+0300 (Москва, стандартное время)</div>
+                <p><img src="cover.png" alt="KFC App"></p>
+<div class="wpb-content-wrapper"><p></p>
+<h2>Checkout</h2>
+<p>As a KFC app user, I don&#8217;t want to spend a lot of time on checkout, choosing delivery/self-delivery times, etc.<strong>Before:</strong><strong>After:</strong>We started to show the price with a discount separately and additionally display it on the button.</p>
+<p>We moved the block with the promo code to the top so that it wouldn&#8217;t distract from the payment.</p>
+<p>We started recommending additional dishes to the order on the basis of those already added.</p>
+<p>We show in which restaurant the order can be picked up and how far away the client is from it, in order to reduce the number of accidental orders at the wrong restaurant.</p>
+<p>Removed a separate curtain for time selection and added vibration to the scroll.</p>
+<p>We show the method of payment right away, so you don&#8217;t have to ask again separately.The screenshot shows how the conversion from app login to successful payment changed after we started implementing the changes described above in June 2021.</p>
+</div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+        <p>© 2014 – 2025  Mikhail Kozlov<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+    </footer>
+</body>
+</html> 

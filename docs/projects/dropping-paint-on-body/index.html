@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropping paint on invisible body</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script>
+        // WebSocket hot-reload
+        const ws = new WebSocket('ws://localhost:8080');
+        ws.onmessage = e=>e.data==='reload' && location.reload();
+        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="narrow">
+            <a href="../../index.html">Home</a>
+            <a href="../../projects/d1-flat-design/index.html">Projects</a>
+        </nav>
+    </header>
+    
+    <main>
+        <article>
+            
+            <div class="content">
+                <h1>Dropping paint on invisible body</h1>
+                <div class="date">Tue Sep 13 2022 03:00:00 GMT+0300 (Москва, стандартное время)</div>
+                <p><img src="cover.jpg" alt="Dropping paint on invisible body"></p>
+<div class="wpb-content-wrapper"><p>One of my daily projects that I share in <a href="https://www.instagram.com/mixvlad">instagram — mixvlad</a></p>
+</div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+        <p>© 2014 – 2025  Mikhail Kozlov<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+    </footer>
+</body>
+</html> 

@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Привет, мир!</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <script>
+        // Подключаемся к WebSocket серверу
+        const ws = new WebSocket('ws://localhost:8080');
+        
+        ws.onmessage = (event) => {
+            if (event.data === 'reload') {
+                window.location.reload();
+            }
+        };
+        
+        // При потере соединения пытаемся переподключиться
+        ws.onclose = () => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        };
+    </script>
 </head>
 <body>
     <header>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saas development management system for PIK Group</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script>
+        // WebSocket hot-reload
+        const ws = new WebSocket('ws://localhost:8080');
+        ws.onmessage = e=>e.data==='reload' && location.reload();
+        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="narrow">
+            <a href="../../index.html">Home</a>
+            <a href="../../projects/d1-flat-design/index.html">Projects</a>
+        </nav>
+    </header>
+    
+    <main>
+        <article>
+            
+            <div class="content">
+                <h1>Saas development management system for PIK Group</h1>
+                <div class="date">Fri Mar 05 2021 03:00:00 GMT+0300 (Москва, стандартное время)</div>
+                <p><img src="cover.png" alt="Saas development management system for PIK Group"></p>
+<div class="wpb-content-wrapper"><p></p>
+<h2>AutoBOP is a system for planning and controlling construction schedules. We have created an app, that solves developers&#8217; problems.<br />
+<a href="https://bop.pik.digital/" target="_blank" rel="nofollow noopener">The landing page with details</a>.<br />
+It is a part of the <a href="https://fr.pik.ru/" target="_blank" rel="nofollow noopener">PIK Franchise project</a>.</h2>
+<p></p>
+<h2>Screenshots of the running system.</h2>
+<p></p>
+</div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+        <p>© 2014 – 2025  Mikhail Kozlov<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+    </footer>
+</body>
+</html> 

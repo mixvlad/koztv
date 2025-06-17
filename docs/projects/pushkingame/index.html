@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian language simulator pushkingame.ru</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script>
+        // WebSocket hot-reload
+        const ws = new WebSocket('ws://localhost:8080');
+        ws.onmessage = e=>e.data==='reload' && location.reload();
+        ws.onclose = () => setTimeout(()=>location.reload(),1000);
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="narrow">
+            <a href="../../index.html">Home</a>
+            <a href="../../projects/d1-flat-design/index.html">Projects</a>
+        </nav>
+    </header>
+    
+    <main>
+        <article>
+            
+            <div class="content">
+                <h1>Russian language simulator pushkingame.ru</h1>
+                <div class="date">Tue Apr 28 2020 03:00:00 GMT+0300 (Москва, стандартное время)</div>
+                <p><img src="cover.png" alt="Russian language simulator pushkingame.ru"></p>
+<div class="wpb-content-wrapper"><p></p>
+<h2>Game page</h2>
+<p>With pushkingame simulator, you can learn how to make fewer mistakes writing in Russian. You should click on the right answer and you will see the right anser and related russian language rule.</p>
+<h2>Score page</h2>
+<p>After 5 answers you will see your score and realize how close you are to the famous Russian poet Alexander Pushkin.</p>
+<h2>Main page</h2>
+<p>We have three different games — commas, commas with timer and dash mode.</p>
+<h2>Technologies</h2>
+<p>I have been using Angular as a framework to develop pushkingame website. The <a href="https://github.com/mixvlad/Corrector">source code is available on githab</a>. The project is running in the Azure cloud using Azure Functions. <a href="https://blog.jeremylikness.com/blog/2017-04-07_create-a-serverless-angular-app-with-azure-functions-and-blob-storage/">Jeremy Likness&#8217; article</a> helped in setting it up.</p>
+</div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+        <p>© 2014 – 2025  Mikhail Kozlov<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+    </footer>
+</body>
+</html> 

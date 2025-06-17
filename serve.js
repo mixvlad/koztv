@@ -4,8 +4,8 @@ const app = express();
 
 const PORT = 3000;
 
-// Раздача статических файлов из директории dist
-app.use(express.static('dist'));
+// Раздача статических файлов из директории docs
+app.use(express.static('docs'));
 
 // Редирект с корня на index.html
 app.get('/', (req, res) => {
