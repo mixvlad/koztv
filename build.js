@@ -6,7 +6,7 @@ const frontMatter = require('front-matter');
 // Конфигурация
 const config = {
     sourceDir: 'content',
-    outputDir: 'dist',
+    outputDir: 'docs',
     templateFile: 'templates/post.html'
 };
 
