@@ -19,6 +19,19 @@ fs.copySync('static', path.join(config.outputDir, 'static'));
 // Читаем шаблон
 const template = fs.readFileSync(config.templateFile, 'utf-8');
 
+// Настраиваем marked для обработки ссылок
+const renderer = new marked.Renderer();
+const originalLinkRenderer = renderer.link.bind(renderer);
+renderer.link = (href, title, text) => {
+    // Если ссылка начинается с /, убираем слеш
+    if (href.startsWith('/')) {
+        href = href.substring(1);
+    }
+    return originalLinkRenderer(href, title, text);
+};
+
+marked.setOptions({ renderer });
+
 // Функция для конвертации Markdown в HTML
 function convertMarkdownToHtml(markdown, metadata) {
     const content = marked.parse(markdown);
