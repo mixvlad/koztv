@@ -290,7 +290,7 @@ async function createRedirects() {
     // 1. /portfolio/ -> /
     const portfolioDir = path.join(config.outputDir, 'portfolio');
     await fs.ensureDir(portfolioDir);
-    await fs.writeFile(path.join(portfolioDir, 'index.html'), redirectPage('../index.html'));
+    await fs.writeFile(path.join(portfolioDir, 'index.html'), redirectPage('../'));
 
     // 2. /portfolio/<project>/ -> /projects/<project>/
     const projectsRoot = path.join(config.sourceDir, 'projects');
@@ -311,6 +311,6 @@ async function createRedirects() {
     for (const slug of postSlugs) {
         const legacyDir = path.join(config.outputDir, slug);
         await fs.ensureDir(legacyDir);
-        await fs.writeFile(path.join(legacyDir, 'index.html'), redirectPage(`posts/${slug}/`));
+        await fs.writeFile(path.join(legacyDir, 'index.html'), redirectPage(`../posts/${slug}/`));
     }
 } 
