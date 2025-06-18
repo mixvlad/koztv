@@ -2,8 +2,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const marked = require('marked');
 const frontMatter = require('front-matter');
-const createWebSocketServer = require('./websocket-server');
-const WebSocket = require('ws');
 
 // Конфигурация
 const config = {
@@ -47,7 +45,7 @@ function convertMarkdownToHtml(markdown, metadata) {
     if (dateStr instanceof Date) {
         dateStr = dateStr.toISOString().slice(0, 10);
     }
-    const devScript = isDev ? `// WebSocket hot-reload\nconst ws = new WebSocket('ws://localhost:8080');\nws.onmessage = e=>e.data==='reload' && location.reload();\nws.onclose = () => setTimeout(()=>location.reload(),1000);` : '';
+    const devScript = '';
     return template
         .replace(/{{title}}/g, metadata.title || '')
         .replace(/{{date}}/g, dateStr)
@@ -127,19 +125,12 @@ async function build() {
 // Функция для наблюдения за изменениями
 async function watch() {
     console.log('Watching for changes...');
-    
-    // Создаем WebSocket сервер
-    const wss = await createWebSocketServer();
-    
-    // Функция для отправки уведомлений всем клиентам
+
+    // WebSocket server removed - live reload now handled by BrowserSync
     function notifyClients() {
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send('reload');
-            }
-        });
+        /* no-op */
     }
-    
+
     // Debounce / queue to избегать одновременных билдов
     let building = false;
     let buildQueued = false;
