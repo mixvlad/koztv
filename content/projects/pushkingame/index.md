@@ -8,7 +8,7 @@ Game page
 
 With pushkingame simulator, you can learn how to make fewer mistakes writing in Russian. You should click on the right answer and you will see the right anser and related russian language rule.
 
-[Play pushkingame](https://pushkingame.ru "Play Pushkin game")
+[Play pushkingame](https://mixvlad.github.io/PushkinGame/ "Play Pushkin game")
 
 ![](image1.png "Screen Shot 2020-04-28 at 16.10.52")
 
@@ -29,6 +29,6 @@ We have three different games — commas, commas with timer and dash mode.
 Technologies
 ------------
 
-I have been using Angular as a framework to develop pushkingame website. The [source code is available on githab](https://github.com/mixvlad/Corrector). The project is running in the Azure cloud using Azure Functions. [Jeremy Likness' article](https://blog.jeremylikness.com/blog/2017-04-07_create-a-serverless-angular-app-with-azure-functions-and-blob-storage/) helped in setting it up.
+I have been using Angular as a framework to develop pushkingame website. The [source code is available on githab](https://github.com/mixvlad/PushkinGame). The project is running in Github Pages.
 
 ![](image4.png "2022-09-13_15-09-54")
