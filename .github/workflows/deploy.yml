@@ -29,10 +29,17 @@ jobs:
     - name: Build site
       run: npm run build
       
+    - name: Ensure CNAME file exists
+      run: |
+        if [ ! -f docs/CNAME ]; then
+          echo "koz.tv" > docs/CNAME
+        fi
+      
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         # Используем Personal Access Token если есть, иначе GITHUB_TOKEN
         github_token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
-        force_orphan: true 
+        force_orphan: true
+        cname: koz.tv 

@@ -430,6 +430,10 @@ async function build() {
     // Create .nojekyll file for GitHub Pages
     await fs.writeFile(path.join(config.outputDir, '.nojekyll'), '# This file tells GitHub Pages not to use Jekyll');
 
+    // Ensure CNAME file exists for custom domain
+    const cnameContent = 'koz.tv';
+    await fs.writeFile(path.join(config.outputDir, 'CNAME'), cnameContent);
+
     // After main content copied, create legacy redirects
     await createRedirects();
 }
