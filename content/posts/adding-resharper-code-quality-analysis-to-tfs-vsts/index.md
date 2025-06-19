@@ -1,22 +1,23 @@
 ---
 title: "Adding Resharper Code Quality Analysis to TFS/VSTS"
-date: 2017-12-05
+date: 2018-05-15
 ---
 
-To improve code qulaity of your project is’t good to check every build with some analyzing tool such as [Resharper Code Quality Analysis](https://marketplace.visualstudio.com/items?itemName=alanwales.resharper-code-analysis).
+This guide shows how to integrate Resharper code quality analysis into TFS/VSTS build pipeline.
 
-[Install Resharper Code Quality Analysis](https://marketplace.visualstudio.com/items?itemName=alanwales.resharper-code-analysis "Resharper Code Quality Analysis")
+## Setup Process
 
-Now you have to add additional step to the build definition of your project after build step, like this:
+### Step 1: Create New Build Step
+First, add a new build step to your TFS/VSTS pipeline.
 
-![](image1.png "newStep")
+![](image1.png "Adding new build step in TFS")
 
-Then you need to set “Path to .sln or .csproj file”, you can find it in build log in build step. Usually it something like “YourProjectName” + .sln or “YourProjectName\\YourProjectName” + .sln
+### Step 2: Configure Solution Name
+Specify the solution name for analysis.
 
-![](image2.png "solutionName")
+![](image2.png "Configuring solution name parameter")
 
-System.Management.Automation.MethodInvocationException: Exception calling “GetFullPath” with “1” argument(s): “Illegal characters in path.” —> System.ArgumentException: Illegal characters in path.
+### Step 3: Set Severity Level
+Configure the severity level for code quality analysis.
 
-Set “Fail build severity” to “Error” if you want your build fail only in case some critical problems have found.
-
-![](image3.png "SeverityMod")
+![](image3.png "Setting severity modification level")

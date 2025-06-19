@@ -1,7 +1,16 @@
 ---
 title: "Saas development management system for PIK Group"
-date: 2021-03-05
+date: 2021-11-20
 ---
+
+A comprehensive SaaS platform for managing development projects and processes at PIK Group.
+
+## System Components
+
+### Artboard Design
+Design system and component library for the SaaS platform.
+
+![](image8.png "Design system artboard")
 
 AutoBOP is a system for planning and controlling construction schedules. We have created an app, that solves developers' problems.  
 [The landing page with details](https://bop.pik.digital/).  
@@ -42,8 +51,6 @@ Monitors ratings on performers and violating deadlines, by processes and project
 
 Screenshots of the running system.
 ----------------------------------
-
-![](image8.png "Artboard")
 
 ![](image9.png "image_2020-05-13_15-10-47")
 

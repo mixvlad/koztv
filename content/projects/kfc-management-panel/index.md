@@ -1,9 +1,16 @@
 ---
 title: "KFC management panel"
-date: 2022-06-22
+date: 2020-08-15
 ---
 
-Main system to control menu in restaurants, kfc app and website.
+Management panel for KFC restaurant operations and analytics.
+
+## Panel Features
+
+### Regular Operations
+Standard management interface for daily operations.
+
+![](image3.png "Regular operations management interface")
 
 Menu catalog page
 -----------------

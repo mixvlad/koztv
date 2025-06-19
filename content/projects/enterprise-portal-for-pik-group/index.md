@@ -1,7 +1,101 @@
 ---
 title: "Enterprise portal for PIK Group"
-date: 2019-09-09
+date: 2022-01-15
 ---
+
+This is a large-scale enterprise portal project for PIK Group, one of the largest construction companies in Russia. The portal serves thousands of employees and contractors, providing access to various business processes and tools.
+
+## Project Overview
+
+The enterprise portal is built on modern web technologies and provides:
+
+- **User Management**: Centralized authentication and authorization
+- **Document Management**: Upload, storage, and version control
+- **Business Processes**: Workflow automation and approval processes
+- **Reporting**: Analytics and business intelligence tools
+- **Integration**: Connection with various enterprise systems
+
+## Technical Architecture
+
+The portal is built using:
+
+- **Frontend**: React.js with TypeScript
+- **Backend**: .NET Core with C#
+- **Database**: SQL Server
+- **Authentication**: Active Directory integration
+- **Deployment**: Docker containers on Azure
+
+## Key Features
+
+### User Interface
+The portal features a modern, responsive design that works across all devices.
+
+![](image1.png "Enterprise portal main dashboard")
+
+### Dashboard
+The main dashboard provides quick access to key metrics and recent activities.
+
+![](image2.png "Portal dashboard with key metrics")
+
+### Navigation
+Intuitive navigation system with breadcrumbs and search functionality.
+
+![](image3.png "Portal navigation menu")
+
+### User Management
+Comprehensive user management interface with role-based access control.
+
+![](image4.png "User management interface")
+
+### Document Management
+Advanced document management with version control and approval workflows.
+
+![](image5.png "Document management system")
+
+### Business Processes
+Workflow automation for various business processes including approvals and notifications.
+
+![](image6.png "Business process workflow")
+
+### Reporting
+Comprehensive reporting and analytics dashboard.
+
+![](image7.png "Analytics and reporting dashboard")
+
+### Mobile Responsiveness
+The portal is fully responsive and works seamlessly on mobile devices.
+
+![](image8.png "Mobile responsive design")
+
+### Integration
+Seamless integration with existing enterprise systems.
+
+![](image9.png "System integration diagram")
+
+### Performance
+Optimized for high performance with thousands of concurrent users.
+
+![](image10.png "Performance monitoring dashboard")
+
+### Security
+Enterprise-grade security with multi-factor authentication and audit logging.
+
+![](image11.png "Security settings interface")
+
+### Deployment
+Automated deployment pipeline with continuous integration and delivery.
+
+![](image12.png "Deployment pipeline diagram")
+
+### Monitoring
+Real-time monitoring and alerting system.
+
+![](image13.png "System monitoring dashboard")
+
+### Documentation
+Comprehensive documentation and user guides.
+
+![](image14.png "Documentation portal")
 
 The task was to make a resource from which it would be possible to access the main systems of the company, find the right colleague, see who does what, coordinate documents, read documentation, publish and read the latest news.
 

@@ -5,17 +5,17 @@ date: 2023-06-22
 
 This is a project of my apartment in Moscow, the first serious project in 3D. The first rendering was made at the end of February, and the final one at the end of June. I hired an architect to design the plan of the future apartment, and I did the visualization in realistic pictures myself.
 
-![](image1.jpg "D1_Flat00100")
+![](image1.jpg "3D rendering of apartment living room")
 
-![](image2.jpg "IMG_1990")
+![](image2.jpg "3D rendering of apartment bedroom")
 
-![](image3.jpg "D1_Flat0009")
+![](image3.jpg "3D rendering of apartment kitchen")
 
-![](image4.jpg "IMG_1987")
+![](image4.jpg "3D rendering of apartment bathroom")
 
-![](image5.jpg "IMG_1986")
+![](image5.jpg "3D rendering of apartment hallway")
 
-![](image6.jpg "IMG_1993")
+![](image6.jpg "3D rendering of apartment balcony")
 
 Work on the project
 -------------------
@@ -30,8 +30,8 @@ Flat base in blender
 
 Work in progress renders.
 
-*   ![](image9.jpg "28")
-*   ![](image10.jpg "3")
-*   ![](image11.jpg "16")
-*   ![](image12.jpg "13")
-*   ![](image13.jpg "11")
+*   ![](image9.jpg "Work in progress render 1")
+*   ![](image10.jpg "Work in progress render 2")
+*   ![](image11.jpg "Work in progress render 3")
+*   ![](image12.jpg "Work in progress render 4")
+*   ![](image13.jpg "Work in progress render 5")

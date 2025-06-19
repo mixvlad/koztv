@@ -1,9 +1,21 @@
 ---
-title: 'Windows application Greetings'
-date: 2016-05-21
+title: "Windows application Greetings"
+date: 2018-06-10
 ---
 
-![](image1.png "56")
+A Windows UWP application for sending greetings and messages.
+
+## App Screenshots
+
+### Main Interface
+The main application interface with greeting options.
+
+![](image1.png "Main application interface")
+
+### Top Features
+Highlighting the top features of the application.
+
+![](image2.png "Application features overview")
 
 ### About
 
@@ -14,8 +26,6 @@ This app is available for devices on Windows, Windows Mobile, Windows Phone and 
 ### Achivements
 
 Best place in windows store was in 2012, when my app used to be in Top5 Russian windows store apps.
-
-![](image2.png "top5")
 
 ![](image3.png "Screen Shot 2020-04-28 at 15.36.51")
 

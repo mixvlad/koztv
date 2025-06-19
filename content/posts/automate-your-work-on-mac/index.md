@@ -1,16 +1,16 @@
 ---
 title: "Automate your work on Mac"
-date: 2018-01-30
+date: 2019-12-10
 ---
 
-Hello!
+Guide to automating repetitive tasks on macOS using built-in tools and third-party applications.
 
-I always wanted to use my macbook more effectively and do more tasks then I do right now. And I have found how to make it possible!
+## Automation Tools
 
-Automator
----------
+### Apple Automator
+Use Apple's built-in Automator to create workflows and automate tasks.
 
-[![](image1.png "eee8b7016b302905a637c5a495578f86")](https://support.apple.com/ru-ru/guide/automator/welcome)
+[![](image1.png "Apple Automator interface")](https://support.apple.com/ru-ru/guide/automator/welcome)
 
 You already have this program on your Mac, no need to install something, just type [**Automator**](https://support.apple.com/ru-ru/guide/automator/welcome) in search and use it 😉
 

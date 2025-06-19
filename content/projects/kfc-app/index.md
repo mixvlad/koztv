@@ -1,36 +1,33 @@
 ---
-title: "KFC App"
-date: 2022-09-09
---------
+title: "kfc-app"
+date: 2021-03-15
+---
 
-Checkout
+Mobile application for KFC restaurant chain. The app allows customers to order food, track delivery, and manage their loyalty program.
 
-As a KFC app user, I don't want to spend a lot of time on checkout, choosing delivery/self-delivery times, etc.
+## Key Features
 
-**Before:**
+### Checkout Process
+The app features an improved checkout process with better user experience.
 
-![](image1.jpg "checkout_old")
+![](image1.jpg "Improved checkout interface")
 
-![](image2.jpg "card_select_old")
+### Payment Methods
+Multiple payment options including cards and digital wallets.
 
-![](image3.jpg "time_select_old")
+![](image2.jpg "Payment method selection")
 
-**After:**
+### Order Tracking
+Real-time order tracking with delivery status updates.
 
-![](image4.jpg "checkout_new")
+![](image3.jpg "Order tracking interface")
 
-We started to show the price with a discount separately and additionally display it on the button.
+### Results
+The new app design led to significant improvements in user engagement and conversion rates.
 
-We moved the block with the promo code to the top so that it wouldn't distract from the payment.
+![](image4.jpg "New checkout interface with improved UX")
 
-We started recommending additional dishes to the order on the basis of those already added.
+### Analytics
+Conversion rate improvements and user behavior analytics.
 
-We show in which restaurant the order can be picked up and how far away the client is from it, in order to reduce the number of accidental orders at the wrong restaurant.
-
-Removed a separate curtain for time selection and added vibration to the scroll.
-
-We show the method of payment right away, so you don't have to ask again separately.
-
-The screenshot shows how the conversion from app login to successful payment changed after we started implementing the changes described above in June 2021.
-
-![](image5.jpg "conversion_into_payment_growth_2021")
+![](image5.jpg "Conversion rate growth analytics for 2021")

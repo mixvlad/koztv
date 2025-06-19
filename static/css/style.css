@@ -17,12 +17,12 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
   --width: 575px;
   --border: 1.5px;
   --radius: calc(var(--cap-height) / 3);
-  --gray-text: rgba(0, 0, 0, 0.4);
+  --gray-text: rgba(0, 0, 0, 0.7);
   --gray-line: rgba(0, 0, 0, 0.2);
   --gray-bg: rgba(0, 0, 0, 0.06);
   --text: #000;
   --bg: #ffffff;
-  --accent-color: #a58f60;
+  --accent-color: #8B7355;
   --transition: all 300ms cubic-bezier(.175,.885,.32,1.075);
 }
 
@@ -297,7 +297,8 @@ a:active:after {
   padding: 6px 0;
   font-size: var(--font-small);
   text-align: center;
-  color: var(--accent-color);
+  color: var(--text);
+  font-weight: 500;
 }
 
 .project-item .caption:after {
@@ -313,6 +314,10 @@ a:active:after {
 
 .project-item:hover .caption:after {
   width: 100%;
+}
+
+.project-item:hover .caption {
+  color: var(--accent-color);
 }
 
 .project-item.full {

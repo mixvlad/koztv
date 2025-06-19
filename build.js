@@ -75,10 +75,26 @@ renderer.image = (href, title, text) => {
         }
     } catch { /* ignore */ }
 
+    // Create srcset for responsive images
+    let srcsetAttr = '';
+    try {
+        const imgPath = path.join(config.sourceDir, currentMdDir, href);
+        const baseName = href.replace(/\.[^/.]+$/, '');
+        const sizes = [400, 800, 1200, 1600];
+        const srcset = [
+            `${href} 1x`,
+            `${baseName}-400.webp 400w`,
+            `${baseName}-800.webp 800w`,
+            `${baseName}-1200.webp 1200w`,
+            `${baseName}-1600.webp 1600w`
+        ].join(', ');
+        srcsetAttr = ` srcset="${srcset}" sizes="(max-width: 500px) 96vw, (max-width: 800px) 90vw, 575px"`;
+    } catch { /* ignore */ }
+
     return `<picture>`+
         `<source type="image/avif" srcset="${avif}">`+
         `<source type="image/webp" srcset="${webp}">`+
-        `<img loading="lazy" decoding="async" src="${href}" alt="${alt}"${dimAttrs}>`+
+        `<img loading="lazy" decoding="async" src="${href}" alt="${alt}"${dimAttrs}${srcsetAttr}>`+
         `</picture>`;
 };
 
@@ -177,6 +193,121 @@ async function processDir(srcDir) {
                     if (!(fs.existsSync(avifDest) && (await fs.stat(avifDest)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
                         try { await sharp(fullPath).toFormat('avif', { quality: 55 }).toFile(avifDest); } catch {}
                     }
+                    // Generate responsive sizes for project covers
+                    if (relPath.includes('projects/') && entry.name.startsWith('cover.')) {
+                        console.log(`Generating responsive sizes for: ${relPath}`);
+                        // Check if this is a featured project
+                        const projectSlug = path.basename(path.dirname(relPath));
+                        const projectMdPath = path.join(path.dirname(fullPath), 'index.md');
+                        let isFeatured = false;
+                        if (fs.existsSync(projectMdPath)) {
+                            try {
+                                const { attributes } = frontMatter(fs.readFileSync(projectMdPath, 'utf-8'));
+                                isFeatured = !!attributes.featured;
+                            } catch {}
+                        }
+                        
+                        // If no project is explicitly featured, the first one becomes featured
+                        if (!isFeatured) {
+                            const projectsRoot = path.join(config.sourceDir, 'projects');
+                            const dirs = fs.readdirSync(projectsRoot, { withFileTypes: true })
+                                .filter(d => d.isDirectory())
+                                .map(d => d.name);
+                            
+                            const metas = dirs.map(slug => {
+                                const mdPath = path.join(projectsRoot, slug, 'index.md');
+                                let date = '1970-01-01';
+                                let featured = false;
+                                if (fs.existsSync(mdPath)) {
+                                    const { attributes } = frontMatter(fs.readFileSync(mdPath, 'utf-8'));
+                                    date = attributes.date || date;
+                                    featured = !!attributes.featured;
+                                }
+                                return { slug, date, featured };
+                            });
+                            
+                            metas.sort((a,b)=> Date.parse(b.date) - Date.parse(a.date));
+                            const featuredProject = metas.find(m=>m.featured) || metas[0];
+                            isFeatured = featuredProject && featuredProject.slug === projectSlug;
+                        }
+                        
+                        // Different sizes for featured vs regular projects
+                        const sizes = isFeatured ? [400, 800, 1200, 1600] : [300, 600, 900, 1200];
+                        for (const size of sizes) {
+                            const sizeWebp = withoutExt + `-${size}.webp`;
+                            const sizeAvif = withoutExt + `-${size}.avif`;
+                            if (!(fs.existsSync(sizeWebp) && (await fs.stat(sizeWebp)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                                try { 
+                                    console.log(`  Creating ${sizeWebp}`);
+                                    await sharp(fullPath)
+                                        .resize(size, null, { withoutEnlargement: true })
+                                        .toFormat('webp', { quality: 82 })
+                                        .toFile(sizeWebp); 
+                                } catch {}
+                            }
+                            if (!(fs.existsSync(sizeAvif) && (await fs.stat(sizeAvif)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                                try { 
+                                    console.log(`  Creating ${sizeAvif}`);
+                                    await sharp(fullPath)
+                                        .resize(size, null, { withoutEnlargement: true })
+                                        .toFormat('avif', { quality: 55 })
+                                        .toFile(sizeAvif); 
+                                } catch {}
+                            }
+                        }
+                    } else if (relPath.includes('projects/') && /^image\d+\.(png|jpe?g|gif|svg|webp)$/i.test(entry.name)) {
+                        // Generate responsive sizes for images inside projects
+                        console.log(`Generating responsive sizes for project image: ${relPath}`);
+                        const sizes = [400, 800, 1200, 1600];
+                        for (const size of sizes) {
+                            const sizeWebp = withoutExt + `-${size}.webp`;
+                            const sizeAvif = withoutExt + `-${size}.avif`;
+                            if (!(fs.existsSync(sizeWebp) && (await fs.stat(sizeWebp)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                                try { 
+                                    console.log(`  Creating ${sizeWebp}`);
+                                    await sharp(fullPath)
+                                        .resize(size, null, { withoutEnlargement: true })
+                                        .toFormat('webp', { quality: 85 })
+                                        .toFile(sizeWebp); 
+                                } catch {}
+                            }
+                            if (!(fs.existsSync(sizeAvif) && (await fs.stat(sizeAvif)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                                try { 
+                                    console.log(`  Creating ${sizeAvif}`);
+                                    await sharp(fullPath)
+                                        .resize(size, null, { withoutEnlargement: true })
+                                        .toFormat('avif', { quality: 60 })
+                                        .toFile(sizeAvif); 
+                                } catch {}
+                            }
+                        }
+                    } else if (relPath.includes('posts/')) {
+                        // Generate responsive sizes for post images (screenshots, diagrams, etc.)
+                        console.log(`Generating responsive sizes for post image: ${relPath}`);
+                        const sizes = [400, 800, 1200, 1600];
+                        for (const size of sizes) {
+                            const sizeWebp = withoutExt + `-${size}.webp`;
+                            const sizeAvif = withoutExt + `-${size}.avif`;
+                            if (!(fs.existsSync(sizeWebp) && (await fs.stat(sizeWebp)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                                try { 
+                                    console.log(`  Creating ${sizeWebp}`);
+                                    await sharp(fullPath)
+                                        .resize(size, null, { withoutEnlargement: true })
+                                        .toFormat('webp', { quality: 85 })
+                                        .toFile(sizeWebp); 
+                                } catch {}
+                            }
+                            if (!(fs.existsSync(sizeAvif) && (await fs.stat(sizeAvif)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                                try { 
+                                    console.log(`  Creating ${sizeAvif}`);
+                                    await sharp(fullPath)
+                                        .resize(size, null, { withoutEnlargement: true })
+                                        .toFormat('avif', { quality: 60 })
+                                        .toFile(sizeAvif); 
+                                } catch {}
+                            }
+                        }
+                    }
                 } else {
                     await fs.copy(fullPath, destPath);
                 }
@@ -239,7 +370,7 @@ async function copyStaticFiles() {
                 if (needCopy) {
                     await fs.copy(srcPath, destPath);
                 }
-                // Generate WebP & AVIF only if not exist or outdated
+                // Generate WebP & AVIF
                 const withoutExt = destPath.slice(0, -ext.length);
                 const webpDest = withoutExt + '.webp';
                 const avifDest = withoutExt + '.avif';
@@ -248,6 +379,33 @@ async function copyStaticFiles() {
                 }
                 if (!(fs.existsSync(avifDest) && (await fs.stat(avifDest)).mtimeMs >= (await fs.stat(srcPath)).mtimeMs)) {
                     try { await sharp(srcPath).toFormat('avif', { quality: 55 }).toFile(avifDest); } catch {}
+                }
+                // Generate responsive sizes for project covers
+                if (relPath.includes('projects/') && entry.name.startsWith('cover.')) {
+                    console.log(`Generating responsive sizes for: ${relPath}`);
+                    const sizes = [300, 600, 900, 1200];
+                    for (const size of sizes) {
+                        const sizeWebp = withoutExt + `-${size}.webp`;
+                        const sizeAvif = withoutExt + `-${size}.avif`;
+                        if (!(fs.existsSync(sizeWebp) && (await fs.stat(sizeWebp)).mtimeMs >= (await fs.stat(srcPath)).mtimeMs)) {
+                            try { 
+                                console.log(`  Creating ${sizeWebp}`);
+                                await sharp(srcPath)
+                                    .resize(size, null, { withoutEnlargement: true })
+                                    .toFormat('webp', { quality: 82 })
+                                    .toFile(sizeWebp); 
+                            } catch {}
+                        }
+                        if (!(fs.existsSync(sizeAvif) && (await fs.stat(sizeAvif)).mtimeMs >= (await fs.stat(srcPath)).mtimeMs)) {
+                            try { 
+                                console.log(`  Creating ${sizeAvif}`);
+                                await sharp(srcPath)
+                                    .resize(size, null, { withoutEnlargement: true })
+                                    .toFormat('avif', { quality: 55 })
+                                    .toFile(sizeAvif); 
+                            } catch {}
+                        }
+                    }
                 }
             } else {
                 // Copy as-is
@@ -426,7 +584,29 @@ function generateProjectsMarkup() {
             } catch {}
         }
         const ratioStyle = m.cover && dimAttr ? ` style="aspect-ratio:${dimAttr.match(/width=\"(\d+)/)[1]}/${dimAttr.match(/height=\"(\d+)/)[1]}"` : '';
-        const imgTag = imgSrc ? `<img data-src="${imgSrc}" alt="${m.title}"${dimAttr} style="aspect-ratio:${dimAttr.match(/width=\"(\d+)/)[1]}/${dimAttr.match(/height=\"(\d+)/)[1]}" />` : '';
+        let imgTag = '';
+        if (imgSrc) {
+            // Create responsive srcset for project covers
+            const baseName = m.cover.replace(/\.[^/.]+$/, '');
+            const projectPath = `projects/${m.slug}/`;
+            
+            // Different srcset for featured vs regular projects
+            const srcsetSizes = m === featuredProject 
+                ? ['400w', '800w', '1200w', '1600w']  // Featured: larger sizes
+                : ['300w', '600w', '900w', '1200w']; // Regular: smaller sizes
+            
+            const srcset = [
+                `${imgSrc} 1x`,
+                ...srcsetSizes.map(size => `${projectPath}${baseName}-${size.replace('w', '')}.webp ${size}`)
+            ].join(', ');
+            
+            // Different sizes for featured vs regular projects
+            const sizes = m === featuredProject 
+                ? "(max-width: 500px) 96vw, (max-width: 800px) 90vw, 960px"  // Featured: full width
+                : "(max-width: 500px) 96vw, (max-width: 800px) 48vw, 32vw"; // Regular: column-based
+            
+            imgTag = `<img src="${imgSrc}" srcset="${srcset}" sizes="${sizes}" alt="${m.title}"${dimAttr} />`;
+        }
         return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/"${videoAttr}${ratioStyle}>${imgTag}<span class="caption">${m.title}</span></a>`;
     };
 
