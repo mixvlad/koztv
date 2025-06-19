@@ -586,19 +586,37 @@ body.home header {
 
 /* === Loader === */
 .img-wrapper { position: relative; display: block; }
-.img-loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.img-loader { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  pointer-events: none; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(165, 143, 96, 0.1) 10px,
+    rgba(165, 143, 96, 0.1) 20px
+  );
+}
 
 .loader {
-  width: 90px;
-  height: 14px;
+  width: 60px;
+  height: 10px;
   background:
-    radial-gradient(circle 7px at bottom,var(--accent-color) 92%,#0000 ) calc(100%/2) 0,
-    radial-gradient(circle 7px at top   ,var(--accent-color) 92%,#0000 ) calc(100%/2) 100%,
+    radial-gradient(circle 5px at bottom,var(--accent-color) 92%,#0000 ) calc(100%/2) 0,
+    radial-gradient(circle 5px at top   ,var(--accent-color) 92%,#0000 ) calc(100%/2) 100%,
     conic-gradient(from 135deg at top   ,var(--accent-color) 90deg,#0000 0) 0 0,
     conic-gradient(from -45deg at bottom,var(--accent-color) 90deg,#0000 0) 0 100%;
   background-size: calc(100%/2) 50%;
   background-repeat: repeat-x;
-  animation: l13 3s infinite;
+  animation: l13 2s infinite;
+  z-index: 1;
 }
 
 @keyframes l13 {
