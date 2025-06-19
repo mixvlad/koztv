@@ -118,6 +118,9 @@ async function build() {
     await copyStaticFiles();
     await processDir(config.sourceDir);
 
+    // Create .nojekyll file for GitHub Pages
+    await fs.writeFile(path.join(config.outputDir, '.nojekyll'), '# This file tells GitHub Pages not to use Jekyll');
+
     // After main content copied, create legacy redirects
     await createRedirects();
 }
