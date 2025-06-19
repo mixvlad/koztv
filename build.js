@@ -2,6 +2,11 @@ const fs = require('fs-extra');
 const path = require('path');
 const marked = require('marked');
 const frontMatter = require('front-matter');
+const crypto = require('crypto');
+const CleanCSS = require('clean-css');
+const esbuild = require('esbuild');
+const sharp = require('sharp');
+const sizeOf = require('image-size');
 
 // Конфигурация
 const config = {
@@ -11,6 +16,7 @@ const config = {
 };
 
 const isDev = process.argv.includes('--watch');
+const shouldClean = process.argv.includes('--clean');
 
 // Создаем выходную директорию
 fs.ensureDirSync(config.outputDir);
@@ -36,11 +42,62 @@ renderer.link = (href, title, text) => {
     return originalLinkRenderer(href, title, text);
 };
 
+const originalImageRenderer = renderer.image.bind(renderer);
+renderer.image = (href, title, text) => {
+    if (href.startsWith('/')) href = href.substring(1);
+    const ext = path.extname(href).toLowerCase();
+    const supportsPicture = ['.png', '.jpg', '.jpeg'].includes(ext);
+    const alt = text || title || '';
+    if (!supportsPicture) {
+        // default handling with lazy/async attrs
+        let base = originalImageRenderer(href, title, text);
+        // Compute dims
+        try {
+            const imgPath = path.join(config.sourceDir, currentMdDir, href);
+            const { width, height } = sizeOf(imgPath);
+            if (width && height) {
+                base = base.replace('<img ', `<img width="${width}" height="${height}" style="aspect-ratio:${width}/${height}" `);
+            }
+        } catch {}
+        return base.replace('<img ', '<img loading="lazy" decoding="async" ');
+    }
+    const withoutExt = href.replace(/\.[^/.]+$/, '');
+    const avif = withoutExt + '.avif';
+    const webp = withoutExt + '.webp';
+
+    // Attempt to read dimensions for width/height
+    let dimAttrs = '';
+    try {
+        const imgPath = path.join(config.sourceDir, currentMdDir, href);
+        const { width, height } = sizeOf(imgPath);
+        if (width && height) {
+            dimAttrs = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
+        }
+    } catch { /* ignore */ }
+
+    return `<picture>`+
+        `<source type="image/avif" srcset="${avif}">`+
+        `<source type="image/webp" srcset="${webp}">`+
+        `<img loading="lazy" decoding="async" src="${href}" alt="${alt}"${dimAttrs}>`+
+        `</picture>`;
+};
+
 marked.setOptions({ renderer });
 
+const assetManifest = {}; // original relative path -> hashed path
+
+function hashContent(buf) {
+    return crypto.createHash('sha1').update(buf).digest('hex').slice(0, 8);
+}
+
+let currentMdDir = '';
+
 // Функция для конвертации Markdown в HTML
-function convertMarkdownToHtml(markdown, metadata) {
+function convertMarkdownToHtml(markdown, metadata, mdDirRel) {
+    const prevDir = currentMdDir;
+    currentMdDir = mdDirRel || '';
     const content = marked.parse(markdown);
+    currentMdDir = prevDir;
     let dateStr = metadata.date || '';
     if (dateStr instanceof Date) {
         dateStr = dateStr.toISOString().slice(0, 10);
@@ -79,17 +136,50 @@ async function processDir(srcDir) {
                 }
                 const depth = path.relative(config.outputDir, path.dirname(destPath)).split(path.sep).filter(Boolean).length;
                 const rootPrefix = depth === 0 ? '' : Array(depth).fill('..').join('/') + '/';
-                const html = convertMarkdownToHtml(mdBody, {
+                let html = convertMarkdownToHtml(mdBody, {
                     ...attributes,
                     bodyClass: relPath === 'index.md' ? 'home' : (attributes.bodyClass || '')
-                })
-                    .replace(/{{root}}/g, rootPrefix);
+                }, path.dirname(relPath));
+                // Inject hashed stylesheet placeholder before root replacement
+                if (assetManifest['static/css/style.css']) {
+                    const stylePath = rootPrefix + assetManifest['static/css/style.css'];
+                    html = html.replace(/{{styleCss}}/g, stylePath);
+                } else {
+                    html = html.replace(/{{styleCss}}/g, rootPrefix + 'static/css/style.css');
+                }
+                // Replace root token
+                html = html.replace(/{{root}}/g, rootPrefix);
+                // Replace any static asset paths with hashed ones
+                for (const [orig, hashed] of Object.entries(assetManifest)) {
+                    const origPath1 = rootPrefix + orig;
+                    const hashedPath1 = rootPrefix + hashed;
+                    html = html.split(origPath1).join(hashedPath1);
+                    // Also replace non-prefixed variant (for root pages)
+                    html = html.split(orig).join(hashed);
+                }
                 const htmlDest = destPath.replace(/\.md$/, '.html');
                 await fs.ensureDir(path.dirname(htmlDest));
                 await fs.writeFile(htmlDest, html);
                 console.log(`Built: ${htmlDest}`);
             } else {
-                await fs.copy(fullPath, destPath);
+                const ext = path.extname(entry.name).toLowerCase();
+                if (['.png', '.jpg', '.jpeg'].includes(ext)) {
+                    const needCopy = !(fs.existsSync(destPath) && (await fs.stat(destPath)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs);
+                    if (needCopy) {
+                        await fs.copy(fullPath, destPath);
+                    }
+                    const withoutExt = destPath.slice(0, -ext.length);
+                    const webpDest = withoutExt + '.webp';
+                    const avifDest = withoutExt + '.avif';
+                    if (!(fs.existsSync(webpDest) && (await fs.stat(webpDest)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                        try { await sharp(fullPath).toFormat('webp', { quality: 82 }).toFile(webpDest); } catch {}
+                    }
+                    if (!(fs.existsSync(avifDest) && (await fs.stat(avifDest)).mtimeMs >= (await fs.stat(fullPath)).mtimeMs)) {
+                        try { await sharp(fullPath).toFormat('avif', { quality: 55 }).toFile(avifDest); } catch {}
+                    }
+                } else {
+                    await fs.copy(fullPath, destPath);
+                }
             }
         }
     }
@@ -97,23 +187,84 @@ async function processDir(srcDir) {
 
 // Функция для безопасного копирования статических файлов
 async function copyStaticFiles() {
-    try {
-        await fs.copy('static', path.join(config.outputDir, 'static'), { 
-            overwrite: true,
-            errorOnExist: false,
-            preserveTimestamps: true
-        });
-    } catch (err) {
-        if (err.code !== 'ENOENT') {
-            console.error('Error copying static files:', err);
+    const staticSrc = 'static';
+    const staticDest = path.join(config.outputDir, 'static');
+    await fs.ensureDir(staticDest);
+
+    async function walk(dir) {
+        const entries = await fs.readdir(dir, { withFileTypes: true });
+        for (const entry of entries) {
+            const srcPath = path.join(dir, entry.name);
+            const relPath = path.relative(staticSrc, srcPath).replace(/\\/g, '/');
+            const destPath = path.join(staticDest, relPath);
+
+            if (entry.isDirectory()) {
+                await fs.ensureDir(destPath);
+                await walk(srcPath);
+                continue;
+            }
+
+            const ext = path.extname(entry.name).toLowerCase();
+            if (ext === '.css') {
+                const cssSrc = await fs.readFile(srcPath, 'utf-8');
+                const hash = hashContent(cssSrc);
+                const hashedName = entry.name.replace(/\.css$/, `.${hash}.css`);
+                const finalDest = path.join(path.dirname(destPath), hashedName);
+                assetManifest[`static/${relPath}`] = `static/${path.posix.join(path.dirname(relPath), hashedName)}`;
+                if (!fs.existsSync(finalDest)) {
+                    const minified = new CleanCSS({ level: 2 }).minify(cssSrc).styles;
+                    await fs.writeFile(finalDest, minified);
+                }
+            } else if (ext === '.js') {
+                const jsSrc = await fs.readFile(srcPath, 'utf-8');
+                const hash = hashContent(jsSrc);
+                const hashedName = entry.name.replace(/\.js$/, `.${hash}.js`);
+                const finalDest = path.join(path.dirname(destPath), hashedName);
+                assetManifest[`static/${relPath}`] = `static/${path.posix.join(path.dirname(relPath), hashedName)}`;
+                if (!fs.existsSync(finalDest)) {
+                    const result = await esbuild.build({
+                        stdin: { contents: jsSrc, resolveDir: path.dirname(srcPath), sourcefile: entry.name },
+                        bundle: false,
+                        minify: true,
+                        write: false,
+                        format: 'iife',
+                        target: 'es2018'
+                    });
+                    const js = result.outputFiles[0].text;
+                    await fs.writeFile(finalDest, js);
+                }
+            } else if (['.png', '.jpg', '.jpeg'].includes(ext)) {
+                // Copy original if missing or outdated
+                const needCopy = !(fs.existsSync(destPath) && (await fs.stat(destPath)).mtimeMs >= (await fs.stat(srcPath)).mtimeMs);
+                if (needCopy) {
+                    await fs.copy(srcPath, destPath);
+                }
+                // Generate WebP & AVIF only if not exist or outdated
+                const withoutExt = destPath.slice(0, -ext.length);
+                const webpDest = withoutExt + '.webp';
+                const avifDest = withoutExt + '.avif';
+                if (!(fs.existsSync(webpDest) && (await fs.stat(webpDest)).mtimeMs >= (await fs.stat(srcPath)).mtimeMs)) {
+                    try { await sharp(srcPath).toFormat('webp', { quality: 82 }).toFile(webpDest); } catch {}
+                }
+                if (!(fs.existsSync(avifDest) && (await fs.stat(avifDest)).mtimeMs >= (await fs.stat(srcPath)).mtimeMs)) {
+                    try { await sharp(srcPath).toFormat('avif', { quality: 55 }).toFile(avifDest); } catch {}
+                }
+            } else {
+                // Copy as-is
+                await fs.copy(srcPath, destPath);
+            }
         }
     }
+
+    await walk(staticSrc);
 }
 
 // Обрабатываем все Markdown файлы и копируем ресурсы
 async function build() {
-    if (!process.argv.includes('--watch')) {
+    if (shouldClean) {
         await fs.emptyDir(config.outputDir);
+    } else {
+        await fs.ensureDir(config.outputDir);
     }
     await copyStaticFiles();
     await processDir(config.sourceDir);
@@ -265,8 +416,18 @@ function generateProjectsMarkup() {
     const makeAnchor = m => {
         const videoAttr = m.hasVideo ? ' data-video' : '';
         const imgSrc = m.cover ? `projects/${m.slug}/${m.cover}` : '';
-        const imgTag = imgSrc ? `<img src="${imgSrc}" alt="${m.title}" />` : '';
-        return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/"${videoAttr}>${imgTag}<span class="caption">${m.title}</span></a>`;
+        let dimAttr = '';
+        if (imgSrc) {
+            try {
+                const { width, height } = sizeOf(path.join(projectsRoot, m.slug, m.cover));
+                if (width && height) {
+                    dimAttr = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
+                }
+            } catch {}
+        }
+        const ratioStyle = m.cover && dimAttr ? ` style="aspect-ratio:${dimAttr.match(/width=\"(\d+)/)[1]}/${dimAttr.match(/height=\"(\d+)/)[1]}"` : '';
+        const imgTag = imgSrc ? `<img data-src="${imgSrc}" alt="${m.title}"${dimAttr} style="aspect-ratio:${dimAttr.match(/width=\"(\d+)/)[1]}/${dimAttr.match(/height=\"(\d+)/)[1]}" />` : '';
+        return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/"${videoAttr}${ratioStyle}>${imgTag}<span class="caption">${m.title}</span></a>`;
     };
 
     return {

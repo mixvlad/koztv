@@ -39,5 +39,5 @@
 
 {{postsList}}
 
-<script src="static/js/project-videos.js"></script>
+<script src="static/js/project-videos.js" defer></script>
 
