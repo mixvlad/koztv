@@ -17,6 +17,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       
+    - name: Restore image cache
+      id: image-cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          docs
+        key: images-${{ hashFiles('content/**/*.{png,jpg,jpeg}', 'static/**/*.{png,jpg,jpeg}') }}
+        restore-keys: |
+          images-
+      
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
