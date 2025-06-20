@@ -14,7 +14,8 @@
     "import:project": "node scripts/import-project.js",
     "import:projects": "node scripts/import-all-projects.js",
     "cleanup:posts": "node scripts/cleanup-unused-files.js",
-    "sync:project-media": "node scripts/sync-project-media.js"
+    "sync:project-media": "node scripts/sync-project-media.js",
+    "test:cache": "node scripts/test-cache.js"
   },
   "dependencies": {
     "axios": "^1.6.1",

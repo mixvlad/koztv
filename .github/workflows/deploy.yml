@@ -17,21 +17,32 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Restore dependencies cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+      
     - name: Restore image cache
       id: image-cache
       uses: actions/cache@v3
       with:
         path: |
           docs
-        key: images-${{ hashFiles('content/**/*.{png,jpg,jpeg}', 'static/**/*.{png,jpg,jpeg}') }}
+        key: images-${{ hashFiles('content/**/*.{png,jpg,jpeg}', 'static/**/*.{png,jpg,jpeg}') }}-code-${{ hashFiles('build.js', 'lib/**/*.js', 'package.json') }}
         restore-keys: |
+          images-${{ hashFiles('content/**/*.{png,jpg,jpeg}', 'static/**/*.{png,jpg,jpeg}') }}-
           images-
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
         
     - name: Install dependencies
       run: npm ci
