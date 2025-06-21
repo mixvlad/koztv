@@ -531,6 +531,9 @@ h1:empty,
   display: flex;
   gap: var(--gap);
   margin-top: var(--gap);
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .social-icons a {
@@ -541,6 +544,20 @@ h1:empty,
 
 .social-icons a:hover {
   opacity: 0.8;
+}
+
+/* YouTube subscribe widget styling */
+.social-icons .g-ytsubscribe {
+  display: inline-block;
+  vertical-align: middle;
+  transform: scale(0.8);
+  transform-origin: left center;
+}
+
+.social-icons .g-ytsubscribe iframe {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* Social icons adjustments */
@@ -566,10 +583,102 @@ body.home header {
   margin-bottom: calc(var(--gap) * 2);
 }
 
+/* Hide Home navigation on home page */
+body.home nav.narrow {
+  display: none;
+}
+
+/* About section responsive layout */
+@media (max-width: 1000px) {
+  .about_inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .about_photo {
+    float: none;
+    margin: 0 auto var(--gap) auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    background-size: 120px;
+  }
+}
+
+/* Social icons responsive fixes */
+@media (max-width: 600px) {
+  .social-icons {
+    gap: calc(var(--gap) * 0.6);
+  }
+  
+  .social-icons a {
+    font-size: 1.3em;
+  }
+  
+  .social-icons .g-ytsubscribe {
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 500px) {
+  .social-icons {
+    gap: calc(var(--gap) * 0.5);
+  }
+  
+  .social-icons a {
+    font-size: 1.2em;
+  }
+  
+  .social-icons .g-ytsubscribe {
+    transform: scale(0.6);
+  }
+}
+
 /* Mobile adjustments */
 @media only screen and (max-device-width: 480px) {
   :root {
     --cap-height: calc(1rem * 18 / 16);
+  }
+  
+  /* Fix content width on mobile */
+  .content > * {
+    width: 92vw;
+    max-width: none;
+  }
+  
+  /* Fix about section on mobile */
+  .about {
+    width: 92vw;
+    max-width: none;
+  }
+  
+  .about_inner {
+    flex-direction: column;
+    padding: var(--gap) 15px;
+  }
+  
+  .about_photo {
+    float: none;
+    margin: 0 auto var(--gap) auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    background-size: 120px;
+  }
+  
+  /* Fix social icons on mobile */
+  .social-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: calc(var(--gap) * 0.4);
+  }
+  
+  .social-icons a {
+    font-size: 1.1em;
+  }
+  
+  .social-icons .g-ytsubscribe {
+    transform: scale(0.5);
   }
 }
 
@@ -580,13 +689,6 @@ body.home header {
   margin: 0 auto;
   text-align: center;
   margin-top: 40px;
-}
-
-.projects-grid {
-  display: inline-block;
-  text-align: left;
-  column-count: 3;
-  column-gap: var(--gap);
 }
 
 /* === Loader === */

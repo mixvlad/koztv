@@ -4,7 +4,7 @@
 
   <div class="about_inner">
     <div class="lead-main">
-      <p>Hi! I'm Mike Koz — solo dev @ KOZ • forging "⚔️ Towerlore", rogue-TD w/ Joker cards • 90-day dev-challenge • Wishlist on Steam soon ↘</p>
+      <p>Hi! I'm Mike Koz — solo dev @ KOZ • forging "⚔️ Towerlore", rogue-TD w/ Joker cards • 90-day dev-challenge • Follow me ↘</p>
       {{socialsWithSubscribers}}
     </div>
   </div>
