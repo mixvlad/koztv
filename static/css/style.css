@@ -533,7 +533,7 @@ h1:empty,
   margin-top: var(--gap);
   align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .social-icons a {
@@ -669,7 +669,7 @@ body.home nav.narrow {
   /* Fix social icons on mobile */
   .social-icons {
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: calc(var(--gap) * 0.4);
   }
   
