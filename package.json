@@ -6,7 +6,7 @@
     "build": "node build.js",
     "serve": "node serve.js",
     "dev:build": "node build.js --watch",
-    "dev:serve": "browser-sync start --server docs --files 'docs/**/*' --no-notify",
+    "dev:serve": "browser-sync start --config lib/bs-config.js",
     "dev": "run-p dev:build dev:serve",
     "import": "node scripts/import-post.js",
     "import:all": "node scripts/import-all.js",
