@@ -10,7 +10,7 @@
     "dev": "npm run serve"
   },
   "dependencies": {
-    "k-engine": "^1.0.8"
+    "k-engine": "^1.0.15"
   },
   "engines": {
     "node": ">=18"

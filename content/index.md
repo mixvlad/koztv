@@ -1,6 +1,6 @@
 <!-- Intro / Hero layout -->
 <div class="about">
-  <div class="about_photo" aria-label="Mikhail Kozlov"></div>
+  <div class="about_photo" aria-label="Mike Koz"></div>
 
   <div class="about_inner">
     <div class="lead-main">
@@ -11,7 +11,7 @@
 </div>
 
 
-<div class="projects-wrapper">
+<div id="projects" class="projects-wrapper">
 
 {{projectsFeatured}}
 
@@ -26,7 +26,11 @@
 
 ## Posts and other projects
 
+<div id="blog">
+<ul>
 {{postsList}}
+</ul>
+</div>
 
 <script src="static/js/project-videos.js" defer></script>
 
