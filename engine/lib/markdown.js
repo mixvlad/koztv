@@ -125,9 +125,19 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
 
     // Generate reply-to link if this post is a reply to another
     let replyToHtml = '';
-    if (metadata.reply_to_msg_id && metadata.original_link) {
-        const replyLink = metadata.original_link.replace(/\/\d+$/, `/${metadata.reply_to_msg_id}`);
-        replyToHtml = `<div class="reply-to"><a href="${replyLink}" target="_blank" rel="noopener">↩️ В ответ на пост</a></div>`;
+    if (metadata.reply_to_msg_id) {
+        const replyPost = findPostByMsgId(metadata.reply_to_msg_id, currentLang);
+        if (replyPost) {
+            // Link to local post
+            const replyLink = `${langPrefix}/posts/${replyPost.slug}/`;
+            const linkText = currentLang === 'ru' ? 'В ответ на' : 'In reply to';
+            replyToHtml = `<div class="reply-to"><a href="${replyLink}">↩️ ${linkText}: ${replyPost.title}</a></div>`;
+        } else if (metadata.original_link) {
+            // Fallback to Telegram link
+            const replyLink = metadata.original_link.replace(/\/\d+$/, `/${metadata.reply_to_msg_id}`);
+            const linkText = currentLang === 'ru' ? 'В ответ на пост' : 'In reply to post';
+            replyToHtml = `<div class="reply-to"><a href="${replyLink}" target="_blank" rel="noopener">↩️ ${linkText}</a></div>`;
+        }
     }
 
     // Generate link to original Telegram post (next to date)
@@ -317,6 +327,50 @@ function findRepliesTo(msgId, lang = null) {
             return { ...p, title, slug };
         })
         .sort((a, b) => new Date(a.date) - new Date(b.date));
+}
+
+// Find a post by its Telegram message ID and return slug/title for given language
+// Since folders are now named by msgId, we can look up directly
+function findPostByMsgId(msgId, lang = null) {
+    const languages = config.languages || [];
+    const defaultLang = languages[0] || 'en';
+    const targetLang = lang || defaultLang;
+
+    // Folder is named by msgId
+    const folderSlug = String(msgId);
+    const postDir = path.join(config.sourceDir, 'posts', folderSlug);
+
+    if (!fs.existsSync(postDir)) return null;
+
+    // Try to read the target language file
+    const mdPath = path.join(postDir, `${targetLang}.md`);
+    if (!fs.existsSync(mdPath)) {
+        // Fallback to default language
+        const defaultMdPath = path.join(postDir, `${defaultLang}.md`);
+        if (!fs.existsSync(defaultMdPath)) return null;
+
+        try {
+            const content = fs.readFileSync(defaultMdPath, 'utf-8');
+            const { attributes } = frontMatter(content);
+            return {
+                slug: attributes.slug || folderSlug,
+                title: attributes.title || folderSlug
+            };
+        } catch {
+            return null;
+        }
+    }
+
+    try {
+        const content = fs.readFileSync(mdPath, 'utf-8');
+        const { attributes } = frontMatter(content);
+        return {
+            slug: attributes.slug || folderSlug,
+            title: attributes.title || folderSlug
+        };
+    } catch {
+        return null;
+    }
 }
 
 // Get available languages for a post (for language switcher)
