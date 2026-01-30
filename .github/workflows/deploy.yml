@@ -53,7 +53,13 @@ jobs:
       
     - name: Build site
       run: npm run build
-      
+
+    - name: Copy media files
+      run: |
+        if [ -d "public/media" ]; then
+          cp -r public/media docs/
+        fi
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
