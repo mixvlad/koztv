@@ -59,7 +59,9 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_API_URL: ${{ vars.LLM_API_URL }}
           LLM_MODEL: ${{ vars.LLM_MODEL }}
-        run: node scripts/export-and-translate.js --channel "$TELEGRAM_CHANNEL"
+          TARGET_LANGS: ${{ vars.TARGET_LANGS }}
+          KEEP_ORIGINAL: ${{ vars.KEEP_ORIGINAL }}
+        run: node scripts/export-and-translate.js
 
       - name: Check for changes
         id: changes
