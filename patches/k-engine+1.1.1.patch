@@ -122,7 +122,7 @@ index 7229470..9ed9a00 100644
  
          let html = convertMarkdownToHtml(mdBody, {
 diff --git a/node_modules/k-engine/lib/images.js b/node_modules/k-engine/lib/images.js
-index 018c28e..b2b6909 100644
+index 018c28e..976aa97 100644
 --- a/node_modules/k-engine/lib/images.js
 +++ b/node_modules/k-engine/lib/images.js
 @@ -4,6 +4,12 @@ import sharp from 'sharp';
@@ -138,7 +138,40 @@ index 018c28e..b2b6909 100644
  // Генерирует все размеры изображения с проверкой только наличия всех производных файлов
  async function generateImageSizes(sourcePath, destPath, forceRegenerate = false, addToProcessed = null) {
      const ext = path.extname(sourcePath).toLowerCase();
-@@ -201,18 +207,39 @@ function createSizes() {
+@@ -133,14 +139,27 @@ function createSrcset(imagePath, imageName, optimalSize = 960, currentMdDir = ''
+     // Получаем размер исходника
+     let originalWidth = null;
+     try {
+-        const imgPath = path.join(config.sourceDir, currentMdDir, imagePath);
+-        const { width } = sizeOf(imgPath);
+-        originalWidth = width;
++        // Try multiple paths to find the image
++        const possiblePaths = [
++            path.join(config.sourceDir, currentMdDir, imagePath),
++            path.join(config.sourceDir, currentMdDir, imageName),
++            path.join(config.outputDir, currentMdDir, imagePath),
++            path.join(config.outputDir, currentMdDir, imageName),
++        ];
++        for (const p of possiblePaths) {
++            if (fs.existsSync(p)) {
++                const { width } = sizeOf(p);
++                originalWidth = width;
++                break;
++            }
++        }
+     } catch {}
+     for (const size of config.images.sizes) {
+-        if (!originalWidth || size <= originalWidth) {
+-            srcset.push(`${basePath}/${baseName}-${size}.webp ${size}w`);
++        // Only include sizes that are <= original width (if known)
++        if (originalWidth && size > originalWidth) {
++            continue;
+         }
++        srcset.push(`${basePath}/${baseName}-${size}.webp ${size}w`);
+     }
+     return srcset.join(', ');
+ }
+@@ -201,18 +220,39 @@ function createSizes() {
  
  // Создает HTML для изображения с поддержкой WebP/AVIF и responsive sizes
  function createImageHtml(href, title, text, currentMdDir = '', context = 'default') {
@@ -181,7 +214,7 @@ index 018c28e..b2b6909 100644
              const { width, height } = sizeOf(imgPath);
              if (width && height) {
                  base += ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
-@@ -229,7 +256,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+@@ -229,7 +269,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
      // Получаем размеры для width/height атрибутов
      let dimAttrs = '';
      try {
@@ -190,7 +223,7 @@ index 018c28e..b2b6909 100644
          const { width, height } = sizeOf(imgPath);
          if (width && height) {
              dimAttrs = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
-@@ -239,7 +266,48 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+@@ -239,7 +279,48 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
      // Определяем оптимальный размер на основе контекста
      const optimalSize = getOptimalImageSize(context);
  
@@ -240,7 +273,7 @@ index 018c28e..b2b6909 100644
      const srcset = createSrcset(href, path.basename(href), optimalSize, currentMdDir);
      const sizes = createSizes();
  
-@@ -249,7 +317,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+@@ -249,7 +330,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
      return `<picture>
          <source type="image/avif" srcset="${avif}">
          <source type="image/webp" srcset="${webp}">
