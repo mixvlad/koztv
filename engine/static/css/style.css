@@ -23,7 +23,7 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
   --text: #000;
   --bg: #ffffff;
   --accent-color: #8B7355;
-  --transition: all 300ms cubic-bezier(.175,.885,.32,1.075);
+  --transition: all 450ms cubic-bezier(.175,.885,.32,1.075);
 }
 
 html {
