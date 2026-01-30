@@ -788,14 +788,7 @@ body.home nav.narrow {
   margin-bottom: 1rem;
 }
 
-.reply-to a {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
-.reply-to a:hover {
-  text-decoration: underline;
-}
+/* reply-to links use default link styles with animated underline */
 
 /* Original link to Telegram */
 .original-link a {
