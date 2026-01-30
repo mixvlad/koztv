@@ -6,4 +6,4 @@ original_link: "https://t.me/koztv/11"
 translated_from: "ru"
 ---
 
-
+<video src="media.mp4" controls></video>
