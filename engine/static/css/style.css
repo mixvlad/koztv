@@ -817,11 +817,4 @@ body.home nav.narrow {
   padding-left: 1.5rem;
 }
 
-.continuation a {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
-.continuation a:hover {
-  text-decoration: underline;
-}
+/* continuation links use default link styles with animated underline */
