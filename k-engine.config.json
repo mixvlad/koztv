@@ -1,5 +1,9 @@
 {
   "cname": "koz.tv",
   "googleAnalytics": null,
-  "languages": ["en", "ru"]
+  "languages": ["en", "ru"],
+  "images": {
+    "sizes": [480, 960],
+    "featuredSize": 1920
+  }
 }

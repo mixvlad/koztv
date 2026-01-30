@@ -1,73 +1,75 @@
 {
   "koztv-6": {
     "posts": [
-      "ru/ya-deystvitelno-mnogoe-delal"
+      "en/ya-deystvitelno-mnogoe-delal"
     ],
     "date": "2026-01-19T16:09:12.000Z",
-    "processedAt": "2026-01-30T12:06:00.240Z"
+    "processedAt": "2026-01-30T12:50:21.448Z"
   },
   "koztv-7": {
     "posts": [
-      "ru/ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-"
+      "en/ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-"
     ],
     "date": "2026-01-20T13:11:51.000Z",
-    "processedAt": "2026-01-30T12:06:00.444Z"
+    "processedAt": "2026-01-30T12:51:32.101Z"
   },
   "koztv-8": {
     "posts": [
-      "ru/pro-to-chto-inogda-luchshe-vykinut-i-zabyt"
+      "pro-to-chto-inogda-luchshe-vykinut-i-zabyt/en.md"
     ],
     "date": "2026-01-22T12:48:34.000Z",
-    "processedAt": "2026-01-30T12:06:00.647Z"
+    "processedAt": "2026-01-30T14:33:50.749Z"
   },
   "koztv-9": {
     "posts": [
-      "ru/dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni"
+      "dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni/en.md"
     ],
     "date": "2026-01-22T12:55:06.000Z",
-    "processedAt": "2026-01-30T12:06:00.849Z"
+    "processedAt": "2026-01-30T14:35:03.289Z"
   },
   "koztv-11": {
     "posts": [
-      "ru/prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy"
+      "prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy/en.md"
     ],
     "date": "2026-01-24T15:59:16.000Z",
-    "processedAt": "2026-01-30T12:06:01.053Z"
+    "processedAt": "2026-01-30T14:35:20.412Z"
   },
   "koztv-12": {
     "posts": [
-      "ru/sgenerirovannyy-treyler-vyglyadit-luchshe-chem-u-90-filmov-k"
+      "sgenerirovannyy-treyler-vyglyadit-luchshe-chem-u-90-filmov-k/en.md",
+      "sgenerirovannyy-treyler-vyglyadit-luchshe-chem-u-90-filmov-k/ru.md"
     ],
     "date": "2026-01-24T16:55:57.000Z",
-    "processedAt": "2026-01-30T12:06:01.258Z"
+    "processedAt": "2026-01-30T16:21:08.746Z"
   },
   "koztv-13": {
     "posts": [
-      "ru/gollivudskie-neyrosetevye-treylery-filmov-bolshe-nelzya-otli"
+      "gollivudskie-neyrosetevye-treylery-filmov-bolshe-nelzya-otli/en.md",
+      "gollivudskie-neyrosetevye-treylery-filmov-bolshe-nelzya-otli/ru.md"
     ],
     "date": "2026-01-24T16:55:57.000Z",
-    "processedAt": "2026-01-30T12:06:01.461Z"
+    "processedAt": "2026-01-30T16:18:06.591Z"
   },
   "koztv-14": {
     "posts": [
-      "ru/pro-instrumentymodeli-dlya-vaybkodinga"
+      "pro-instrumentymodeli-dlya-vaybkodinga/en.md"
     ],
     "date": "2026-01-28T17:09:31.000Z",
-    "processedAt": "2026-01-30T12:06:01.665Z"
+    "processedAt": "2026-01-30T14:39:02.544Z"
   },
   "koztv-15": {
     "posts": [
-      "ru/v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp",
-      "en/continuing-from-the-post-you-can-use-kimi-k25-for-free-for-t"
+      "v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp/en.md"
     ],
     "date": "2026-01-28T18:19:45.000Z",
-    "processedAt": "2026-01-30T12:12:31.787Z"
+    "processedAt": "2026-01-30T14:40:20.058Z"
   },
   "koztv-16": {
     "posts": [
-      "ru/ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r"
+      "ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r/en.md",
+      "ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r/ru.md"
     ],
     "date": "2026-01-29T10:47:03.000Z",
-    "processedAt": "2026-01-30T12:06:02.071Z"
+    "processedAt": "2026-01-30T14:55:19.512Z"
   }
 }
