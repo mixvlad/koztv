@@ -248,28 +248,22 @@ figcaption {
   }
 }
 
-/* LINKS */
+/* LINKS - animated underline that works with multi-line links */
 a {
   color: var(--accent-color);
   text-decoration: none;
-  position: relative;
-  display: inline-block;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size var(--transition);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-a:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  display: block;
-  width: 0;
-  height: 0.5px;
-  background-color: var(--accent-color);
-  transition: var(--transition);
-}
-
-a:hover:after,
-a:active:after {
-  width: 100%;
+a:hover,
+a:active {
+  background-size: 100% 1px;
 }
 
 /* Project items */
@@ -281,8 +275,12 @@ a:active:after {
   color: var(--accent-color);
 }
 
-.project-item:after {
-  display: none;
+.project-item {
+  background-image: none;
+}
+
+.project-item:hover {
+  background-image: none;
 }
 
 .project-item img {
