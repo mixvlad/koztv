@@ -2,11 +2,11 @@
   "name": "koztv-blog",
   "version": "1.0.0",
   "description": "Personal blog built with Markdown",
+  "type": "module",
   "scripts": {
-    "postinstall": "patch-package",
-    "build": "k-engine build",
-    "serve": "k-engine serve",
-    "dev:build": "k-engine build --watch",
+    "build": "node engine/build.js",
+    "serve": "node engine/serve.js",
+    "dev:build": "node engine/build.js --watch",
     "dev:serve": "browser-sync start --server docs --files 'docs/**/*' --no-notify",
     "dev": "run-p dev:build dev:serve",
     "import": "node scripts/import-post.js",
@@ -28,8 +28,8 @@
     "front-matter": "^4.0.2",
     "fs-extra": "^11.1.1",
     "image-size": "^1.2.1",
-    "k-engine": "^1.2.4",
     "koztv-blog-tools": "file:../blog-tools",
+    "lodash.merge": "^4.6.2",
     "marked": "^9.1.0",
     "qrcode": "^1.5.4",
     "sharp": "^0.33.5",
@@ -37,7 +37,6 @@
     "turndown": "^7.1.2"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "patch-package": "^8.0.1"
+    "npm-run-all": "^4.1.5"
   }
 }
