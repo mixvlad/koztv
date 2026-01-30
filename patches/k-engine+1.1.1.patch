@@ -397,10 +397,10 @@ index 9252b95..4cc82fd 100644
  }; 
 \ No newline at end of file
 diff --git a/node_modules/k-engine/static/css/style.css b/node_modules/k-engine/static/css/style.css
-index dda1651..99255ff 100644
+index dda1651..a260e1d 100644
 --- a/node_modules/k-engine/static/css/style.css
 +++ b/node_modules/k-engine/static/css/style.css
-@@ -769,16 +769,18 @@ body.home nav.narrow {
+@@ -769,18 +769,20 @@ body.home nav.narrow {
  .lang-switcher {
    font-size: var(--font-small);
    color: var(--gray-text);
@@ -420,3 +420,7 @@ index dda1651..99255ff 100644
  }
  
  .lang-switcher .lang-link:hover {
+-  text-decoration: underline;
++  text-decoration: none;
+ }
+\ No newline at end of file
