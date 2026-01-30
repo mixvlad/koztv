@@ -215,7 +215,7 @@ index 018c28e..057df38 100644
      const sizes = createSizes();
  
 diff --git a/node_modules/k-engine/lib/markdown.js b/node_modules/k-engine/lib/markdown.js
-index 9252b95..78b6e3c 100644
+index 9252b95..4cc82fd 100644
 --- a/node_modules/k-engine/lib/markdown.js
 +++ b/node_modules/k-engine/lib/markdown.js
 @@ -89,7 +89,9 @@ function processPartials(template, variables) {
@@ -358,7 +358,7 @@ index 9252b95..78b6e3c 100644
      });
  
      metas.sort((a,b)=> Date.parse(b.date) - Date.parse(a.date));
-@@ -294,13 +356,16 @@ function generateProjectsMarkup() {
+@@ -294,13 +356,17 @@ function generateProjectsMarkup() {
      if(!featuredProject && metas.length) featuredProject = metas[0];
      const others = metas.filter(m=>m!==featuredProject);
  
@@ -367,7 +367,9 @@ index 9252b95..78b6e3c 100644
 +
      const makeAnchor = m => {
          const videoAttr = m.hasVideo ? ' data-video' : '';
-         const imgSrc = m.cover ? `projects/${m.slug}/${m.cover}` : '';
+-        const imgSrc = m.cover ? `projects/${m.slug}/${m.cover}` : '';
++        // Use absolute path for images so they work on non-default language pages
++        const imgSrc = m.cover ? `/projects/${m.slug}/${m.cover}` : '';
          let dimAttr = '';
 -        if (imgSrc) {
 +        if (imgSrc && m.coverRoot) {
@@ -377,7 +379,7 @@ index 9252b95..78b6e3c 100644
                  if (width && height) {
                      dimAttr = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
                  }
-@@ -313,7 +378,7 @@ function generateProjectsMarkup() {
+@@ -313,7 +379,7 @@ function generateProjectsMarkup() {
              const context = m === featuredProject ? 'featured' : 'grid';
              imgTag = createImageHtml(imgSrc, m.title, m.title, '', context);
          }
@@ -386,7 +388,7 @@ index 9252b95..78b6e3c 100644
      };
  
      return {
-@@ -327,5 +392,6 @@ export {
+@@ -327,5 +393,6 @@ export {
      generatePostsMarkdownList,
      generateProjectsMarkup,
      getPostLanguages,
@@ -394,3 +396,27 @@ index 9252b95..78b6e3c 100644
      generateLanguageSwitcher
  }; 
 \ No newline at end of file
+diff --git a/node_modules/k-engine/static/css/style.css b/node_modules/k-engine/static/css/style.css
+index dda1651..99255ff 100644
+--- a/node_modules/k-engine/static/css/style.css
++++ b/node_modules/k-engine/static/css/style.css
+@@ -769,16 +769,18 @@ body.home nav.narrow {
+ .lang-switcher {
+   font-size: var(--font-small);
+   color: var(--gray-text);
+-  margin-bottom: var(--gap);
++  margin-left: auto;
+ }
+ 
+ .lang-switcher .lang-current {
+   font-weight: 600;
+   color: var(--text);
++  text-decoration: none;
+ }
+ 
+ .lang-switcher .lang-link {
+   color: var(--accent-color);
++  text-decoration: none;
+ }
+ 
+ .lang-switcher .lang-link:hover {
