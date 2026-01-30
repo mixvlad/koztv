@@ -1,18 +1,38 @@
 {
-  "name": "koztv-content",
+  "name": "koztv-blog",
   "version": "1.0.0",
-  "description": "Content repository for koz.tv blog",
-  "private": true,
-  "type": "module",
+  "description": "Personal blog built with Markdown",
   "scripts": {
-    "build": "k-engine build",
-    "serve": "k-engine serve",
-    "dev": "npm run serve"
+    "build": "node build.js",
+    "serve": "node serve.js",
+    "dev:build": "node build.js --watch",
+    "dev:serve": "browser-sync start --server docs --files 'docs/**/*' --no-notify",
+    "dev": "run-p dev:build dev:serve",
+    "import": "node scripts/import-post.js",
+    "import:all": "node scripts/import-all.js",
+    "sort:posts": "node scripts/sort-posts-in-index.js",
+    "import:project": "node scripts/import-project.js",
+    "import:projects": "node scripts/import-all-projects.js",
+    "cleanup:posts": "node scripts/cleanup-unused-files.js",
+    "sync:project-media": "node scripts/sync-project-media.js",
+    "test:cache": "node scripts/test-cache.js"
   },
   "dependencies": {
-    "k-engine": "^1.0.15"
+    "axios": "^1.6.1",
+    "browser-sync": "^3.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "clean-css": "^5.3.3",
+    "esbuild": "^0.21.0",
+    "express": "^4.18.2",
+    "front-matter": "^4.0.2",
+    "fs-extra": "^11.1.1",
+    "image-size": "^1.2.1",
+    "koztv-blog-tools": "^1.0.1",
+    "marked": "^9.1.0",
+    "sharp": "^0.33.5",
+    "turndown": "^7.1.2"
   },
-  "engines": {
-    "node": ">=18"
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
-} 
+}
