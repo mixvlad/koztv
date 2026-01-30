@@ -110,10 +110,23 @@ index 7229470..9ed9a00 100644
  
          let html = convertMarkdownToHtml(mdBody, {
 diff --git a/node_modules/k-engine/lib/images.js b/node_modules/k-engine/lib/images.js
-index 018c28e..057df38 100644
+index 018c28e..b2b6909 100644
 --- a/node_modules/k-engine/lib/images.js
 +++ b/node_modules/k-engine/lib/images.js
-@@ -201,18 +201,39 @@ function createSizes() {
+@@ -4,6 +4,12 @@ import sharp from 'sharp';
+ import sizeOf from 'image-size';
+ import { config } from './config.js';
+ 
++// Escape HTML attribute values
++function escapeAttr(str) {
++    if (!str) return '';
++    return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
++}
++
+ // Генерирует все размеры изображения с проверкой только наличия всех производных файлов
+ async function generateImageSizes(sourcePath, destPath, forceRegenerate = false, addToProcessed = null) {
+     const ext = path.extname(sourcePath).toLowerCase();
+@@ -201,18 +207,39 @@ function createSizes() {
  
  // Создает HTML для изображения с поддержкой WebP/AVIF и responsive sizes
  function createImageHtml(href, title, text, currentMdDir = '', context = 'default') {
@@ -146,7 +159,8 @@ index 018c28e..057df38 100644
 +
      if (!supportsPicture) {
          // Для неподдерживаемых форматов - обычная обработка
-         let base = `<img src="${href}" alt="${alt}"`;
+-        let base = `<img src="${href}" alt="${alt}"`;
++        let base = `<img src="${href}" alt="${escapeAttr(alt)}"`;
  
          // Добавляем размеры если можем их получить
          try {
@@ -155,7 +169,7 @@ index 018c28e..057df38 100644
              const { width, height } = sizeOf(imgPath);
              if (width && height) {
                  base += ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
-@@ -229,7 +250,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+@@ -229,7 +256,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
      // Получаем размеры для width/height атрибутов
      let dimAttrs = '';
      try {
@@ -164,7 +178,7 @@ index 018c28e..057df38 100644
          const { width, height } = sizeOf(imgPath);
          if (width && height) {
              dimAttrs = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
-@@ -239,7 +260,48 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+@@ -239,7 +266,48 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
      // Определяем оптимальный размер на основе контекста
      const optimalSize = getOptimalImageSize(context);
  
@@ -206,13 +220,22 @@ index 018c28e..057df38 100644
 +        return `<picture>
 +        <source type="image/avif" srcset="${avif}">
 +        <source type="image/webp" srcset="${webp}">
-+        <img loading="lazy" decoding="async" src="${optimalSrc}" alt="${alt}"${dimAttrs} srcset="${srcsetStr}" sizes="${sizes}">
++        <img loading="lazy" decoding="async" src="${optimalSrc}" alt="${escapeAttr(alt)}"${dimAttrs} srcset="${srcsetStr}" sizes="${sizes}">
 +    </picture>`;
 +    }
 +
 +    // Создаем srcset для responsive изображений (relative paths)
      const srcset = createSrcset(href, path.basename(href), optimalSize, currentMdDir);
      const sizes = createSizes();
+ 
+@@ -249,7 +317,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+     return `<picture>
+         <source type="image/avif" srcset="${avif}">
+         <source type="image/webp" srcset="${webp}">
+-        <img loading="lazy" decoding="async" src="${optimalSrc}" alt="${alt}"${dimAttrs} srcset="${srcset}" sizes="${sizes}">
++        <img loading="lazy" decoding="async" src="${optimalSrc}" alt="${escapeAttr(alt)}"${dimAttrs} srcset="${srcset}" sizes="${sizes}">
+     </picture>`;
+ }
  
 diff --git a/node_modules/k-engine/lib/markdown.js b/node_modules/k-engine/lib/markdown.js
 index 9252b95..4cc82fd 100644
