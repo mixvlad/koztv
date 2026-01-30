@@ -1,5 +1,5 @@
 diff --git a/node_modules/k-engine/build.js b/node_modules/k-engine/build.js
-index e44d271..71d39e4 100644
+index e44d271..d884454 100644
 --- a/node_modules/k-engine/build.js
 +++ b/node_modules/k-engine/build.js
 @@ -30,6 +30,8 @@ fs.ensureDirSync(config.outputDir);
@@ -48,6 +48,18 @@ index e44d271..71d39e4 100644
                  // This is a language folder, process its contents but don't create the folder
                  await processDir(fullPath);
              } else {
+@@ -157,6 +161,11 @@ async function cleanupRemovedFiles() {
+         for (const entry of entries) {
+             const fullPath = path.join(dirPath, entry.name);
+ 
++            // Skip media directory - managed externally
++            if (entry.name === 'media') {
++                continue;
++            }
++
+             if (entry.isDirectory()) {
+                 // Рекурсивно очищаем подпапки
+                 await cleanupDir(fullPath);
 diff --git a/node_modules/k-engine/lib/fileProcessors.js b/node_modules/k-engine/lib/fileProcessors.js
 index 7229470..9ed9a00 100644
 --- a/node_modules/k-engine/lib/fileProcessors.js
