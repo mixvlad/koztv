@@ -7,7 +7,7 @@ date: 2016-11-08
 
 Когда я попытался протестировать свою программу перед отправкой в Windows Store, я получил ошибку от Windows App Certification Kit:
 
-![](image1.png "screenshot-2016-11-09-21-13-03")
+![](../../en/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image1.png "screenshot-2016-11-09-21-13-03")
 
 Но мы всё ещё можем использовать консольное приложение — **appcert.exe**
 
@@ -15,7 +15,7 @@ date: 2016-11-08
 
 1\. Вам нужно установить подготовленную версию вашего приложения, она находится рядом с файлом bundle. Найдите файл с именем Add-AppDevPackage.ps и запустите его через PowerShell.
 
-![](image2.png "screenshot-2016-11-09-21-28-57")
+![](../../en/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image2.png "screenshot-2016-11-09-21-28-57")
 
 2\. Откройте PowerShell и выполните команду:
 
@@ -25,7 +25,7 @@ Get-AppxPackage > packages.txt
 
 3\. Откройте файл packages.txt и найдите своё приложение, скопируйте PackageFullName:
 
-![](image3.png "screenshot-2016-11-09-21-41-10")
+![](../../en/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image3.png "screenshot-2016-11-09-21-41-10")
 
 4\. Создайте файл **testPackage.bat** и поместите в него этот текст:
 

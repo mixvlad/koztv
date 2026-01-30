@@ -12,7 +12,7 @@ mysql --user=root --password=your_password
 Параметры подключения можно найти в **{папка redmine}/htdocs/config/database**
 
 Если учётные данные верны, вы увидите приветственное сообщение от консоли MySql:
-![](image1.png)
+![](../../en/reset-password-and-give-admin-rights-to-redmine-account/image1.png)
 
 Теперь нужно посмотреть все базы данных на текущем сервере mysql, выполните эту команду:
 

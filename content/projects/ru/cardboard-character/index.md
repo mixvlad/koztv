@@ -3,7 +3,7 @@ title: "Картонный персонаж"
 date: 2022-09-13
 ---
 
-<video src="video.mp4" autoplay muted loop playsinline controls style="max-width:100%;height:auto;"></video>
+<video src="../../en/cardboard-character/video.mp4" autoplay muted loop playsinline controls style="max-width:100%;height:auto;"></video>
 
 Для создания этого анимированного персонажа я следовал этим урокам:
 

@@ -10,9 +10,9 @@ date: 2020-04-28
 
 [Играть в pushkingame](https://mixvlad.github.io/PushkinGame/ "Играть в Pushkin game")
 
-![](image1.png "Screen Shot 2020-04-28 at 16.10.52")
+![](../../en/pushkingame/image1.png "Screen Shot 2020-04-28 at 16.10.52")
 
-![](image2.png "Screen Shot 2020-04-28 at 15.46.15")
+![](../../en/pushkingame/image2.png "Screen Shot 2020-04-28 at 15.46.15")
 
 Страница результатов
 --------------------
@@ -24,11 +24,11 @@ date: 2020-04-28
 
 У нас есть три разные игры — запятые, запятые с таймером и режим тире.
 
-![](image3.png "screencapture-pushkingame-ru-2020-04-28-15_45_08")
+![](../../en/pushkingame/image3.png "screencapture-pushkingame-ru-2020-04-28-15_45_08")
 
 Технологии
 ----------
 
 Я использовал Angular в качестве фреймворка для разработки сайта pushkingame. [Исходный код доступен на github](https://github.com/mixvlad/PushkinGame). Проект работает на Github Pages.
 
-![](image4.png "2022-09-13_15-09-54")
+![](../../en/pushkingame/image4.png "2022-09-13_15-09-54")
