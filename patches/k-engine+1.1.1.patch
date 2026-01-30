@@ -1,0 +1,373 @@
+diff --git a/node_modules/k-engine/build.js b/node_modules/k-engine/build.js
+index e44d271..71d39e4 100644
+--- a/node_modules/k-engine/build.js
++++ b/node_modules/k-engine/build.js
+@@ -30,6 +30,8 @@ fs.ensureDirSync(config.outputDir);
+ // Helper to adjust paths for multi-language content
+ // content/posts/en/slug/file -> docs/posts/slug/file (default lang, no prefix)
+ // content/posts/ru/slug/file -> docs/ru/posts/slug/file (other lang, with prefix)
++// content/projects/en/slug/file -> docs/projects/slug/file (default lang, no prefix)
++// content/projects/ru/slug/file -> docs/ru/projects/slug/file (other lang, with prefix)
+ function adjustPathForLanguage(relPath) {
+     const languages = config.languages || [];
+     if (languages.length === 0) return relPath;
+@@ -37,17 +39,18 @@ function adjustPathForLanguage(relPath) {
+     const defaultLang = languages[0];
+     const pathParts = relPath.split(path.sep);
+ 
+-    // Pattern: posts/{lang}/slug/...
+-    if (pathParts[0] === 'posts' && pathParts.length >= 3 && languages.includes(pathParts[1])) {
++    // Pattern: posts/{lang}/slug/... or projects/{lang}/slug/...
++    const contentType = pathParts[0]; // 'posts' or 'projects'
++    if ((contentType === 'posts' || contentType === 'projects') && pathParts.length >= 3 && languages.includes(pathParts[1])) {
+         const lang = pathParts[1];
+         const rest = pathParts.slice(2); // slug and everything after
+ 
+         if (lang === defaultLang) {
+             // Default language: posts/en/slug/file -> posts/slug/file
+-            return path.join('posts', ...rest);
++            return path.join(contentType, ...rest);
+         } else {
+             // Non-default language: posts/ru/slug/file -> ru/posts/slug/file
+-            return path.join(lang, 'posts', ...rest);
++            return path.join(lang, contentType, ...rest);
+         }
+     }
+ 
+@@ -66,10 +69,11 @@ async function processDir(srcDir) {
+         const destPath = path.join(config.outputDir, adjustedRelPath);
+ 
+         if (entry.isDirectory()) {
+-            // For language directories inside posts/, don't create them directly
++            // For language directories inside posts/ or projects/, don't create them directly
+             // as their contents will be remapped
+             const languages = config.languages || [];
+-            if (relPath.startsWith('posts' + path.sep) && languages.includes(entry.name)) {
++            const isLangDir = (relPath.startsWith('posts' + path.sep) || relPath.startsWith('projects' + path.sep)) && languages.includes(entry.name);
++            if (isLangDir) {
+                 // This is a language folder, process its contents but don't create the folder
+                 await processDir(fullPath);
+             } else {
+diff --git a/node_modules/k-engine/lib/fileProcessors.js b/node_modules/k-engine/lib/fileProcessors.js
+index 7229470..9ed9a00 100644
+--- a/node_modules/k-engine/lib/fileProcessors.js
++++ b/node_modules/k-engine/lib/fileProcessors.js
+@@ -74,6 +74,8 @@ const fileProcessors = {
+         let currentLang = defaultLang;
+         let slug = null;
+ 
++        let contentType = 'page'; // post, project, or page
++
+         if (languages.length > 0) {
+             const pathParts = relPath.split(path.sep);
+ 
+@@ -81,11 +83,29 @@ const fileProcessors = {
+             if (pathParts.length >= 3 && languages.includes(pathParts[0]) && pathParts[1] === 'posts') {
+                 currentLang = pathParts[0];
+                 slug = pathParts[2];
++                contentType = 'post';
+             }
+             // Pattern: posts/slug/index.md (default language)
+             else if (pathParts[0] === 'posts' && pathParts.length >= 2) {
+                 currentLang = defaultLang;
+                 slug = pathParts[1];
++                contentType = 'post';
++            }
++            // Pattern: {lang}/projects/slug/index.md (non-default language)
++            else if (pathParts.length >= 3 && languages.includes(pathParts[0]) && pathParts[1] === 'projects') {
++                currentLang = pathParts[0];
++                slug = pathParts[2];
++                contentType = 'project';
++            }
++            // Pattern: projects/slug/index.md (default language)
++            else if (pathParts[0] === 'projects' && pathParts.length >= 2) {
++                currentLang = defaultLang;
++                slug = pathParts[1];
++                contentType = 'project';
++            }
++            // Pattern: {lang}/index.md (home page for non-default language)
++            else if (pathParts.length >= 1 && languages.includes(pathParts[0])) {
++                currentLang = pathParts[0];
+             }
+         }
+ 
+@@ -94,7 +114,7 @@ const fileProcessors = {
+             (languages.length > 0 && languages.some(l => relPath === `${l}${path.sep}index.md`));
+ 
+         if (isHomePage) {
+-            const proj = generateProjectsMarkup();
++            const proj = generateProjectsMarkup(currentLang);
+             mdBody = mdBody
+                 .replace(/{{postsList}}/g, generatePostsMarkdownList(currentLang))
+                 .replace(/{{projectsFeatured}}/g, proj.featured)
+@@ -108,7 +128,7 @@ const fileProcessors = {
+         const langOptions = languages.length > 0 ? {
+             lang: currentLang,
+             slug: slug,
+-            type: slug ? 'post' : 'page'
++            type: contentType
+         } : {};
+ 
+         let html = convertMarkdownToHtml(mdBody, {
+diff --git a/node_modules/k-engine/lib/images.js b/node_modules/k-engine/lib/images.js
+index 018c28e..057df38 100644
+--- a/node_modules/k-engine/lib/images.js
++++ b/node_modules/k-engine/lib/images.js
+@@ -201,18 +201,39 @@ function createSizes() {
+ 
+ // Создает HTML для изображения с поддержкой WebP/AVIF и responsive sizes
+ function createImageHtml(href, title, text, currentMdDir = '', context = 'default') {
+-    if (href.startsWith('/')) href = href.substring(1);
++    // Keep absolute paths as-is (they start with /) - they work on web servers
++    const isAbsolute = href.startsWith('/');
+     const ext = path.extname(href).toLowerCase();
+     const supportsPicture = ['.png', '.jpg', '.jpeg'].includes(ext);
+     const alt = text || title || '';
+ 
++    // For absolute paths, try to find the source file in the default language folder
++    // e.g., /projects/chess-rodeo/image.png -> content/projects/en/chess-rodeo/image.png
++    const resolveSourcePath = (hrefPath) => {
++        if (!isAbsolute) {
++            return path.join(config.sourceDir, currentMdDir, hrefPath);
++        }
++        // For absolute paths, try to find in projects/en/ structure
++        const languages = config.languages || [];
++        const defaultLang = languages[0] || 'en';
++        const pathWithoutSlash = hrefPath.substring(1);
++        // Try default language folder first
++        const langPath = pathWithoutSlash.replace(/^(projects|posts)\//, `$1/${defaultLang}/`);
++        const fullPath = path.join(config.sourceDir, langPath);
++        if (fs.existsSync(fullPath)) {
++            return fullPath;
++        }
++        // Fallback to direct path
++        return path.join(config.sourceDir, pathWithoutSlash);
++    };
++
+     if (!supportsPicture) {
+         // Для неподдерживаемых форматов - обычная обработка
+         let base = `<img src="${href}" alt="${alt}"`;
+ 
+         // Добавляем размеры если можем их получить
+         try {
+-            const imgPath = path.join(config.sourceDir, currentMdDir, href);
++            const imgPath = resolveSourcePath(href);
+             const { width, height } = sizeOf(imgPath);
+             if (width && height) {
+                 base += ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
+@@ -229,7 +250,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+     // Получаем размеры для width/height атрибутов
+     let dimAttrs = '';
+     try {
+-        const imgPath = path.join(config.sourceDir, currentMdDir, href);
++        const imgPath = resolveSourcePath(href);
+         const { width, height } = sizeOf(imgPath);
+         if (width && height) {
+             dimAttrs = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
+@@ -239,7 +260,48 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
+     // Определяем оптимальный размер на основе контекста
+     const optimalSize = getOptimalImageSize(context);
+ 
+-    // Создаем srcset для responsive изображений
++    // For absolute paths, create simple srcset with absolute paths
++    if (isAbsolute) {
++        const baseName = path.basename(href).replace(/\.[^/.]+$/, '');
++        const basePath = path.dirname(href);
++        let srcset = [];
++        let originalWidth = null;
++        try {
++            const imgPath = resolveSourcePath(href);
++            const { width } = sizeOf(imgPath);
++            originalWidth = width;
++        } catch {}
++        for (const size of config.images.sizes) {
++            if (!originalWidth || size <= originalWidth) {
++                srcset.push(`${basePath}/${baseName}-${size}.webp ${size}w`);
++            }
++        }
++        const srcsetStr = srcset.join(', ');
++        const sizes = createSizes();
++
++        // Use optimal src with absolute path
++        let optimalSrc = href;
++        if (originalWidth) {
++            let bestSize = null;
++            for (const size of config.images.sizes) {
++                if (size >= optimalSize && size <= originalWidth) {
++                    bestSize = size;
++                    break;
++                }
++            }
++            if (bestSize !== null) {
++                optimalSrc = `${basePath}/${baseName}-${bestSize}.webp`;
++            }
++        }
++
++        return `<picture>
++        <source type="image/avif" srcset="${avif}">
++        <source type="image/webp" srcset="${webp}">
++        <img loading="lazy" decoding="async" src="${optimalSrc}" alt="${alt}"${dimAttrs} srcset="${srcsetStr}" sizes="${sizes}">
++    </picture>`;
++    }
++
++    // Создаем srcset для responsive изображений (relative paths)
+     const srcset = createSrcset(href, path.basename(href), optimalSize, currentMdDir);
+     const sizes = createSizes();
+ 
+diff --git a/node_modules/k-engine/lib/markdown.js b/node_modules/k-engine/lib/markdown.js
+index 9252b95..ac8f95f 100644
+--- a/node_modules/k-engine/lib/markdown.js
++++ b/node_modules/k-engine/lib/markdown.js
+@@ -221,13 +221,31 @@ function getPostLanguages(slug) {
+     });
+ }
+ 
++// Get available languages for a project (for language switcher)
++function getProjectLanguages(slug) {
++    const languages = config.languages || [];
++    if (languages.length === 0) return [];
++
++    return languages.filter(lang => {
++        const mdPath = path.join(config.sourceDir, 'projects', lang, slug, 'index.md');
++        return fs.existsSync(mdPath);
++    });
++}
++
+ // Generate language switcher HTML
+ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+     const languages = config.languages || [];
+     if (languages.length <= 1) return '';
+ 
+     const defaultLang = languages[0];
+-    const availableLangs = type === 'post' ? getPostLanguages(slug) : languages;
++    let availableLangs;
++    if (type === 'post') {
++        availableLangs = getPostLanguages(slug);
++    } else if (type === 'project') {
++        availableLangs = getProjectLanguages(slug);
++    } else {
++        availableLangs = languages;
++    }
+ 
+     if (availableLangs.length <= 1) return '';
+ 
+@@ -246,7 +264,14 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+         const isDefault = lang === defaultLang;
+         const isCurrent = lang === currentLang;
+         const urlPrefix = isDefault ? '' : `/${lang}`;
+-        const href = type === 'post' ? `${urlPrefix}/posts/${slug}/` : `${urlPrefix}/`;
++        let href;
++        if (type === 'post') {
++            href = `${urlPrefix}/posts/${slug}/`;
++        } else if (type === 'project') {
++            href = `${urlPrefix}/projects/${slug}/`;
++        } else {
++            href = `${urlPrefix}/`;
++        }
+         const name = langNames[lang] || lang.toUpperCase();
+ 
+         if (isCurrent) {
+@@ -259,11 +284,29 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+ }
+ 
+ // Generate HTML markup for projects section
+-function generateProjectsMarkup() {
+-    const projectsRoot = path.join(config.sourceDir, 'projects');
++// If lang is provided, looks in projects/{lang}/ folder
++// If lang is the default (first in config.languages), URLs have no prefix
++// Otherwise URLs are prefixed with /{lang}/
++function generateProjectsMarkup(lang = null) {
++    const languages = config.languages || [];
++    const defaultLang = languages[0] || null;
++    const isDefaultLang = !lang || lang === defaultLang;
++
++    // Determine projects root based on language config
++    let projectsRoot;
++    if (languages.length > 0 && lang) {
++        projectsRoot = path.join(config.sourceDir, 'projects', lang);
++    } else {
++        projectsRoot = path.join(config.sourceDir, 'projects');
++    }
++
+     if (!fs.existsSync(projectsRoot)) return { featured: '', grid: '' };
+ 
+-    const dirs = fs.readdirSync(projectsRoot, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name);
++    const dirs = fs.readdirSync(projectsRoot, { withFileTypes: true })
++        .filter(d => d.isDirectory())
++        // Skip language directories if they exist at wrong level
++        .filter(d => !languages.includes(d.name))
++        .map(d => d.name);
+ 
+     const metas = dirs.map(slug => {
+         const mdPath = path.join(projectsRoot, slug, 'index.md');
+@@ -277,15 +320,31 @@ function generateProjectsMarkup() {
+             featured = !!attributes.featured;
+         }
+ 
+-        // find cover image
++        // find cover image in current lang folder first, then fallback to default lang
+         const dirFiles = fs.readdirSync(path.join(projectsRoot, slug));
+         let cover = dirFiles.find(f => /^cover\.(png|jpe?g|gif|svg|webp)$/i.test(f));
+         if (!cover) {
+             cover = dirFiles.find(f => /image1\.(png|jpe?g|gif|svg|webp)$/i.test(f));
+         }
+-        const hasVideo = fs.existsSync(path.join(projectsRoot, slug, 'video.mp4'));
+ 
+-        return { slug, title, date, cover, hasVideo, featured };
++        // For non-default languages, check if media exists in default lang folder
++        let coverRoot = projectsRoot;
++        if (!cover && !isDefaultLang && defaultLang) {
++            const defaultRoot = path.join(config.sourceDir, 'projects', defaultLang, slug);
++            if (fs.existsSync(defaultRoot)) {
++                const defaultFiles = fs.readdirSync(defaultRoot);
++                cover = defaultFiles.find(f => /^cover\.(png|jpe?g|gif|svg|webp)$/i.test(f));
++                if (!cover) {
++                    cover = defaultFiles.find(f => /image1\.(png|jpe?g|gif|svg|webp)$/i.test(f));
++                }
++                if (cover) coverRoot = defaultRoot;
++            }
++        }
++
++        const hasVideo = fs.existsSync(path.join(projectsRoot, slug, 'video.mp4')) ||
++            (!isDefaultLang && defaultLang && fs.existsSync(path.join(config.sourceDir, 'projects', defaultLang, slug, 'video.mp4')));
++
++        return { slug, title, date, cover, hasVideo, featured, coverRoot };
+     });
+ 
+     metas.sort((a,b)=> Date.parse(b.date) - Date.parse(a.date));
+@@ -294,13 +353,16 @@ function generateProjectsMarkup() {
+     if(!featuredProject && metas.length) featuredProject = metas[0];
+     const others = metas.filter(m=>m!==featuredProject);
+ 
++    // URL prefix for non-default languages
++    const urlPrefix = isDefaultLang ? '' : `/${lang}`;
++
+     const makeAnchor = m => {
+         const videoAttr = m.hasVideo ? ' data-video' : '';
+         const imgSrc = m.cover ? `projects/${m.slug}/${m.cover}` : '';
+         let dimAttr = '';
+-        if (imgSrc) {
++        if (imgSrc && m.coverRoot) {
+             try {
+-                const { width, height } = sizeOf(path.join(projectsRoot, m.slug, m.cover));
++                const { width, height } = sizeOf(path.join(m.coverRoot, m.slug, m.cover));
+                 if (width && height) {
+                     dimAttr = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
+                 }
+@@ -313,7 +375,7 @@ function generateProjectsMarkup() {
+             const context = m === featuredProject ? 'featured' : 'grid';
+             imgTag = createImageHtml(imgSrc, m.title, m.title, '', context);
+         }
+-        return `<a class="project-item${m===featuredProject?' full':''}" href="projects/${m.slug}/"${videoAttr}${ratioStyle}>${imgTag}<span class="caption">${m.title}</span></a>`;
++        return `<a class="project-item${m===featuredProject?' full':''}" href="${urlPrefix}/projects/${m.slug}/"${videoAttr}${ratioStyle}>${imgTag}<span class="caption">${m.title}</span></a>`;
+     };
+ 
+     return {
+@@ -327,5 +389,6 @@ export {
+     generatePostsMarkdownList,
+     generateProjectsMarkup,
+     getPostLanguages,
++    getProjectLanguages,
+     generateLanguageSwitcher
+ }; 
+\ No newline at end of file

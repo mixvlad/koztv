@@ -1,18 +1,18 @@
 ---
-title: "Симулятор русского языка pushkingame.ru"
+title: "Тренажёр русского языка pushkingame.ru"
 date: 2020-04-28
 ---
 
 Страница игры
 -------------
 
-С симулятором pushkingame вы можете научиться делать меньше ошибок при написании на русском языке. Вам нужно нажать на правильный ответ, и вы увидите правильный ответ и связанное с ним правило русского языка.
+С помощью тренажёра pushkingame можно научиться делать меньше ошибок при письме на русском языке. Нужно выбрать правильный ответ, и вы увидите правильный вариант и соответствующее правило русского языка.
 
-[Играть в pushkingame](https://mixvlad.github.io/PushkinGame/ "Играть в Pushkin game")
+[Играть в pushkingame](https://mixvlad.github.io/PushkinGame/ "Играть в Пушкин-игру")
 
-![](../../en/pushkingame/image1.png "Screen Shot 2020-04-28 at 16.10.52")
+![](/projects/pushkingame/image1.png "Экран игры 1")
 
-![](../../en/pushkingame/image2.png "Screen Shot 2020-04-28 at 15.46.15")
+![](/projects/pushkingame/image2.png "Экран игры 2")
 
 Страница результатов
 --------------------
@@ -22,13 +22,13 @@ date: 2020-04-28
 Главная страница
 ----------------
 
-У нас есть три разные игры — запятые, запятые с таймером и режим тире.
+У нас есть три разных режима игры — запятые, запятые с таймером и режим тире.
 
-![](../../en/pushkingame/image3.png "screencapture-pushkingame-ru-2020-04-28-15_45_08")
+![](/projects/pushkingame/image3.png "Главная страница")
 
 Технологии
 ----------
 
-Я использовал Angular в качестве фреймворка для разработки сайта pushkingame. [Исходный код доступен на github](https://github.com/mixvlad/PushkinGame). Проект работает на Github Pages.
+Для разработки сайта pushkingame я использовал Angular в качестве фреймворка. [Исходный код доступен на GitHub](https://github.com/mixvlad/PushkinGame). Проект работает на GitHub Pages.
 
-![](../../en/pushkingame/image4.png "2022-09-13_15-09-54")
+![](/projects/pushkingame/image4.png "Скриншот кода")
