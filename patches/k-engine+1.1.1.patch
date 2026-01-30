@@ -283,9 +283,18 @@ index 018c28e..976aa97 100644
  }
  
 diff --git a/node_modules/k-engine/lib/markdown.js b/node_modules/k-engine/lib/markdown.js
-index 9252b95..4cc82fd 100644
+index 9252b95..2f144f9 100644
 --- a/node_modules/k-engine/lib/markdown.js
 +++ b/node_modules/k-engine/lib/markdown.js
+@@ -33,7 +33,7 @@ renderer.image = (href, title, text) => {
+     return createImageHtml(href, title, text, currentMdDir, 'content');
+ };
+ 
+-marked.setOptions({ renderer });
++marked.setOptions({ renderer, breaks: true });
+ 
+ // Функция для чтения шаблона
+ function loadTemplate() {
 @@ -89,7 +89,9 @@ function processPartials(template, variables) {
          // Подставляем переменные в partial
          return partialContent
