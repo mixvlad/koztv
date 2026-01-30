@@ -1,7 +1,7 @@
 ---
 title: "Для маленьких проектов Supabase вообще-то неплохое решение."
 date: 2026-01-22
-lang: ru
+lang: original
 original_link: "https://t.me/koztv/9"
 ---
 

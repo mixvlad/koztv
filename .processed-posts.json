@@ -1,83 +1,72 @@
 {
   "koztv-6": {
     "posts": [
-      "en/i-really-did-a-lot",
-      "de/ich-habe-wirklich-viel-gemacht",
       "ru/ya-deystvitelno-mnogoe-delal"
     ],
     "date": "2026-01-19T16:09:12.000Z",
-    "processedAt": "2026-01-30T11:36:43.934Z"
+    "processedAt": "2026-01-30T12:06:00.240Z"
   },
   "koztv-7": {
     "posts": [
-      "en/i-spent-a-week-to-understand-that-i-dont-need-a-trendy-stack",
       "ru/ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-"
     ],
     "date": "2026-01-20T13:11:51.000Z",
-    "processedAt": "2026-01-30T11:36:44.138Z"
+    "processedAt": "2026-01-30T12:06:00.444Z"
   },
   "koztv-8": {
     "posts": [
-      "en/about-the-fact-that-sometimes-its-better-to-throw-away-and-f",
       "ru/pro-to-chto-inogda-luchshe-vykinut-i-zabyt"
     ],
     "date": "2026-01-22T12:48:34.000Z",
-    "processedAt": "2026-01-30T11:36:44.342Z"
+    "processedAt": "2026-01-30T12:06:00.647Z"
   },
   "koztv-9": {
     "posts": [
-      "en/supabase-is-actually-a-pretty-good-solution-for-small-projec",
       "ru/dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni"
     ],
     "date": "2026-01-22T12:55:06.000Z",
-    "processedAt": "2026-01-30T11:36:44.545Z"
-  },
-  "koztv-12": {
-    "posts": [
-      "en/the-generated-trailer-looks-better-than-90-of-films-released",
-      "ru/sgenerirovannyy-treyler-vyglyadit-luchshe-chem-u-90-filmov-k"
-    ],
-    "date": "2026-01-24T16:55:57.000Z",
-    "processedAt": "2026-01-30T11:36:44.954Z"
-  },
-  "koztv-13": {
-    "posts": [
-      "en/hollywood-ai-generated-movie-trailers-can-no-longer-be-disti",
-      "ru/gollivudskie-neyrosetevye-treylery-filmov-bolshe-nelzya-otli"
-    ],
-    "date": "2026-01-24T16:55:57.000Z",
-    "processedAt": "2026-01-30T11:36:45.156Z"
-  },
-  "koztv-14": {
-    "posts": [
-      "en/about-toolsmodels-for-vibe-coding",
-      "ru/pro-instrumentymodeli-dlya-vaybkodinga"
-    ],
-    "date": "2026-01-28T17:09:31.000Z",
-    "processedAt": "2026-01-30T11:36:45.359Z"
-  },
-  "koztv-15": {
-    "posts": [
-      "en/following-up-on-the-post-you-can-use-kimi-k25-for-free-for-t",
-      "ru/v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp"
-    ],
-    "date": "2026-01-28T18:19:45.000Z",
-    "processedAt": "2026-01-30T11:36:45.564Z"
-  },
-  "koztv-16": {
-    "posts": [
-      "en/i-tested-it-it-really-works-well-they-also-give-out-glm-47-f",
-      "ru/ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r"
-    ],
-    "date": "2026-01-29T10:47:03.000Z",
-    "processedAt": "2026-01-30T11:36:45.767Z"
+    "processedAt": "2026-01-30T12:06:00.849Z"
   },
   "koztv-11": {
     "posts": [
-      "en/bought-myself-this-beauty-for-3000-rubles-ill-try-to-make-so",
       "ru/prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy"
     ],
     "date": "2026-01-24T15:59:16.000Z",
-    "processedAt": "2026-01-30T11:36:44.747Z"
+    "processedAt": "2026-01-30T12:06:01.053Z"
+  },
+  "koztv-12": {
+    "posts": [
+      "ru/sgenerirovannyy-treyler-vyglyadit-luchshe-chem-u-90-filmov-k"
+    ],
+    "date": "2026-01-24T16:55:57.000Z",
+    "processedAt": "2026-01-30T12:06:01.258Z"
+  },
+  "koztv-13": {
+    "posts": [
+      "ru/gollivudskie-neyrosetevye-treylery-filmov-bolshe-nelzya-otli"
+    ],
+    "date": "2026-01-24T16:55:57.000Z",
+    "processedAt": "2026-01-30T12:06:01.461Z"
+  },
+  "koztv-14": {
+    "posts": [
+      "ru/pro-instrumentymodeli-dlya-vaybkodinga"
+    ],
+    "date": "2026-01-28T17:09:31.000Z",
+    "processedAt": "2026-01-30T12:06:01.665Z"
+  },
+  "koztv-15": {
+    "posts": [
+      "ru/v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp"
+    ],
+    "date": "2026-01-28T18:19:45.000Z",
+    "processedAt": "2026-01-30T12:06:01.868Z"
+  },
+  "koztv-16": {
+    "posts": [
+      "ru/ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r"
+    ],
+    "date": "2026-01-29T10:47:03.000Z",
+    "processedAt": "2026-01-30T12:06:02.071Z"
   }
 }

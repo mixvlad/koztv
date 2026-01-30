@@ -1,7 +1,7 @@
 ---
 title: "Я потестил, реально неплохо работает, они и GLM 4.7 бесплатно раздают (тоже хорошая модель, выше писал про нее)."
 date: 2026-01-29
-lang: ru
+lang: original
 original_link: "https://t.me/koztv/16"
 reply_to_msg_id: 15
 ---

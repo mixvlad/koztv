@@ -1,7 +1,7 @@
 ---
 title: "В продолжение поста, ближайшие 6 дней можно бесплатно использовать kimi k2.5, если установить их приложуху или расширение. https://kilo.ai/"
 date: 2026-01-28
-lang: ru
+lang: original
 original_link: "https://t.me/koztv/15"
 reply_to_msg_id: 14
 ---

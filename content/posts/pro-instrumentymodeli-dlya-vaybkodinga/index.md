@@ -1,7 +1,7 @@
 ---
 title: "Про инструменты/модели для вайбкодинга."
 date: 2026-01-28
-lang: ru
+lang: original
 original_link: "https://t.me/koztv/14"
 ---
 

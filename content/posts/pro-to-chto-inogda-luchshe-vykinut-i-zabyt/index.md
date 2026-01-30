@@ -1,7 +1,7 @@
 ---
 title: "Про то, что иногда лучше выкинуть и забыть."
 date: 2026-01-22
-lang: ru
+lang: original
 original_link: "https://t.me/koztv/8"
 ---
 

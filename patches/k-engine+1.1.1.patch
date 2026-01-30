@@ -283,7 +283,7 @@ index 018c28e..976aa97 100644
  }
  
 diff --git a/node_modules/k-engine/lib/markdown.js b/node_modules/k-engine/lib/markdown.js
-index 9252b95..2f144f9 100644
+index 9252b95..61fbfa3 100644
 --- a/node_modules/k-engine/lib/markdown.js
 +++ b/node_modules/k-engine/lib/markdown.js
 @@ -33,7 +33,7 @@ renderer.image = (href, title, text) => {
@@ -306,7 +306,7 @@ index 9252b95..2f144f9 100644
      });
  }
  
-@@ -115,9 +117,10 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
+@@ -115,9 +117,18 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
      const langPrefix = isDefaultLang ? '' : `/${currentLang}`;
  
      // Generate language switcher if applicable
@@ -315,10 +315,27 @@ index 9252b95..2f144f9 100644
          ? generateLanguageSwitcher(currentLang, langOptions.slug, langOptions.type || 'post')
 -        : '';
 +        : (languages.length > 1 ? generateLanguageSwitcher(currentLang, null, 'page') : '');
++
++    // Generate reply-to link if available
++    let replyToHtml = '';
++    if (metadata.reply_to_msg_id && metadata.original_link) {
++        // Replace msg_id in original_link with reply_to_msg_id
++        const replyLink = metadata.original_link.replace(/\/\d+$/, `/${metadata.reply_to_msg_id}`);
++        replyToHtml = `<div class="reply-to">↩️ <a href="${replyLink}" target="_blank">В ответ на пост</a></div>`;
++    }
  
      // Подготавливаем переменные для шаблона
      const templateVariables = {
-@@ -221,13 +224,31 @@ function getPostLanguages(slug) {
+@@ -126,7 +137,7 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
+         bodyClass: metadata.bodyClass || '',
+         year: yearStr,
+         devReload: devScript,
+-        content: content,
++        content: replyToHtml + content,
+         root: rootPrefix,
+         lang: currentLang,
+         langPrefix: langPrefix,
+@@ -221,13 +232,31 @@ function getPostLanguages(slug) {
      });
  }
  
@@ -351,7 +368,7 @@ index 9252b95..2f144f9 100644
  
      if (availableLangs.length <= 1) return '';
  
-@@ -246,7 +267,14 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+@@ -246,7 +275,14 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
          const isDefault = lang === defaultLang;
          const isCurrent = lang === currentLang;
          const urlPrefix = isDefault ? '' : `/${lang}`;
@@ -367,7 +384,7 @@ index 9252b95..2f144f9 100644
          const name = langNames[lang] || lang.toUpperCase();
  
          if (isCurrent) {
-@@ -259,11 +287,29 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+@@ -259,11 +295,29 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
  }
  
  // Generate HTML markup for projects section
@@ -400,7 +417,7 @@ index 9252b95..2f144f9 100644
  
      const metas = dirs.map(slug => {
          const mdPath = path.join(projectsRoot, slug, 'index.md');
-@@ -277,15 +323,31 @@ function generateProjectsMarkup() {
+@@ -277,15 +331,31 @@ function generateProjectsMarkup() {
              featured = !!attributes.featured;
          }
  
@@ -435,7 +452,7 @@ index 9252b95..2f144f9 100644
      });
  
      metas.sort((a,b)=> Date.parse(b.date) - Date.parse(a.date));
-@@ -294,13 +356,17 @@ function generateProjectsMarkup() {
+@@ -294,13 +364,17 @@ function generateProjectsMarkup() {
      if(!featuredProject && metas.length) featuredProject = metas[0];
      const others = metas.filter(m=>m!==featuredProject);
  
@@ -456,7 +473,7 @@ index 9252b95..2f144f9 100644
                  if (width && height) {
                      dimAttr = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
                  }
-@@ -313,7 +379,7 @@ function generateProjectsMarkup() {
+@@ -313,7 +387,7 @@ function generateProjectsMarkup() {
              const context = m === featuredProject ? 'featured' : 'grid';
              imgTag = createImageHtml(imgSrc, m.title, m.title, '', context);
          }
@@ -465,7 +482,7 @@ index 9252b95..2f144f9 100644
      };
  
      return {
-@@ -327,5 +393,6 @@ export {
+@@ -327,5 +401,6 @@ export {
      generatePostsMarkdownList,
      generateProjectsMarkup,
      getPostLanguages,
