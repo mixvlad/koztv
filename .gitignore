@@ -52,3 +52,8 @@ temp/
 
 # Keep CNAME file
 !CNAME 
+.telegram-session
+.telegram-export/
+qr-login.png
+.translated-posts.json
+.env
