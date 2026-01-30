@@ -215,10 +215,21 @@ index 018c28e..057df38 100644
      const sizes = createSizes();
  
 diff --git a/node_modules/k-engine/lib/markdown.js b/node_modules/k-engine/lib/markdown.js
-index 9252b95..ac8f95f 100644
+index 9252b95..dcca6e4 100644
 --- a/node_modules/k-engine/lib/markdown.js
 +++ b/node_modules/k-engine/lib/markdown.js
-@@ -221,13 +221,31 @@ function getPostLanguages(slug) {
+@@ -89,7 +89,9 @@ function processPartials(template, variables) {
+         // Подставляем переменные в partial
+         return partialContent
+             .replace(/{{root}}/g, variables.root || '')
+-            .replace(/{{year}}/g, variables.year || '');
++            .replace(/{{year}}/g, variables.year || '')
++            .replace(/{{langSwitcher}}/g, variables.langSwitcher || '')
++            .replace(/{{langPrefix}}/g, variables.langPrefix || '');
+     });
+ }
+ 
+@@ -221,13 +223,31 @@ function getPostLanguages(slug) {
      });
  }
  
@@ -251,7 +262,7 @@ index 9252b95..ac8f95f 100644
  
      if (availableLangs.length <= 1) return '';
  
-@@ -246,7 +264,14 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+@@ -246,7 +266,14 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
          const isDefault = lang === defaultLang;
          const isCurrent = lang === currentLang;
          const urlPrefix = isDefault ? '' : `/${lang}`;
@@ -267,7 +278,7 @@ index 9252b95..ac8f95f 100644
          const name = langNames[lang] || lang.toUpperCase();
  
          if (isCurrent) {
-@@ -259,11 +284,29 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
+@@ -259,11 +286,29 @@ function generateLanguageSwitcher(currentLang, slug, type = 'post') {
  }
  
  // Generate HTML markup for projects section
@@ -300,7 +311,7 @@ index 9252b95..ac8f95f 100644
  
      const metas = dirs.map(slug => {
          const mdPath = path.join(projectsRoot, slug, 'index.md');
-@@ -277,15 +320,31 @@ function generateProjectsMarkup() {
+@@ -277,15 +322,31 @@ function generateProjectsMarkup() {
              featured = !!attributes.featured;
          }
  
@@ -335,7 +346,7 @@ index 9252b95..ac8f95f 100644
      });
  
      metas.sort((a,b)=> Date.parse(b.date) - Date.parse(a.date));
-@@ -294,13 +353,16 @@ function generateProjectsMarkup() {
+@@ -294,13 +355,16 @@ function generateProjectsMarkup() {
      if(!featuredProject && metas.length) featuredProject = metas[0];
      const others = metas.filter(m=>m!==featuredProject);
  
@@ -354,7 +365,7 @@ index 9252b95..ac8f95f 100644
                  if (width && height) {
                      dimAttr = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
                  }
-@@ -313,7 +375,7 @@ function generateProjectsMarkup() {
+@@ -313,7 +377,7 @@ function generateProjectsMarkup() {
              const context = m === featuredProject ? 'featured' : 'grid';
              imgTag = createImageHtml(imgSrc, m.title, m.title, '', context);
          }
@@ -363,7 +374,7 @@ index 9252b95..ac8f95f 100644
      };
  
      return {
-@@ -327,5 +389,6 @@ export {
+@@ -327,5 +391,6 @@ export {
      generatePostsMarkdownList,
      generateProjectsMarkup,
      getPostLanguages,
