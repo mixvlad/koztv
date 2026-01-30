@@ -1,38 +1,53 @@
 {
   "koztv-6": {
     "posts": [
-      "en/ya-deystvitelno-mnogoe-delal"
+      "en/ya-deystvitelno-mnogoe-delal",
+      "i-really-did-a-lot/en.md",
+      "i-really-did-a-lot/ru.md",
+      "ya-deystvitelno-mnogoe-delal/ru.md"
     ],
     "date": "2026-01-19T16:09:12.000Z",
-    "processedAt": "2026-01-30T12:50:21.448Z"
+    "processedAt": "2026-01-30T17:04:15.500Z"
   },
   "koztv-7": {
     "posts": [
-      "en/ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-"
+      "en/ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-",
+      "i-spent-a-week-to-realize-that-i-dont-need-a-trendy-stack/en.md",
+      "i-spent-a-week-to-realize-that-i-dont-need-a-trendy-stack/ru.md",
+      "ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-/ru.md"
     ],
     "date": "2026-01-20T13:11:51.000Z",
-    "processedAt": "2026-01-30T12:51:32.101Z"
+    "processedAt": "2026-01-30T16:56:22.650Z"
   },
   "koztv-8": {
     "posts": [
-      "pro-to-chto-inogda-luchshe-vykinut-i-zabyt/en.md"
+      "pro-to-chto-inogda-luchshe-vykinut-i-zabyt/en.md",
+      "about-how-sometimes-its-better-to-throw-away-and-forget/en.md",
+      "about-how-sometimes-its-better-to-throw-away-and-forget/ru.md",
+      "pro-to-chto-inogda-luchshe-vykinut-i-zabyt/ru.md"
     ],
     "date": "2026-01-22T12:48:34.000Z",
-    "processedAt": "2026-01-30T14:33:50.749Z"
+    "processedAt": "2026-01-30T16:59:16.580Z"
   },
   "koztv-9": {
     "posts": [
-      "dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni/en.md"
+      "dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni/en.md",
+      "supabase-is-actually-a-pretty-good-solution-for-small-projec/en.md",
+      "supabase-is-actually-a-pretty-good-solution-for-small-projec/ru.md",
+      "dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni/ru.md",
+      "for-small-projects-supabase-is-actually-a-pretty-good-soluti/en.md",
+      "for-small-projects-supabase-is-actually-a-pretty-good-soluti/ru.md"
     ],
     "date": "2026-01-22T12:55:06.000Z",
-    "processedAt": "2026-01-30T14:35:03.289Z"
+    "processedAt": "2026-01-30T17:00:25.724Z"
   },
   "koztv-11": {
     "posts": [
-      "prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy/en.md"
+      "prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy/en.md",
+      "prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy/ru.md"
     ],
     "date": "2026-01-24T15:59:16.000Z",
-    "processedAt": "2026-01-30T14:35:20.412Z"
+    "processedAt": "2026-01-30T16:47:38.916Z"
   },
   "koztv-12": {
     "posts": [
@@ -40,7 +55,7 @@
       "sgenerirovannyy-treyler-vyglyadit-luchshe-chem-u-90-filmov-k/ru.md"
     ],
     "date": "2026-01-24T16:55:57.000Z",
-    "processedAt": "2026-01-30T16:21:08.746Z"
+    "processedAt": "2026-01-30T16:47:43.718Z"
   },
   "koztv-13": {
     "posts": [
@@ -52,24 +67,34 @@
   },
   "koztv-14": {
     "posts": [
-      "pro-instrumentymodeli-dlya-vaybkodinga/en.md"
+      "pro-instrumentymodeli-dlya-vaybkodinga/en.md",
+      "pro-instrumentymodeli-dlya-vaybkodinga/ru.md",
+      "about-toolsmodels-for-vibe-coding/en.md",
+      "about-toolsmodels-for-vibe-coding/ru.md"
     ],
     "date": "2026-01-28T17:09:31.000Z",
-    "processedAt": "2026-01-30T14:39:02.544Z"
+    "processedAt": "2026-01-30T17:09:26.298Z"
   },
   "koztv-15": {
     "posts": [
-      "v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp/en.md"
+      "v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp/en.md",
+      "following-up-on-the-post-you-can-use-kimi-k25-for-free-for-t/en.md",
+      "following-up-on-the-post-you-can-use-kimi-k25-for-free-for-t/ru.md",
+      "v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp/ru.md"
     ],
     "date": "2026-01-28T18:19:45.000Z",
-    "processedAt": "2026-01-30T14:40:20.058Z"
+    "processedAt": "2026-01-30T17:10:12.665Z"
   },
   "koztv-16": {
     "posts": [
       "ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r/en.md",
-      "ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r/ru.md"
+      "ya-potestil-realno-neploho-rabotaet-oni-i-glm-47-besplatno-r/ru.md",
+      "i-tested-it-out-it-actually-works-pretty-well-theyre-also-gi/en.md",
+      "i-tested-it-out-it-actually-works-pretty-well-theyre-also-gi/ru.md",
+      "i-tested-it-it-really-works-pretty-well-and-theyre-giving-aw/en.md",
+      "i-tested-it-it-really-works-pretty-well-and-theyre-giving-aw/ru.md"
     ],
     "date": "2026-01-29T10:47:03.000Z",
-    "processedAt": "2026-01-30T14:55:19.512Z"
+    "processedAt": "2026-01-30T17:11:26.251Z"
   }
 }

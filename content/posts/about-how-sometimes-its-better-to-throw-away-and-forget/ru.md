@@ -3,6 +3,7 @@ title: "Про то, что иногда лучше выкинуть и забы
 date: 2026-01-22
 lang: ru
 original_link: "https://t.me/koztv/8"
+slug: "pro-to-chto-inogda-luchshe-vykinut-i-zabyt"
 ---
 
 В продолжение истории с [Supabase](https://supabase.com/).

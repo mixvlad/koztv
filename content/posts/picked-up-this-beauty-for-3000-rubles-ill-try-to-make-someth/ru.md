@@ -3,6 +3,7 @@ title: "Прикупил себе вот такого красавчика за 
 date: 2026-01-24
 lang: ru
 original_link: "https://t.me/koztv/11"
+slug: "prikupil-sebe-vot-takogo-krasavchika-za-3000-rubley-poprobuy"
 ---
 
 

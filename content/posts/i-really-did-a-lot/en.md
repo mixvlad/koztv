@@ -7,13 +7,13 @@ translated_from: "ru"
 ---
 
 Projects, technologies, attempts to optimize everything,
-understand faster, solve more precisely.
-Over time, I began to notice,
-that perhaps the point,
-is not in the quantity of what is done,
-but in the quality of choice.
+understand faster, decide more accurately.
+Over time, I started noticing,
+that perhaps the point
+isn't in the amount of work done,
+but in the quality of the choices.
 This channel is an attempt
-to figure out,
+to figure out
 how we think and choose
 in a world that is constantly accelerating.
 Sometimes through technology.

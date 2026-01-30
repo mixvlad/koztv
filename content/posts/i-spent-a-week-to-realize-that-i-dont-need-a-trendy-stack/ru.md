@@ -3,6 +3,7 @@ title: "Я потратил неделю, чтобы понять, что мне
 date: 2026-01-20
 lang: ru
 original_link: "https://t.me/koztv/7"
+slug: "ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-"
 ---
 
 Как и многие, я начал с Supabase в качестве базы данных. Потом упёрся в бесплатные лимиты, платные показались жадными, и я решил развернуть всё на своём сервере. Убил на это неделю.

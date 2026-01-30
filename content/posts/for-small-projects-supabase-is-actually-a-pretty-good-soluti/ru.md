@@ -3,6 +3,7 @@ title: "Для маленьких проектов Supabase вообще-то н
 date: 2026-01-22
 lang: ru
 original_link: "https://t.me/koztv/9"
+slug: "dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni"
 ---
 
 Если влезаешь в лимиты или если не жалко денег за облако —

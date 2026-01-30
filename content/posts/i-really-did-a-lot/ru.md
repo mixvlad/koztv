@@ -3,6 +3,7 @@ title: "Я действительно многое делал."
 date: 2026-01-19
 lang: ru
 original_link: "https://t.me/koztv/6"
+slug: "ya-deystvitelno-mnogoe-delal"
 ---
 
 Проекты, технологии, попытки всё оптимизировать,
