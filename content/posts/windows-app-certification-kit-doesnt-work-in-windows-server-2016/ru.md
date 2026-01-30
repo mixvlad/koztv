@@ -1,5 +1,6 @@
 ---
 title: "Windows App Certification Kit не работает в Windows Server 2016"
+slug: "windows-app-certification-kit-ne-rabotaet-v-windows-server-2"
 date: 2016-11-08
 ---
 

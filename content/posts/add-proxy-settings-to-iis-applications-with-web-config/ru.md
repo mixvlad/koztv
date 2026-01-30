@@ -1,5 +1,6 @@
 ---
 title: "Настройка прокси для IIS-приложений через web.config"
+slug: "nastroyka-proksi-dlya-iis-prilozheniy-cherez-web-config"
 date: 2017-03-27
 ---
 

@@ -31,4 +31,4 @@ and still let it go to keep moving forward.
 Even if it's hard.
 Even if it hurts.
 
-![](image1.bin)
+![](image1.jpg)

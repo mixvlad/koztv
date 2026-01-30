@@ -30,4 +30,4 @@ slug: "pro-to-chto-inogda-luchshe-vykinut-i-zabyt"
 Даже если сложно.
 Даже если обидно.
 
-![](image1.bin)
+![](image1.jpg)

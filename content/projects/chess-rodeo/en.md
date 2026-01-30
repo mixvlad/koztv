@@ -1,5 +1,5 @@
 ---
-title: "chess.rodeo"
+title: "chess.rodeo – game review platform"
 date: 2024-01-15
 featured: true
 ---

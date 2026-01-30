@@ -1,5 +1,6 @@
 ---
 title: "Создание администратора в Ubuntu Linux"
+slug: "sozdanie-administratora-v-ubuntu-linux"
 date: 2017-12-04
 ---
 

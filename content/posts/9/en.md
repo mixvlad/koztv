@@ -18,4 +18,4 @@ You get started in minutes.
 A lot works right away.
 For prototypes and small services — it's fine.
 
-![](image1.bin)
+![](image1.jpg)

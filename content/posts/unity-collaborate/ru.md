@@ -1,5 +1,6 @@
 ---
 title: "Unity Collaborate"
+slug: "unity-collaborate"
 date: 2020-03-27
 ---
 

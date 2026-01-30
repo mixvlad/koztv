@@ -1,5 +1,6 @@
 ---
 title: "Настройка Sendmail когда MX-запись указывает на другой сервер"
+slug: "nastroyka-sendmail-kogda-mx-zapis-ukazyvaet-na-drugoy-server"
 date: 2016-05-21
 ---
 

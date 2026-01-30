@@ -1,5 +1,6 @@
 ---
 title: "Как сгенерировать и скопировать SSH-ключ в Mac OS"
+slug: "kak-sgenerirovat-i-skopirovat-ssh-klyuch-v-mac-os"
 date: 2017-07-09
 ---
 

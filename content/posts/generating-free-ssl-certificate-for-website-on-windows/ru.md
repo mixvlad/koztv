@@ -1,5 +1,6 @@
 ---
 title: "Создание бесплатного SSL-сертификата для сайта на Windows"
+slug: "sozdanie-besplatnogo-ssl-sertifikata-dlya-sayta-na-windows"
 date: 2022-09-08
 ---
 

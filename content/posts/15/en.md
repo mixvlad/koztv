@@ -10,4 +10,4 @@ translated_from: "ru"
 
 That's a really juicy offer; if it's actually better than Opus, then you can manage to complete several projects over these 6 days and evaluate how it all works without spending a penny.
 
-![](image1.bin)
+![](image1.jpg)

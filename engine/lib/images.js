@@ -5,6 +5,31 @@ import sizeOf from 'image-size';
 import frontMatter from 'front-matter';
 import { config } from './config.js';
 
+// Helper: resolve image path, handling absolute paths and non-default language directories
+function resolveImagePath(currentMdDir, originalHref) {
+    // If originalHref is an absolute path (starts with projects/ or posts/),
+    // resolve it directly from sourceDir instead of joining with currentMdDir
+    if (originalHref.startsWith('projects/') || originalHref.startsWith('posts/')) {
+        const imgPath = path.join(config.sourceDir, originalHref);
+        if (fs.existsSync(imgPath)) return imgPath;
+    }
+
+    // Try relative to currentMdDir
+    let imgPath = path.join(config.sourceDir, currentMdDir, originalHref);
+    if (fs.existsSync(imgPath)) return imgPath;
+
+    // Try without language prefix (for non-default lang content)
+    const languages = config.languages || [];
+    for (const lang of languages) {
+        if (currentMdDir.startsWith(lang + '/')) {
+            const pathWithoutLang = path.join(config.sourceDir, currentMdDir.slice(lang.length + 1), originalHref);
+            if (fs.existsSync(pathWithoutLang)) return pathWithoutLang;
+            break;
+        }
+    }
+    return imgPath; // Return original path even if not found
+}
+
 // Кэш для featured проекта
 let featuredProjectSlug = null;
 let featuredProjectScanned = false;
@@ -271,7 +296,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
 
         // Добавляем размеры если можем их получить
         try {
-            const imgPath = path.join(config.sourceDir, currentMdDir, originalHref);
+            const imgPath = resolveImagePath(currentMdDir, originalHref);
             const { width, height } = sizeOf(imgPath);
             if (width && height) {
                 base += ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
@@ -288,7 +313,7 @@ function createImageHtml(href, title, text, currentMdDir = '', context = 'defaul
     // Получаем размеры для width/height атрибутов
     let dimAttrs = '';
     try {
-        const imgPath = path.join(config.sourceDir, currentMdDir, originalHref);
+        const imgPath = resolveImagePath(currentMdDir, originalHref);
         const { width, height } = sizeOf(imgPath);
         if (width && height) {
             dimAttrs = ` width="${width}" height="${height}" style="aspect-ratio:${width}/${height}"`;
@@ -318,7 +343,7 @@ function createSrcsetAbsolute(resolvedHref, optimalSize, currentMdDir, originalH
 
     let originalWidth = null;
     try {
-        const imgPath = path.join(config.sourceDir, currentMdDir, originalHref);
+        const imgPath = resolveImagePath(currentMdDir, originalHref);
         const { width } = sizeOf(imgPath);
         originalWidth = width;
     } catch {}
@@ -345,7 +370,7 @@ function createOptimalSrcAbsolute(resolvedHref, optimalSize, currentMdDir, origi
 
     let originalWidth = null;
     try {
-        const imgPath = path.join(config.sourceDir, currentMdDir, originalHref);
+        const imgPath = resolveImagePath(currentMdDir, originalHref);
         const { width } = sizeOf(imgPath);
         originalWidth = width;
     } catch {}

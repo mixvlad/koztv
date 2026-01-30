@@ -1,5 +1,6 @@
 ---
 title: "SQL-запрос для текущей даты минус год, месяц, день или минута"
+slug: "sql-zapros-dlya-tekuschey-daty-minus-god-mesyats-den-ili-min"
 date: 2018-10-09
 ---
 

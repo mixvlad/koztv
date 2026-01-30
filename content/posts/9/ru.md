@@ -17,4 +17,4 @@ slug: "dlya-malenkih-proektov-supabase-voobsche-to-neplohoe-resheni"
 Многое работает сразу.
 Для прототипов и небольших сервисов — вполне.
 
-![](image1.bin)
+![](image1.jpg)

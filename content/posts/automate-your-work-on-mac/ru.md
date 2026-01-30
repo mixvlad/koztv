@@ -1,5 +1,6 @@
 ---
 title: "Автоматизация работы на Mac"
+slug: "avtomatizatsiya-raboty-na-mac"
 date: 2019-12-10
 ---
 

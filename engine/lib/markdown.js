@@ -100,8 +100,38 @@ function processPartials(template, variables) {
 function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', langOptions = {}) {
     const prevDir = currentMdDir;
     currentMdDir = mdDirRel || '';
-    const content = marked.parse(markdown);
+    let content = marked.parse(markdown);
     currentMdDir = prevDir;
+
+    // Fix media paths to use correct slug (not folder name) for posts and projects
+    const languages = config.languages || [];
+    const defaultLang = languages[0] || 'en';
+    const currentLang = langOptions.lang || defaultLang;
+    const contentType = langOptions.type; // 'post' or 'project'
+
+    if (langOptions.folderSlug && (contentType === 'post' || contentType === 'project')) {
+        // Get slug for default language (images are stored in default lang slug folder)
+        const contentTypePlural = contentType === 'post' ? 'posts' : 'projects';
+        const defaultLangMdPath = path.join(config.sourceDir, contentTypePlural, langOptions.folderSlug, `${defaultLang}.md`);
+        let defaultSlug = langOptions.folderSlug;
+        if (fs.existsSync(defaultLangMdPath)) {
+            try {
+                const mdContent = fs.readFileSync(defaultLangMdPath, 'utf-8');
+                const { attributes } = frontMatter(mdContent);
+                defaultSlug = attributes.slug || langOptions.folderSlug;
+            } catch {}
+        }
+
+        // Replace media paths to point to correct slug folder (where images are stored)
+        const mediaBase = `/${contentTypePlural}/${defaultSlug}/`;
+        // Match src="filename.ext" where filename doesn't start with / or http
+        content = content.replace(/src="(?!\/|https?:\/\/)([^"]+)"/g, `src="${mediaBase}$1"`);
+        // Also replace absolute paths that use folderSlug (numeric folder) with correct slug
+        if (defaultSlug !== langOptions.folderSlug) {
+            const oldBase = `/${contentTypePlural}/${langOptions.folderSlug}/`;
+            content = content.replace(new RegExp(oldBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), mediaBase);
+        }
+    }
     let dateStr = metadata.date || '';
     if (dateStr instanceof Date) {
         dateStr = dateStr.toISOString().slice(0, 10);
@@ -109,10 +139,7 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
     const devScript = '';
     const yearStr = new Date().getFullYear();
 
-    // Language support
-    const languages = config.languages || [];
-    const defaultLang = languages[0] || 'en';
-    const currentLang = langOptions.lang || defaultLang;
+    // Language support (languages, defaultLang, currentLang already defined above)
     const isDefaultLang = currentLang === defaultLang;
     const langPrefix = isDefaultLang ? '' : `/${currentLang}`;
 
@@ -148,18 +175,40 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
     }
 
     // Generate "Continuation" section - find posts that reply to this one
+    // If no continuations, show "Next post" link
     let continuationHtml = '';
+    let hasContinuations = false;
     if (metadata.original_link) {
         const currentMsgId = metadata.original_link.match(/\/(\d+)$/)?.[1];
         if (currentMsgId) {
             const replies = findRepliesTo(currentMsgId, currentLang);
             if (replies.length > 0) {
+                hasContinuations = true;
                 const continuationTitle = currentLang === 'ru' ? 'Продолжение' : 'Continuation';
                 const replyLinks = replies.map(r => {
                     const link = `${langPrefix}/posts/${r.slug}/`;
                     return `<li><a href="${link}">${r.title}</a></li>`;
                 }).join('\n');
                 continuationHtml = `<div class="continuation"><strong>${continuationTitle}:</strong><ul>${replyLinks}</ul></div>`;
+            }
+        }
+    }
+
+    // If no continuations, show next post/project link
+    if (!hasContinuations && langOptions.folderSlug) {
+        if (contentType === 'post') {
+            const nextPost = findNextPost(langOptions.folderSlug, currentLang);
+            if (nextPost) {
+                const nextTitle = currentLang === 'ru' ? 'Следующий пост' : 'Next post';
+                const link = `${langPrefix}/posts/${nextPost.slug}/`;
+                continuationHtml = `<div class="next-post"><strong>${nextTitle}:</strong> <a href="${link}">${nextPost.title}</a></div>`;
+            }
+        } else if (contentType === 'project') {
+            const nextProject = findNextProject(langOptions.folderSlug, currentLang);
+            if (nextProject) {
+                const nextTitle = currentLang === 'ru' ? 'Следующий проект' : 'Next project';
+                const link = `${langPrefix}/projects/${nextProject.slug}/`;
+                continuationHtml = `<div class="next-post"><strong>${nextTitle}:</strong> <a href="${link}">${nextProject.title}</a></div>`;
             }
         }
     }
@@ -280,16 +329,17 @@ function getPostsMetaCache() {
         .map(d => d.name);
 
     postsMetaCache = [];
-    for (const slug of slugs) {
-        const mdPath = path.join(postsRoot, slug, `${defaultLang}.md`);
+    for (const folderSlug of slugs) {
+        const mdPath = path.join(postsRoot, folderSlug, `${defaultLang}.md`);
         if (fs.existsSync(mdPath)) {
             try {
                 const content = fs.readFileSync(mdPath, 'utf-8');
                 const { attributes } = frontMatter(content);
                 const msgId = attributes.original_link ? attributes.original_link.match(/\/(\d+)$/)?.[1] : null;
                 postsMetaCache.push({
-                    slug,
-                    title: attributes.title || slug,
+                    folderSlug,
+                    slug: attributes.slug || folderSlug,  // Use frontmatter slug for URLs
+                    title: attributes.title || folderSlug,
                     date: attributes.date,
                     msgId: msgId ? parseInt(msgId) : null,
                     replyToMsgId: attributes.reply_to_msg_id || null
@@ -310,17 +360,17 @@ function findRepliesTo(msgId, lang = null) {
     return posts
         .filter(p => p.replyToMsgId === parseInt(msgId))
         .map(p => {
-            // Try to get title in target language
+            // For non-default language, read title and slug from that language's file
             let title = p.title;
             let slug = p.slug;
             if (targetLang !== defaultLang) {
-                const langMdPath = path.join(config.sourceDir, 'posts', p.slug, `${targetLang}.md`);
+                const langMdPath = path.join(config.sourceDir, 'posts', p.folderSlug, `${targetLang}.md`);
                 if (fs.existsSync(langMdPath)) {
                     try {
                         const content = fs.readFileSync(langMdPath, 'utf-8');
                         const { attributes } = frontMatter(content);
                         title = attributes.title || title;
-                        slug = attributes.slug || p.slug;
+                        slug = attributes.slug || p.folderSlug;
                     } catch {}
                 }
             }
@@ -371,6 +421,100 @@ function findPostByMsgId(msgId, lang = null) {
     } catch {
         return null;
     }
+}
+
+// Find the next post chronologically after the given folderSlug
+function findNextPost(currentFolderSlug, lang = null) {
+    const posts = getPostsMetaCache();
+    const languages = config.languages || [];
+    const defaultLang = languages[0] || 'en';
+    const targetLang = lang || defaultLang;
+
+    // Sort posts by date ascending
+    const sorted = [...posts].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Find current post index by folderSlug (not by language-specific slug)
+    const currentIndex = sorted.findIndex(p => p.folderSlug === currentFolderSlug);
+    if (currentIndex === -1 || currentIndex >= sorted.length - 1) return null;
+
+    // Get next post
+    const nextPost = sorted[currentIndex + 1];
+
+    // Get title and slug for target language
+    let title = nextPost.title;
+    let slug = nextPost.slug;
+    if (targetLang !== defaultLang) {
+        const langMdPath = path.join(config.sourceDir, 'posts', nextPost.folderSlug, `${targetLang}.md`);
+        if (fs.existsSync(langMdPath)) {
+            try {
+                const content = fs.readFileSync(langMdPath, 'utf-8');
+                const { attributes } = frontMatter(content);
+                title = attributes.title || title;
+                slug = attributes.slug || nextPost.folderSlug;
+            } catch {}
+        }
+    }
+
+    return { slug, title };
+}
+
+// Find the next project chronologically after the given folderSlug
+function findNextProject(currentFolderSlug, lang = null) {
+    const languages = config.languages || [];
+    const defaultLang = languages[0] || 'en';
+    const targetLang = lang || defaultLang;
+
+    const projectsRoot = path.join(config.sourceDir, 'projects');
+    if (!fs.existsSync(projectsRoot)) return null;
+
+    // Build list of all projects with dates
+    const dirs = fs.readdirSync(projectsRoot, { withFileTypes: true })
+        .filter(d => d.isDirectory())
+        .map(d => d.name);
+
+    const projects = [];
+    for (const folderSlug of dirs) {
+        const mdPath = path.join(projectsRoot, folderSlug, `${defaultLang}.md`);
+        if (fs.existsSync(mdPath)) {
+            try {
+                const content = fs.readFileSync(mdPath, 'utf-8');
+                const { attributes } = frontMatter(content);
+                projects.push({
+                    folderSlug,
+                    slug: attributes.slug || folderSlug,
+                    title: attributes.title || folderSlug,
+                    date: attributes.date || '1970-01-01'
+                });
+            } catch {}
+        }
+    }
+
+    // Sort by date ascending
+    projects.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Find current project index
+    const currentIndex = projects.findIndex(p => p.folderSlug === currentFolderSlug);
+    if (currentIndex === -1 || currentIndex >= projects.length - 1) return null;
+
+    // Get next project
+    const nextProject = projects[currentIndex + 1];
+
+    // Get title and slug for target language
+    let title = nextProject.title;
+    let slug = nextProject.slug;
+    if (targetLang !== defaultLang) {
+        const langMdPath = path.join(projectsRoot, nextProject.folderSlug, `${targetLang}.md`);
+        if (fs.existsSync(langMdPath)) {
+            try {
+                const content = fs.readFileSync(langMdPath, 'utf-8');
+                const { attributes } = frontMatter(content);
+                title = attributes.title || title;
+                slug = attributes.slug || nextProject.folderSlug;
+            } catch {}
+        }
+    }
+
+    return { slug, title };
 }
 
 // Get available languages for a post (for language switcher)

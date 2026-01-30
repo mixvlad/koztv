@@ -49,4 +49,4 @@ But my personal experience was so-so.
 **If you are just getting into vibe coding – get Codex and don't stress.**
 For starting out, this is currently the most normal option.
 
-![](image1.bin)
+![](image1.jpg)

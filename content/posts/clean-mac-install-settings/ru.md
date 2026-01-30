@@ -1,5 +1,6 @@
 ---
 title: "Настройка чистого MacBook"
+slug: "nastroyka-chistogo-macbook"
 date: 2021-02-03
 ---
 

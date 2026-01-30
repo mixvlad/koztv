@@ -256,7 +256,7 @@ a {
   background-position: 0% 100%;
   background-repeat: no-repeat;
   background-size: 0% 1px;
-  transition: background-size var(--transition);
+  transition: background-size 300ms ease-out;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -273,9 +273,6 @@ a:active {
   margin: 0 20px 20px 0;
   text-decoration: none;
   color: var(--accent-color);
-}
-
-.project-item {
   background-image: none;
 }
 
@@ -297,25 +294,16 @@ a:active {
   text-align: center;
   color: var(--text);
   font-weight: 500;
-}
-
-.project-item .caption:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  display: block;
-  width: 0;
-  height: 0.5px;
-  background-color: var(--accent-color);
-  transition: var(--transition);
-}
-
-.project-item:hover .caption:after {
-  width: 100%;
+  background-image: linear-gradient(var(--accent-color), var(--accent-color));
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 300ms ease-out, color 300ms ease-out;
 }
 
 .project-item:hover .caption {
   color: var(--accent-color);
+  background-size: 100% 1px;
 }
 
 .project-item.full {
@@ -789,21 +777,14 @@ body.home nav.narrow {
 /* reply-to links use default link styles with animated underline */
 
 /* Original link to Telegram */
-.original-link a {
-  color: var(--gray-text);
-  text-decoration: none;
-}
-
-.original-link a:hover {
-  color: var(--accent-color);
-}
-
+/* original-link uses default link styles with animated underline */
 .original-link .fa-telegram {
   color: #0088cc;
 }
 
-/* Continuation links */
-.continuation {
+/* Continuation and next post links */
+.continuation,
+.next-post {
   margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);

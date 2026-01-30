@@ -77,8 +77,20 @@ function adjustPathForLanguage(relPath, srcFullPath = null) {
         }
 
         // Handle other files in the folder (media, etc.)
-        // They go to {contentType}/{folderSlug}/
-        return { adjustedPath: relPath, folderSlug };
+        // They should go to {contentType}/{slug}/ where slug is from default lang frontmatter
+        const defaultLangMdPath = path.join(config.sourceDir, contentType, folderSlug, `${defaultLang}.md`);
+        let slug = folderSlug;
+        if (fs.existsSync(defaultLangMdPath)) {
+            try {
+                const content = fs.readFileSync(defaultLangMdPath, 'utf-8');
+                const { attributes } = frontMatter(content);
+                if (attributes.slug) {
+                    slug = attributes.slug;
+                }
+            } catch { /* use default folderSlug */ }
+        }
+        const mediaPath = path.join(contentType, slug, filename);
+        return { adjustedPath: mediaPath, folderSlug };
     }
 
     return { adjustedPath: relPath, folderSlug: null };

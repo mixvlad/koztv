@@ -1,5 +1,6 @@
 ---
 title: "Cron-задача для обработки почты в Redmine"
+slug: "cron-zadacha-dlya-obrabotki-pochty-v-redmine"
 date: 2017-04-16
 ---
 
