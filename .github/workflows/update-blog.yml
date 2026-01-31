@@ -58,7 +58,7 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_API_URL: ${{ vars.LLM_API_URL }}
           LLM_MODEL: ${{ vars.LLM_MODEL }}
-        run: npx tg-export --channel ${{ vars.TELEGRAM_CHANNEL || '@koztv' }} --keep-original
+        run: npx tg-export --channel ${{ vars.TELEGRAM_CHANNEL || '@koztv' }} --langs en
 
       - name: Check for changes
         id: changes
