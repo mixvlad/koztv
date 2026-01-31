@@ -1,9 +1,9 @@
 ---
-title: "We hit the 1000 MAU mark with chess.rodeo(https://chess.rodeo/) 🥳"
+title: "We hit the 1000 MAU mark with chess.rodeo 🥳"
 date: 2026-01-31
 lang: en
 original_link: "https://t.me/koztv/17"
-slug: "we-hit-the-1000-mau-mark-with-chessrodeohttpschessrodeo"
+slug: "we-hit-the-1000-mau-mark-with-chess-rodeo"
 translated_from: "ru"
 ---
 

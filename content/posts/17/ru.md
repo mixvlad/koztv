@@ -1,9 +1,9 @@
 ---
-title: "Пробили отметку в 1000 MAU с chess.rodeo(https://chess.rodeo/) 🥳"
+title: "Пробили отметку в 1000 MAU с chess.rodeo 🥳"
 date: 2026-01-31
 lang: ru
 original_link: "https://t.me/koztv/17"
-slug: "probili-otmetku-v-1000-mau-s-chessrodeohttpschessrodeo"
+slug: "probili-otmetku-v-1000-mau-s-chess-rodeo"
 ---
 
 И это всего за 2 месяца с запуска.
