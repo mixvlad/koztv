@@ -4,6 +4,9 @@ date: 2026-01-31
 lang: ru
 original_link: "https://t.me/koztv/17"
 slug: "probili-otmetku-v-1000-mau-s-chessrodeo"
+title_link:
+  text: "chess.rodeo"
+  url: "https://chess.rodeo/"
 ---
 
 И это всего за 2 месяца с запуска.

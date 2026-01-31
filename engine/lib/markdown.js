@@ -213,9 +213,16 @@ function convertMarkdownToHtml(markdown, metadata, mdDirRel, rootPrefix = '', la
         }
     }
 
+    // Process title with link if present
+    let displayTitle = metadata.title || '';
+    if (metadata.title_link && metadata.title_link.text && metadata.title_link.url) {
+        const linkHtml = `<a href="${metadata.title_link.url}" target="_blank" rel="noopener">${metadata.title_link.text}</a>`;
+        displayTitle = displayTitle.replace(metadata.title_link.text, linkHtml);
+    }
+
     // Подготавливаем переменные для шаблона
     const templateVariables = {
-        title: metadata.title || '',
+        title: displayTitle,
         date: dateStr,
         originalLink: originalLinkHtml,
         bodyClass: metadata.bodyClass || '',
