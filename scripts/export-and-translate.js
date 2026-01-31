@@ -13,9 +13,13 @@
  *   KEEP_ORIGINAL - true/false (default: false)
  */
 
-const fs = require('fs');
-const path = require('path');
-const { exportAndTranslate } = require('koztv-blog-tools');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { exportAndTranslate } from 'koztv-blog-tools';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load .env file
 const envPath = path.join(__dirname, '..', '.env');
