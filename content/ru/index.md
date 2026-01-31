@@ -4,7 +4,7 @@
 
   <div class="about_inner">
     <div class="lead-main">
-      <p>Привет! Я Миша Козлов — соло-предприниматель, создатель <a href="https://chess.rodeo">chess.rodeo</a>. Экспериментирую с софтом, железом и шахматами. Иногда получается. Иногда не очень.</p>
+      <p>Привет! Я Миша Козлов – основатель <a href="https://chess.rodeo">chess.rodeo</a>.<br>Экспериментирую с софтом, железом и шахматами.<br>Не каждый ход выигрышный.</p>
       {{socialsWithSubscribers}}
     </div>
   </div>
