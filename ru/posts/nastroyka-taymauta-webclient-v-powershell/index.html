@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка таймаута WebClient в PowerShell</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/setup-webclient-timeout-in-powershell/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Настройка таймаута WebClient в PowerShell</h1>
+                <div class="post-meta">
+                    <span class="date">2016-11-09</span>
+                </div>
+                <p>Если вы хотите настроить значение таймаута для метода downloadString класса WebClient в PowerShell, нужно расширить класс WebClient, потому что свойство Timeout не является публичным.</p>
+<p>В следующем примере я унаследовал новый класс ExtendedWebClient от класса WebClient. И добавил публичное поле Timeout в новый класс. Затем я переопределил метод GetWebRequest для использования поля Timeout.</p>
+<pre><code class="language-powershell">$Source = @&quot;
+using System.Net;
+
+public class ExtendedWebClient : WebClient
+{
+public int Timeout;
+
+protected override WebRequest GetWebRequest(System.Uri address)
+{
+WebRequest request = base.GetWebRequest(address);
+if (request != null)
+{
+request.Timeout = Timeout;
+}
+return request;
+}
+
+public ExtendedWebClient()
+{
+Timeout = 600000; // Значение таймаута по умолчанию
+}
+}
+&quot;@;
+
+Add-Type -TypeDefinition $Source -Language CSharp
+
+$webClient = New-Object ExtendedWebClient;
+$webClient.Timeout = 1800000; # Изменить таймаут для webClient
+$loadData = $webClient.downloadString(&#39;http://your_url&#39;)
+</code></pre>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/ustanovka-i-nastroyka-bitnami-redmine/">Установка и настройка Bitnami Redmine</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

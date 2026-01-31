@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changing the folder where screenshots placed on Mac</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/posts/izmenenie-papki-dlya-skrinshotov-na-mac/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Changing the folder where screenshots placed on Mac</h1>
+                <div class="post-meta">
+                    <span class="date">2018-02-01</span>
+                </div>
+                <p>By default all your screenshots are saving on desktop, but you can change this location to any other folder on your Mac.</p>
+<p>First of all, start the terminal.</p>
+<p>I personally prefer iTerm, but you can use default one that is installed on every Mac.</p>
+<p>Choose the folder where you want to place screenshots and enter following command into terminal window:</p>
+<pre><code class="language-bash">defaults write com.apple.screencapture location
+</code></pre>
+<p>Now drug and drop your screenshots folder into terminal window. Then the command will look like this:</p>
+<pre><code class="language-bash">defaults write com.apple.screencapture location ~/Documents/Screenshots
+</code></pre>
+<p>Now you need to restart SystemUIServer, enter this command in terminal:</p>
+<pre><code class="language-bash">killall SystemUIServer
+</code></pre>
+<p>Thats all 😉</p>
+<p>Take a screenshot right now with Cmd + Shift + 3 and new screenshot will be saved to the folder you chose in previous step.</p>
+<div class="next-post"><strong>Next post:</strong> <a href="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/">Adding Resharper Code Quality Analysis to TFS/VSTS</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

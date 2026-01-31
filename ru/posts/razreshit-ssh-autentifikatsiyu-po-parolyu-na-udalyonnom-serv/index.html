@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разрешить SSH-аутентификацию по паролю на удалённом сервере</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/allow-ssh-password-authentication/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Разрешить SSH-аутентификацию по паролю на удалённом сервере</h1>
+                <div class="post-meta">
+                    <span class="date">2017-12-04</span>
+                </div>
+                <p>1. Подключитесь к серверу и проверьте настройки ssh:</p>
+<pre><code class="language-bash">sudo nano /etc/ssh/sshd_config
+</code></pre>
+<pre><code class="language-ini"># Change to no to disable tunnelled clear text passwords
+PasswordAuthentication yes
+</code></pre>
+<p><strong>PasswordAuthentication</strong> должен быть установлен в <strong>yes</strong>.</p>
+<p>2. Теперь перезапустите службу ssh:</p>
+<pre><code class="language-bash">service ssh restart
+</code></pre>
+<p>3. Попробуйте подключиться по ssh с аутентификацией по паролю:</p>
+<pre><code class="language-bash">ssh username@domain
+</code></pre>
+<p>Не забудьте заменить <strong>username</strong> и <strong>domain</strong> на ваши значения.</p>
+<p><a href="create-admin-user-in-ubuntu-linux/">Здесь</a> вы можете узнать, как создать нового пользователя, если у вас его нет, для ssh-подключения.</p>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/sozdanie-administratora-v-ubuntu-linux/">Создание администратора в Ubuntu Linux</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

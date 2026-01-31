@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интеграция анализа качества кода Resharper в TFS/VSTS</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Интеграция анализа качества кода Resharper в TFS/VSTS</h1>
+                <div class="post-meta">
+                    <span class="date">2018-05-15</span>
+                </div>
+                <p>Это руководство показывает, как интегрировать анализ качества кода Resharper в пайплайн сборки TFS/VSTS.</p>
+<h2>Процесс настройки</h2>
+<h3>Шаг 1: Создание нового шага сборки</h3>
+<p>Сначала добавьте новый шаг сборки в ваш пайплайн TFS/VSTS.</p>
+<p><picture>
+        <source type="image/avif" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image1.avif">
+        <source type="image/webp" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image1.webp">
+        <img loading="lazy" decoding="async" src="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image1-480.webp" alt="Добавление нового шага сборки в TFS" width="903" height="397" style="aspect-ratio:903/397" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image1-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<h3>Шаг 2: Настройка имени решения</h3>
+<p>Укажите имя решения для анализа.</p>
+<p><picture>
+        <source type="image/avif" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image2.avif">
+        <source type="image/webp" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image2.webp">
+        <img loading="lazy" decoding="async" src="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image2-480.webp" alt="Настройка параметра имени решения" width="903" height="397" style="aspect-ratio:903/397" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image2-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<h3>Шаг 3: Установка уровня серьёзности</h3>
+<p>Настройте уровень серьёзности для анализа качества кода.</p>
+<p><picture>
+        <source type="image/avif" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image3.avif">
+        <source type="image/webp" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image3.webp">
+        <img loading="lazy" decoding="async" src="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image3-480.webp" alt="Установка уровня модификации серьёзности" width="903" height="397" style="aspect-ratio:903/397" srcset="/posts/adding-resharper-code-quality-analysis-to-tfs-vsts/image3-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/sql-zapros-dlya-tekuschey-daty-minus-god-mesyats-den-ili-min/">SQL-запрос для текущей даты минус год, месяц, день или минута</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

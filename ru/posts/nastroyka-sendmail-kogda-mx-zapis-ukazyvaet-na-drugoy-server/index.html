@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка Sendmail когда MX-запись указывает на другой сервер</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/sendmail-user-unknown-error/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Настройка Sendmail когда MX-запись указывает на другой сервер</h1>
+                <div class="post-meta">
+                    <span class="date">2016-05-21</span>
+                </div>
+                <p>Если почта вашего домена размещена на почтовом сервере в другом домене, нужно сообщить об этом sendmail. Иначе при попытке отправить письмо пользователю в вашем локальном домене вы получите ошибку от sendmail в <strong>/var/log/mail.log</strong>:</p>
+<p><strong><em>User unknown.</em></strong></p>
+<p>Это означает, что sendmail пытается найти пользователя, указанного в сообщении, на вашем локальном сервере и не может его найти, потому что мы используем почтовый сервер, размещённый на другом IP-адресе. Чтобы решить эту проблему, нужно сообщить sendmail искать почтовых пользователей с нашим доменным именем на удалённом сервере.</p>
+<p>Откройте <strong>/etc/mail/sendmail.mc</strong> для редактирования:</p>
+<pre><code class="language-bash">sudo nano /etc/mail/sendmail.mc
+</code></pre>
+<p>Добавьте эти две строки в конец файла:</p>
+<pre><code>define(`MAIL_HUB&#39;, `your.domain.com.&#39;)dnl
+define(`LOCAL_RELAY&#39;, `your.domain.com.&#39;)dnl
+</code></pre>
+<p>Нажмите &quot;<strong>Ctrl + X</strong>&quot; когда закончите и ответьте &quot;<strong>Y</strong>&quot; на вопрос о сохранении файла.</p>
+<p>Теперь нужно перезагрузить сервис sendmail:</p>
+<pre><code class="language-bash">service sendmail reload
+</code></pre>
+<p>И попробуйте отправить письмо снова. Если вы всё сделали правильно, письма должны проходить через удалённый почтовый сервер без ошибок.</p>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/nachalo-mesyatsa-iz-daty-v-ms-sql-protivopolozhnost-funktsii/">Начало месяца из даты в MS SQL (противоположность функции EOMONTH)</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS SQL: вставка в середину таблицы и сброс автоинкремента</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/ms-sql-insert-in-the-middle-and-reset-auto-increment/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>MS SQL: вставка в середину таблицы и сброс автоинкремента</h1>
+                <div class="post-meta">
+                    <span class="date">2019-04-28</span>
+                </div>
+                <p>Если вам нужно вставить что-то в середину таблицы и установить автоинкрементный столбец в определённое значение, можно сделать следующее:</p>
+<pre><code class="language-sql">Set Identity_Insert [TableName] On -- Включить вставку в identity для вашей таблицы
+-----------------------------------
+Insert TableName (pkCol, [OtherColumns])
+Values(pkValue, [OtherValues])
+-----------------------------------
+Set Identity_Insert [TableName] Off -- Выключить вставку в identity для вашей таблицы
+</code></pre>
+<p>Если нужно сбросить автоинкремент в MS SQL, используйте это:</p>
+<pre><code class="language-sql">DBCC CHECKIDENT ([TableName], RESEED, 0) -- сбросит PK в [TableName], чтобы начинался с 1
+</code></pre>
+<p>Если нужно начать не с 0, а с другого числа, можно изменить последний параметр:</p>
+<pre><code class="language-sql">DBCC CHECKIDENT ([TableName], RESEED, 123) -- PK будет начинаться с 124, измените число при необходимости
+</code></pre>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/poleznye-komandy-angular/">Полезные команды Angular</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

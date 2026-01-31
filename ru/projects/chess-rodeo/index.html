@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chess.rodeo – платформа для анализа партий</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/projects/chess-rodeo/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>chess.rodeo – платформа для анализа партий</h1>
+                <div class="post-meta">
+                    <span class="date">2024-01-15</span>
+                </div>
+                <p>Бесплатный анализатор шахматных партий, использующий Stockfish для профессионального разбора ваших игр.</p>
+<h2>Проблема</h2>
+<p>Анализ партий на Chess.com платный. Lichess хорош, но требует переключения между платформами. Мне нужен был инструмент, который работает с моими играми на Chess.com без лишних действий.</p>
+<h2>Решение</h2>
+<p><a href="https://chess.rodeo">chess.rodeo</a> — вставьте имя пользователя, импортируйте партии, получите мгновенный анализ на движке Stockfish прямо в браузере.</p>
+<p><picture>
+        <source type="image/avif" srcset="/projects/chess-rodeo/image2.avif">
+        <source type="image/webp" srcset="/projects/chess-rodeo/image2.webp">
+        <img loading="lazy" decoding="async" src="/projects/chess-rodeo/image2-960.webp" alt="Простой интерфейс для импорта партий из Chess.com, Lichess или PGN-файлов" width="1280" height="720" style="aspect-ratio:1280/720" srcset="/projects/chess-rodeo/image2-480.webp 480w, /projects/chess-rodeo/image2-960.webp 960w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<h2>Ключевые возможности</h2>
+<p><strong>Классификация ходов</strong> — Каждый ход получает понятную оценку: блестящий (!!), отличный (!), хороший (✓), неточность (?!), ошибка (?), грубая ошибка (??). Никаких догадок.</p>
+<p><strong>Оценка точности</strong> — Процент точности в сравнении с идеальной игрой. Отслеживайте свой прогресс.</p>
+<p><strong>Распознавание дебютов</strong> — Автоматическое определение ECO-кода с названием дебюта. Узнавайте, что играете, без зубрёжки теории.</p>
+<p><picture>
+        <source type="image/avif" srcset="/projects/chess-rodeo/cover.avif">
+        <source type="image/webp" srcset="/projects/chess-rodeo/cover.webp">
+        <img loading="lazy" decoding="async" src="/projects/chess-rodeo/cover-960.webp" alt="Полный анализ партии с графиком оценки, списком ходов и разбивкой точности" width="3840" height="2160" style="aspect-ratio:3840/2160" srcset="/projects/chess-rodeo/cover-480.webp 480w, /projects/chess-rodeo/cover-960.webp 960w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<p><strong>График оценки</strong> — Визуальная шкала преимущества на протяжении всей партии. Найдите момент, когда всё пошло не так.</p>
+<p><strong>Лучшие ходы</strong> — Смотрите, что сыграл бы Stockfish в любой позиции. Учитесь у движка бесплатно.</p>
+<h2>Технические детали</h2>
+<ul>
+<li>Stockfish работает полностью в браузере через WebAssembly</li>
+<li>Без серверных вычислений = неограниченный бесплатный анализ</li>
+<li>Партии хранятся локально в IndexedDB</li>
+<li>Доступно расширение для Chrome для импорта в один клик</li>
+</ul>
+<h2>Результаты</h2>
+<p>Инструмент проанализировал миллионы партий. Пользователи от 1000 Elo до гроссмейстерского уровня используют его ежедневно. Избранные партии демонстрируют невероятные камбэки, достижения точности и марафонские сражения.</p>
+<p><a href="https://chess.rodeo">Попробуйте бесплатно на chess.rodeo</a></p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

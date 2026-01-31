@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to select first row in each group ordered by some columns</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/posts/kak-vybrat-pervuyu-stroku-v-kazhdoy-gruppe-s-sortirovkoy-po-/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>How to select first row in each group ordered by some columns</h1>
+                <div class="post-meta">
+                    <span class="date">2018-01-31</span>
+                </div>
+                <p>I’m just gonna show you an example how to select first row in each group of logins ordered by IsActive and Created columns, hope you will realise how it works.</p>
+<p>For example i have a table:</p>
+<p>Id | Login | IsActive | Created<br>1  | test1 |     1    | 2016-01-01<br>2  | test1 |     0    | 2015-05-21<br>3  | test2 |     0    | 2016-07-03<br>4  | test2 |     0    | 2017-01-22</p>
+<p>I want to select only one row per login, and this login should be active, if there’s no row where some login is active, I want to select the row that was created lately. So, in my case it’s row 1 and 4.</p>
+<p>To solve this task I created this script:</p>
+<pre><code class="language-sql">with cte as (
+  select *,
+  rank() over (partition by [Login] order by [Active] desc, Created desc) as [r]
+  from [User]
+)
+SELECT * FROM cte where [r] = 1
+</code></pre>
+<p>With <strong>rank() over</strong> I sorted rows in order I needed to and saved it in column [r]. Then I selected only first row in each group with this:<br><strong>SELECT * FROM cte where [r] = 1</strong></p>
+<p>If you need to to use it in join, just place block “with” on top, like this:</p>
+<pre><code class="language-sql">with cte as (
+  select *,
+  rank() over (partition by [Login] order by [Active] desc, Created desc) as [r]
+  from [User]
+)
+SELECT * FROM Employees emp
+LEFT JOIN (SELECT * FROM cte where [r] = 1) u on emp.[Login]=u.[Login]
+</code></pre>
+<div class="next-post"><strong>Next post:</strong> <a href="/posts/changing-the-folder-where-screenshots-placed-on-mac/">Changing the folder where screenshots placed on Mac</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

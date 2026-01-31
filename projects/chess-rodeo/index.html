@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chess.rodeo – game review platform</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/projects/chess-rodeo/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>chess.rodeo – game review platform</h1>
+                <div class="post-meta">
+                    <span class="date">2024-01-15</span>
+                </div>
+                <p>A free chess game analyzer that uses Stockfish to give you GM-level insights into your games.</p>
+<h2>The Problem</h2>
+<p>Chess.com&#39;s game analysis is paywalled. Lichess analysis is good but requires switching platforms. I wanted something that works with my existing Chess.com games without friction.</p>
+<h2>The Solution</h2>
+<p><a href="https://chess.rodeo">chess.rodeo</a> — paste your username, import your games, get instant analysis powered by Stockfish running in your browser.</p>
+<p><picture>
+        <source type="image/avif" srcset="/projects/chess-rodeo/image2.avif">
+        <source type="image/webp" srcset="/projects/chess-rodeo/image2.webp">
+        <img loading="lazy" decoding="async" src="/projects/chess-rodeo/image2-960.webp" alt="Clean interface to import games from Chess.com, Lichess, or PGN files" width="1280" height="720" style="aspect-ratio:1280/720" srcset="/projects/chess-rodeo/image2-480.webp 480w, /projects/chess-rodeo/image2-960.webp 960w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<h2>Key Features</h2>
+<p><strong>Move Classification</strong> — Every move gets a clear label: brilliant (!!), great (!), good (✓), inaccuracy (?!), mistake (?), or blunder (??). No guessing what went wrong.</p>
+<p><strong>Accuracy Scores</strong> — See your accuracy percentage compared to perfect play. Track improvement over time.</p>
+<p><strong>Opening Recognition</strong> — Automatic ECO code detection with opening names. Learn what you&#39;re playing without memorizing theory.</p>
+<p><picture>
+        <source type="image/avif" srcset="/projects/chess-rodeo/cover.avif">
+        <source type="image/webp" srcset="/projects/chess-rodeo/cover.webp">
+        <img loading="lazy" decoding="async" src="/projects/chess-rodeo/cover-960.webp" alt="Full game analysis with evaluation graph, move list, and accuracy breakdown" width="3840" height="2160" style="aspect-ratio:3840/2160" srcset="/projects/chess-rodeo/cover-480.webp 480w, /projects/chess-rodeo/cover-960.webp 960w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<p><strong>Evaluation Graph</strong> — Visual timeline of who&#39;s winning throughout the game. Spot the exact moment things went sideways.</p>
+<p><strong>Best Moves</strong> — See what Stockfish would play in any position. Learn from the engine without paying for premium.</p>
+<h2>Technical Details</h2>
+<ul>
+<li>Stockfish runs entirely in your browser via WebAssembly</li>
+<li>No server-side computation = unlimited free analysis</li>
+<li>Games stored locally in IndexedDB</li>
+<li>Chrome extension available for one-click import</li>
+</ul>
+<h2>Results</h2>
+<p>The tool has analyzed millions of games. Users from 1000+ Elo to GM level use it daily. Featured games showcase incredible comebacks, accuracy achievements, and marathon battles.</p>
+<p><a href="https://chess.rodeo">Try it free at chess.rodeo</a></p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

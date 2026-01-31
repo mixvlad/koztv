@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset password and give admin rights to redmine account</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/posts/sbros-parolya-i-vydacha-prav-administratora-dlya-akkaunta-re/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Reset password and give admin rights to redmine account</h1>
+                <div class="post-meta">
+                    <span class="date">2017-11-09</span>
+                </div>
+                <p>First of all run mysql:</p>
+<pre><code class="language-sql">mysql --user=root --password=your_password
+</code></pre>
+<p>You can find your connection parameters in <strong>{your redmine folder}/htdocs/config/database</strong></p>
+<p>If credentials are correct you will see hello message from MySql console:<br><picture>
+        <source type="image/avif" srcset="/posts/reset-password-and-give-admin-rights-to-redmine-account/image1.avif">
+        <source type="image/webp" srcset="/posts/reset-password-and-give-admin-rights-to-redmine-account/image1.webp">
+        <img loading="lazy" decoding="async" src="/posts/reset-password-and-give-admin-rights-to-redmine-account/image1-480.webp" alt="" width="567" height="289" style="aspect-ratio:567/289" srcset="/posts/reset-password-and-give-admin-rights-to-redmine-account/image1-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<p>Now you need to reveal all databases on current mysql server, run this command:</p>
+<pre><code class="language-sql">SHOW DATABASES;
+</code></pre>
+<p>You will see something like this:</p>
+<p>We need to select active database, choose something with word “redmine” in name, for me it “bitnami_redmine” and run command:</p>
+<pre><code class="language-sql">use your_database_name;
+</code></pre>
+<p>In my case it looked like this:</p>
+<p>To reveal current users information you can use this command:</p>
+<pre><code class="language-sql">select * from users;
+</code></pre>
+<p>Then we can reset password and any other property for any user in this table. Example with admin user:</p>
+<pre><code class="language-sql">update users set hashed_password = &#39;353e8061f2befecb6818ba0c034c632fb0bcae1b&#39;, salt =&#39;&#39; where login = &#39;admin&#39;;
+</code></pre>
+<p>Or you can reset password for regular user and make give it admin rights at the same time:</p>
+<pre><code class="language-sql">update users set hashed_password = &#39;353e8061f2befecb6818ba0c034c632fb0bcae1b&#39;, salt =&#39;&#39;, admin = 1 where login = &#39;user&#39;;
+</code></pre>
+<p>Now we can login to redmine with admin rights using password: **password<br>**for account you used in previous step.</p>
+<div class="next-post"><strong>Next post:</strong> <a href="/posts/allow-ssh-password-authentication/">Allow ssh password authentication on remote server</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows App Certification Kit doesn’t work in Windows Server 2016</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/posts/windows-app-certification-kit-ne-rabotaet-v-windows-server-2/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Windows App Certification Kit doesn’t work in Windows Server 2016</h1>
+                <div class="post-meta">
+                    <span class="date">2016-11-08</span>
+                </div>
+                <p>I develop Universal Windows Programs and found an interesting problem. You can’t use UI version of Windows App Certification Kit when your OS is Windows Server 2016.</p>
+<p>When I tried to test my program before send it to Windows Store, I got an error from Windows App Certification Kit:</p>
+<p><picture>
+        <source type="image/avif" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image1.avif">
+        <source type="image/webp" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image1.webp">
+        <img loading="lazy" decoding="async" src="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image1-480.webp" alt="screenshot-2016-11-09-21-13-03" width="480" height="163" style="aspect-ratio:480/163" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image1-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<p>But we can still use console app – <strong>appcert.exe</strong></p>
+<p>It’s a little bit harder then use UI version, we need to create some preparations:</p>
+<p>1. You need to instal prepared version of your app, it’s near the bundle file. Find file called Add-AppDevPackage.ps and run it with PowerShell.</p>
+<p><picture>
+        <source type="image/avif" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image2.avif">
+        <source type="image/webp" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image2.webp">
+        <img loading="lazy" decoding="async" src="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image2-480.webp" alt="screenshot-2016-11-09-21-28-57" width="733" height="245" style="aspect-ratio:733/245" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image2-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<p>2. Open PowerShell and run command:</p>
+<pre><code class="language-powershell">Get-AppxPackage &gt; packages.txt
+</code></pre>
+<p>3. Open file packages.txt and find your app, copy PackageFullName:</p>
+<p><picture>
+        <source type="image/avif" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image3.avif">
+        <source type="image/webp" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image3.webp">
+        <img loading="lazy" decoding="async" src="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image3-480.webp" alt="screenshot-2016-11-09-21-41-10" width="769" height="148" style="aspect-ratio:769/148" srcset="/posts/windows-app-certification-kit-doesnt-work-in-windows-server-2016/image3-480.webp 480w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<p>4. Create file <strong>testPackage.bat</strong> and place this text inside:</p>
+<pre><code class="language-batch">del %~dp0\report.xml
+&quot;C:\Program Files (x86)\Windows Kits\10\App Certification Kit\appcert.exe&quot; reset
+&quot;C:\Program Files (x86)\Windows Kits\10\App Certification Kit\appcert.exe&quot; test -apptype windowsstoreapp -packagefullname &quot;Your app package full name&quot; -reportoutputpath %~dp0\report.xml
+pause
+</code></pre>
+<p>5. Do not forget to replace text “Your app package full name” with text from 3-rd step. Now you can run <strong>testPackage.bat</strong> file and when it’s done, check file <strong>report.xml</strong>. There you will found all information from Windows App Certification Kit about your app.</p>
+<div class="next-post"><strong>Next post:</strong> <a href="/posts/setup-webclient-timeout-in-powershell/">Setup WebClient timeout in PowerShell</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

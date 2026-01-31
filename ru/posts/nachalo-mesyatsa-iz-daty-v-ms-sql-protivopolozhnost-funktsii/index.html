@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Начало месяца из даты в MS SQL (противоположность функции EOMONTH)</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/start-of-month-from-date-in-ms-sql-opposite-to-eomonth-function/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Начало месяца из даты в MS SQL (противоположность функции EOMONTH)</h1>
+                <div class="post-meta">
+                    <span class="date">2016-10-08</span>
+                </div>
+                <p>Иногда нам нужно выбрать значения, сгруппированные по месяцам, из таблицы MS SQL. Вероятно, самый простой способ сделать это — вызвать функцию DateAdd с DateDiff:</p>
+<pre><code class="language-sql">SELECT Sum(YourColumn), DATEADD(month, DATEDIFF(month, 0, [YourDateColumn]), 0) as &#39;Date&#39;
+FROM YourTable
+GROUP BY DATEADD(month, DATEDIFF(month, 0, [YourDateColumn]), 0);
+</code></pre>
+<p>Или мы можем использовать функцию EOMONTH, которая даёт нам дату последнего дня месяца:</p>
+<pre><code class="language-sql">SELECT Sum(YourColumn),  EOMONTH([YourDateColumn]) as &#39;Date&#39;
+FROM YourTable
+GROUP BY EOMONTH([YourDateColumn]) ;
+</code></pre>
+<p>Но обычно удобнее использовать первый день месяца. Поэтому, если вы хотите сэкономить время и сделать скрипт более понятным, можете создать свою собственную функцию, как EOMONTH:</p>
+<pre><code class="language-sql">SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[SOMONTH] (@dd datetime)
+   RETURNS date
+
+AS
+BEGIN
+    declare @YYYY_MM_DD datetime;
+
+    SET @YYYY_MM_DD = DATEADD(month, DATEDIFF(month, 0, @dd), 0);
+
+    return @YYYY_MM_DD
+END
+</code></pre>
+<p>Теперь мы можем её вызвать:</p>
+<pre><code class="language-sql">SELECT Sum(YourColumn),  SOMONTH([YourDateColumn]) as &#39;Date&#39;
+FROM YourTable
+GROUP BY SOMONTH([YourDateColumn]) ;
+</code></pre>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/windows-app-certification-kit-ne-rabotaet-v-windows-server-2/">Windows App Certification Kit не работает в Windows Server 2016</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как сгенерировать и скопировать SSH-ключ в Mac OS</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/how-to-generate-and-copy-ssh-key-in-mac-os/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Как сгенерировать и скопировать SSH-ключ в Mac OS</h1>
+                <div class="post-meta">
+                    <span class="date">2017-07-09</span>
+                </div>
+                <h4>Генерация SSH-ключа</h4>
+<p>Для начала откройте окно терминала. Лично я использую <a href="https://www.iterm2.com/">iTerm2</a>.</p>
+<p>Чтобы сгенерировать SSH-ключи, введите следующую команду в окне терминала:</p>
+<pre><code class="language-bash">ssh-keygen -t rsa
+</code></pre>
+<p>Вам нужно будет ответить на несколько вопросов в процессе генерации ssh-ключа. Оставьте расположение по умолчанию, на остальные вопросы отвечайте как хотите.</p>
+<h4>Копирование SSH-ключа в буфер обмена</h4>
+<p>Чтобы скопировать публичный ssh-ключ в буфер обмена, введите эту команду в окне терминала:</p>
+<pre><code class="language-bash">pbcopy &lt; ~/.ssh/id_rsa.pub
+</code></pre>
+<h4>Проверка парольной фразы SSH</h4>
+<p>Чтобы проверить парольную фразу SSH, введите:</p>
+<pre><code class="language-bash">ssh-keygen -y
+</code></pre>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/sbros-parolya-i-vydacha-prav-administratora-dlya-akkaunta-re/">Сброс пароля и выдача прав администратора для аккаунта Redmine</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

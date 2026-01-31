@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL-запрос для текущей даты минус год, месяц, день или минута</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/sql-query-for-todays-date-minus-year-month-day-or-minute/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>SQL-запрос для текущей даты минус год, месяц, день или минута</h1>
+                <div class="post-meta">
+                    <span class="date">2018-10-09</span>
+                </div>
+                <p>Чтобы добавить или вычесть дату/время, можно использовать функцию MS SQL:</p>
+<p>DATEADD(datepart, number, date)</p>
+<p>Допустим, вам нужно добавить пять месяцев к текущей дате, используйте это:</p>
+<pre><code class="language-sql">SELECT * FROM YourTable
+WHERE YourDate &lt; DATEADD(month, 5, GETDATE())
+</code></pre>
+<p>Я использовал функцию GETDATE() для получения текущей даты и времени.</p>
+<p>Если нужно вычесть какое-то время, просто добавьте минус ко второму параметру:</p>
+<pre><code class="language-sql">SELECT * FROM YourTable
+WHERE YourDate &lt; DATEADD(month, -5, GETDATE())
+</code></pre>
+<p>Список доступных аргументов для параметра datepart:</p>
+<ul>
+<li>year (год)</li>
+<li>quarter (квартал)</li>
+<li>month (месяц)</li>
+<li>dayofyear (день года)</li>
+<li>day (день)</li>
+<li>week (неделя)</li>
+<li>weekday (день недели)</li>
+<li>hour (час)</li>
+<li>minute (минута)</li>
+<li>second (секунда)</li>
+<li>millisecond (миллисекунда)</li>
+<li>microsecond (микросекунда)</li>
+<li>nanosecond (наносекунда)</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-us/sql/t-sql/functions/dateadd-transact-sql">Полная информация о функции MS SQL DATEADD на сайте Microsoft</a></p>
+<div class="next-post"><strong>Следующий пост:</strong> <a href="/ru/posts/ms-sql-vstavka-v-seredinu-tablitsy-i-sbros-avtoinkrementa/">MS SQL: вставка в середину таблицы и сброс автоинкремента</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

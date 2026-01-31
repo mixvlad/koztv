@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Про инструменты/модели для вайбкодинга.</title>
+    <link rel="icon" type="image/x-icon" href="../../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/ru/">Home</a>
+        <a href="/ru/#projects">Projects</a>
+        <a href="/ru/#blog">Blog</a>
+        <div class="lang-switcher"><a href="/posts/about-tools-models-for-vibe-coding/" class="lang-link">English</a> | <span class="lang-current">Русский</span></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Про инструменты/модели для вайбкодинга.</h1>
+                <div class="post-meta">
+                    <span class="date">2026-01-28</span> · <span class="original-link"><a href="https://t.me/koztv/14" target="_blank" rel="noopener">Открыть в <i class="fab fa-telegram"></i></a></span>
+                </div>
+                <p>Мой личный рейтинг цена / качество на январь 2026.</p>
+<ol>
+<li>ChatGPT Codex<br><a href="https://openai.com/chatgpt">https://openai.com/chatgpt</a>
+20$ в месяц, входит в обычную Plus-подписку, которую многие и так платят.
+Очень большие лимиты — если сравнивать с Claude, это как их план за ~100$.
+Если не сидеть в нём весь рабочий день, а использовать для своих сайд-проектов –
+это сейчас, по-моему, лучший вариант.
+Плюс у Codex большое окно памяти: он спокойно переваривает крупные проекты и не уходит постоянно в «задумчивость» из-за переполненного контекста.</li>
+<li>Claude Code (Max)<br><a href="https://www.anthropic.com/claude">https://www.anthropic.com/claude</a>
+Подписка за 100$, но по факту часто приходится брать 200$, если реально работаешь целый день или ведёшь несколько проектов. За 20$ даже смысла нет брать, она заканчивается моментально, даже на сайд проект не хватит, особенно если включить топовую модель Opus.
+Как продукт в целом, они лучшие сейчас. Задают направление, остальные в основном догоняют. По отзывам Opus считается самой «умной» моделью на рынке. По моему опыту — не факт что она прям умнее Codex, но если нужно писать много кода и есть лишние 200$ — это вероятно лучший вариант (хотя я не брал подписку за 200$ от ChatGPT, может она лучше).</li>
+<li>OpenCode<br><a href="https://opencode.ai">https://opencode.ai</a>
+Открытый инструмент. Можно бесплатно использовать некоторые модели, подключать API GPT или Claude, или вообще свои локальные модели. Хороший вариант если хочется вообще бесплатно попробовать или локальные модели использовать.</li>
+<li>Kimi K2.5<br><a href="https://kimi.com">https://kimi.com</a>
+Вышла буквально вчера. Уже слышал хорошие отзывы, сам пока не пробовал. Заявляют уровень Opus, стоит сильно дешевле, и теоретически можно развернуть локально урезанную версию (нужна видеокарта с большим объёмом памяти).</li>
+<li>GLM-4.7<br><a href="https://github.com/THUDM/GLM">https://github.com/THUDM/GLM</a>
+Китайская модель, тоже целится в конкуренцию с Opus и Codex. Насколько хороша – не скажу, но стоит дешевле. И у них есть облегчённая версия GLM-4.7 Flash, которую можно использовать бесплатно через тот же OpenCode. Или цепануть к модному нынче Clawdbot (Moltbot) — и вообще не думать про токены/деньги.</li>
+<li>Google Antigravity<br><a href="https://deepmind.google/technologies/alphacode/">https://deepmind.google/technologies/alphacode/</a>
+В России не работает, но можно извернуться и подключить через тот же OpenCode. Сколько хватает бесплатных лимитов — не знаю, но если хочется хоть немного пощупать Opus бесплатно, это вариант.</li>
+<li>Copilot<br><a href="https://github.com/features/copilot">https://github.com/features/copilot</a>
+У меня с ним не сложилось. Два подхода: в первый раз не смог оплатить, во второй — подписка вроде прошла, но в одном проекте он её не видел, в другом постоянно подвисал и сыпал ошибками.
+Хотя по цене и лимитам он выглядит неплохо:
+10$ — 300 запросов к Claude Sonnet,
+39$ — 1500 запросов.
+Но личный опыт был так себе.
+<strong>Если вы только въезжаете в вайбкодинг – берите Codex и не парьтесь.</strong>
+Для старта сейчас это самый нормальный вариант.</li>
+</ol>
+<p><picture>
+        <source type="image/avif" srcset="/posts/about-tools-models-for-vibe-coding/image1.avif">
+        <source type="image/webp" srcset="/posts/about-tools-models-for-vibe-coding/image1.webp">
+        <img loading="lazy" decoding="async" src="/posts/about-tools-models-for-vibe-coding/image1-960.webp" alt="" width="1600" height="900" style="aspect-ratio:1600/900" srcset="/posts/about-tools-models-for-vibe-coding/image1-480.webp 480w, /posts/about-tools-models-for-vibe-coding/image1-960.webp 960w" sizes="(max-width: 480px) 96vw, (max-width: 960px) 90vw, 960px">
+    </picture></p>
+<div class="continuation"><strong>Продолжение:</strong><ul><li><a href="/ru/posts/v-prodolzhenie-posta-blizhayshie-6-dney-mozhno-besplatno-isp/">В продолжение поста, ближайшие 6 дней можно бесплатно использовать kimi k2.5, если установить их приложуху или расширение. https://kilo.ai/</a></li></ul></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

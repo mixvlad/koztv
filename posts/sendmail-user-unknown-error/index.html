@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sendmail config when MX record points to another server</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/posts/nastroyka-sendmail-kogda-mx-zapis-ukazyvaet-na-drugoy-server/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>Sendmail config when MX record points to another server</h1>
+                <div class="post-meta">
+                    <span class="date">2016-05-21</span>
+                </div>
+                <p>If your domain mail is hosted on mail server in a different domain, you should tell your sendmail about it. Otherwise if you try to send a mail to a user in your local domain, you will get an error from sendmail at <strong>/vat/log/mail.log</strong>:</p>
+<p><strong><em>User unknown.</em></strong></p>
+<p>It means that sendmail is trying to find user, that is mentioned in a message, on your local server and can’t find that user, because we use mail server that is hosted on different IP-address. To solve this problem we should tell sendmail to search for mail users with our domain name on the remote server.</p>
+<p>Open <strong>/etc/mail/sendmail.mc</strong> for edit:</p>
+<pre><code class="language-bash">sudo nano /etc/mail/sendmail.mc
+</code></pre>
+<p>Add this two lines to the end of the file:</p>
+<pre><code>define(`MAIL_HUB&#39;, `your.domain.com.&#39;)dnl
+define(`LOCAL_RELAY&#39;, `your.domain.com.&#39;)dnl
+</code></pre>
+<p>Press “<strong>Ctrl + X</strong>” when you are done and answer “<strong>Y</strong>” for question about saving a file.</p>
+<p>Now we should reload sendmail service:</p>
+<pre><code class="language-bash">service sendmail reload
+</code></pre>
+<p>And try to send mail again. If you have done everything right, emails should go through remote mail server without errors.</p>
+<div class="next-post"><strong>Next post:</strong> <a href="/posts/start-of-month-from-date-in-ms-sql-opposite-to-eomonth-function/">Start of month from date in MS SQL (opposite to EOMONTH function)</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 

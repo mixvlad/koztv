@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I spent a week to realize that I don't need a trendy stack.</title>
+    <link rel="icon" type="image/x-icon" href="../../static/img/logo.ico">
+
+    <!-- Preconnects for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Font Awesome (loaded after initial render) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Site styles: preload for early fetch, standard link to avoid FOUC -->
+    <link rel="preload" href="../../static/css/style.09ab6ce1.css" as="style">
+    <link rel="stylesheet" href="../../static/css/style.09ab6ce1.css">
+    
+    <!-- Google Analytics 4 -->
+    
+    
+    <script>
+        
+    </script>
+
+    <!-- Inline image loader script early to wrap images before they start downloading -->
+    <script src="../../static/js/img-loader.53beda4c.js"></script>
+</head>
+<body class="">
+    <header>
+    <nav class="narrow">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#blog">Blog</a>
+        <div class="lang-switcher"><span class="lang-current">English</span> | <a href="/ru/posts/ya-potratil-nedelyu-chtoby-ponyat-chto-mne-ne-nuzhen-modnyy-/" class="lang-link">Русский</a></div>
+    </nav>
+</header>
+
+    <main>
+        <article>
+            <div class="content">
+                <h1>I spent a week to realize that I don't need a trendy stack.</h1>
+                <div class="post-meta">
+                    <span class="date">2026-01-20</span> · <span class="original-link"><a href="https://t.me/koztv/7" target="_blank" rel="noopener">View in <i class="fab fa-telegram"></i></a></span>
+                </div>
+                <p>Like many, I started with Supabase as my database. Then I hit the free limits, the paid plans seemed greedy, so I decided to host everything on my own server. I spent a week on it.
+In return, I got more complexity, less flexibility, and limitations that didn&#39;t suit me.
+I have other projects that also need a database. But Supabase only has one. It also turned out that this beast consumes quite a few resources. In the end, I just spun up Postgres in containers on the same server where my other services live. Without unnecessary bells and whistles and without extra payments.
+I should have spent more time thinking than doing. Although, honestly, I really wanted to try something new.
+Every choice costs time. Make the wrong choice, and you lose time. And when you&#39;re working alone, the limit for experiments is pretty tight.
+The experience was useful. But not essential.</p>
+<div class="next-post"><strong>Next post:</strong> <a href="/posts/about-how-sometimes-its-better-to-throw-away-and-forget/">About how sometimes it's better to throw away and forget.</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="narrow">
+    <p>© 2014 – 2026  Mike Koz<br><a href="mailto:m@koz.tv">m@koz.tv</a> </p>
+</footer> 
+
+    <script>
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        } else {
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.social-icons i').forEach(el => el.classList.add('fa-loaded'));
+            });
+        }
+    </script>
+</body>
+</html> 
